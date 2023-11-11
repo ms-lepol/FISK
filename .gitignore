@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+CMakeLists/
+Makefile
+foogame
+
+build/
+.idea
+cmake-build-debug
+data/raw
+.vscode
