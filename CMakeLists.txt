@@ -8,6 +8,7 @@ find_package(gf REQUIRED)
  
 add_executable(foogame
   src/client/client.cc
+  src/client/testGF.cc
   # and the rest of your sources
 )
  
