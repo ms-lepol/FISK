@@ -1,3 +1,9 @@
+# How to use:
+#   mkdir build
+#   cd build
+#   cmake ..
+#   make
+#
 cmake_minimum_required(VERSION 3.10)
  
 project(FISK
@@ -7,13 +13,30 @@ project(FISK
 find_package(gf REQUIRED)
  
 add_executable(foogame
-  src/client/client.cc
   src/client/testGF.cc
   # and the rest of your sources
 )
- 
+
 target_link_libraries(foogame
   PRIVATE
     gf::graphics
+    gf::net
+)
+
+add_executable(server
+  src/server/server.cc
+)
+
+target_link_libraries(server
+  PRIVATE
+    gf::net
+)
+
+add_executable(client
+  src/client/client.cc
+)
+
+target_link_libraries(client
+  PRIVATE
     gf::net
 )
