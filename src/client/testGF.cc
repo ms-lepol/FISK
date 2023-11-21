@@ -53,14 +53,14 @@ int main() {
         text_pos.y += text_mov.y ;
         text.setPosition(text_pos);
 
-        if (text_pos.x + text_size.x >= windows_size.x || text_pos.x <= 0) {
+        if ((text_pos.x + text_size.x >= windows_size.x) || (text_pos.x <= 0)) {
         text_mov.x *= -1;
         float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
         float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
         float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
         text.setColor(gf::Color::fromRgb(r,g,b));
         }
-        if (text_pos.y + text_size.y >= windows_size.y || text_pos.y <= 0) {
+        if ((text_pos.y + text_size.y >= windows_size.y) || (text_pos.y <= 0)) {
             text_mov.y *= -1;
             float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
             float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
