@@ -11,7 +11,7 @@
 
 
 void initClient(){
-    // Create a socket to example.com on port 24680
+    // Create a socket to HOSTNAME on port 25000
     gf::TcpSocket socket(HOSTNAME, PORT);
     gf::Log::info("(CLIENT) Trying to connect to %s\n", socket.getRemoteAddress().getHostname().c_str());
 
@@ -30,14 +30,11 @@ void initClient(){
     }
 
     char msg [MAX];
-    memcpy(&msg, bytes, sizeof(uint8_t)*MAX);
 
     gf::Log::info("(CLIENT) Received : %s\n", msg);
 }
 
 int main(){
     initClient();
-    std::cout << gf::Log::Info;
-    std::cerr << gf::Log::Error;
     return 0;
 }
