@@ -14,6 +14,7 @@ void initClient(){
     // Create a socket to HOSTNAME on port 25000
     gf::TcpSocket socket(HOSTNAME, PORT);
     gf::Log::info("(CLIENT) Trying to connect to %s\n", socket.getRemoteAddress().getHostname().c_str());
+    printf("(CLIENT) Trying to connect to %s\n", socket.getRemoteAddress().getHostname().c_str());
 
     if (!socket) {
         // Handle error
@@ -31,7 +32,8 @@ void initClient(){
 
     char msg [MAX];
 
-    gf::Log::info("(CLIENT) Received : %s\n", msg);
+    gf::Log::info("(CLIENT) Received : %s\n", bytes);
+    printf("(CLIENT) Received : %s\n", bytes);
 }
 
 int main(){
