@@ -1,6 +1,8 @@
 #include <string>
 #include <vector>
 
+namespace fisk {
+
 class Land {
     private:
         unsigned land_id;
