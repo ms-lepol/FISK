@@ -2,3 +2,5 @@
 #define FISK_CONSTANTS_H
 
 namespace fisk {}
+
+#endif
