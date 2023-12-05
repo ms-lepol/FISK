@@ -1,6 +1,6 @@
-#include "Type.h"
+#include "Enums.h"
 
 class Card {
-    Type type_unit;
+    fisk::Type type_unit;
     unsigned land_id;
 };

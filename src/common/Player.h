@@ -2,10 +2,10 @@
 namespace fisk {
     class Player {
         private:
-            int id_client;
-            int nb_units;
+            unsigned id_client;
+            unsigned nb_units;
             gf::Color4f color;
-            int hand[];
+            unsigned hand[];
         public:
             Player(int id_client, int nb_units, gf::Color4f color, int hand[]);
             int getId_client();
