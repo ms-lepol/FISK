@@ -14,6 +14,8 @@ find_package(gf REQUIRED)
  
 add_executable(foogame
   src/client/testGF.cc
+  src/common/Land.cc
+  src/client/LandShape.cc
   # and the rest of your sources
 )
 
@@ -21,6 +23,7 @@ target_link_libraries(foogame
   PRIVATE
     gf::graphics
     gf::net
+    
 )
 
 add_executable(server

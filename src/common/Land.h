@@ -1,10 +1,10 @@
 #include <string>
 #include <vector>
-
+ 
 namespace fisk {
 
     class Land {
-        private:
+        protected:
             unsigned land_id;
             unsigned nb_units;
             std::string name;
