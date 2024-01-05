@@ -1,40 +1,142 @@
-#include <algorithm>
-#include <cstdint>
-#include <cstring>
-#include <gf/TcpSocket.h>
-#include <gf/Log.h>
-#include <iostream>
+#include <cstdlib>
+#include <gf/Color.h>
+#include <gf/Event.h>
+#include <gf/Font.h>
+#include <gf/RenderWindow.h>
+#include <gf/Sprite.h>
+#include <gf/Text.h>
+#include <gf/Vector.h>
+#include <gf/VectorOps.h>
+#include <gf/Polygon.h>
+#include <gf/Shapes.h>
+#include <gf/ViewContainer.h>
+#include <gf/Window.h>
 
-#include "../common/networkMisc.h"
+#include <gf/Views.h>
+#include <gf/Event.h>
+#include <gf/Math.h>
+#include <gf/RenderWindow.h>
+#include <gf/Texture.h>
+#include <gf/TileLayer.h>
+#include <gf/VectorOps.h>
+#include <gf/Views.h>
+#include <gf/ViewContainer.h>
+#include <gf/Window.h>
 
 
-void initClient(){
-    // Create a socket to HOSTNAME on port 25000
-    gf::TcpSocket socket(HOSTNAME, PORT);
-    gf::Log::info("(CLIENT) Trying to connect to %s\n", socket.getRemoteAddress().getHostname().c_str());
-    printf("(CLIENT) Trying to connect to %s\n", socket.getRemoteAddress().getHostname().c_str());
+#include <set>
+#include <string>
+#include "LandShape.h"
 
-    if (!socket) {
-        // Handle error
-        gf::Log::error("(CLIENT) Error while connecting to the socket\n");
-        return;
-    }
+static constexpr float ZoomInFactor = 0.8f;
+static constexpr float ZoomOutFactor = 1.25f;
+
+int main() {
+    // Create the main window and the renderer
+    static constexpr gf::Vector2i ScreenSize(1080, 720);
     
-    uint8_t bytes[MAX];
+    gf::Window window("FISK - Client", { 1080, 720 });
+    gf::RenderWindow renderer(window);
+    gf::Vector2f windows_size = window.getSize();
+
+    // Create the views for the camera of the game
     
-    if (socket.recvBytes(bytes) != gf::SocketStatus::Data) {
-        // Handle error
-        gf::Log::error("(CLIENT) Error while retrieving the socket\n");
-        return;
+    gf::ViewContainer views;
+
+    gf::ExtendView view;
+    view.setCenter({ 0.0f, 0.0f });
+    view.setSize(ScreenSize);
+    views.addView(view);
+
+    views.setInitialFramebufferSize(ScreenSize);
+
+    gf::ZoomingViewAdaptor adaptor(renderer, view);
+
+
+    // Load a sprite to display
+    
+    
+    // Create a graphical text to display
+    
+   
+
+    // Testing a display for the map
+    gf::Polygon america = gf::Polygon();
+    america.addPoint(gf::Vector2f(50,50));
+    america.addPoint(gf::Vector2f(300,50));
+    america.addPoint(gf::Vector2f(275,150));
+    america.addPoint(gf::Vector2f(400,175));
+    america.addPoint(gf::Vector2f(450,100));
+    america.addPoint(gf::Vector2f(500,175));
+    america.addPoint(gf::Vector2f(450,300));
+    america.addPoint(gf::Vector2f(275,350));
+    america.addPoint(gf::Vector2f(300,375));
+    america.addPoint(gf::Vector2f(150,350));
+    america.addPoint(gf::Vector2f(125,175));
+    america.addPoint(gf::Vector2f(112,150));
+    america.addPoint(gf::Vector2f(85,175));
+    america.addPoint(gf::Vector2f(50,125));
+    america.addPoint(gf::Vector2f(25,100));
+
+    fisk::LandShape land1 = fisk::LandShape(1, "land1", std::vector<unsigned>(), 1, gf::Color::fromRgb(1,0,0), america);
+
+
+    renderer.clear(gf::Color::Black);
+        
+    gf::Vector2f text_mov = { 1, 1 };
+    srand(time(NULL));
+    // Start the game loop
+
+    while (window.isOpen()) {
+        
+        // Process events
+        gf::Event event;
+    
+        while (window.pollEvent(event)) {
+            switch (event.type) {
+                case gf::EventType::Closed:
+                window.close();
+                break;
+                
+                //Events for the camera of the game (zoom, rotate, move)
+                case gf::EventType::KeyPressed:
+                    switch (event.key.scancode) {
+                        //Events for the camera of the game (rotate, move)
+                        case gf::Scancode::Up:
+                        view.zoom(ZoomInFactor);
+                        break;
+
+                        case gf::Scancode::Down:
+                        view.zoom(ZoomOutFactor);
+                        break;
+
+                        case gf::Scancode::Escape:
+                        window.close();
+                        break;
+
+                        default:
+                        break;
+                    }
+
+                default:
+                break;
+                }
+            adaptor.processEvent(event);
+            views.processEvent(event);
+        }
+        
+    
+        //Update the game
+
+        // Draw the entities
+
+        renderer.setView(view);
+    
+        renderer.clear();
+        gf::ConvexShape shape = land1.getShape();
+        renderer.draw(shape);
+        renderer.display();
     }
-
-    char msg [MAX];
-
-    gf::Log::info("(CLIENT) Received : %s\n", bytes);
-    printf("(CLIENT) Received : %s\n", bytes);
-}
-
-int main(){
-    initClient();
+        
     return 0;
 }

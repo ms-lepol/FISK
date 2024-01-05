@@ -26,6 +26,21 @@ target_link_libraries(foogame
     
 )
 
+ 
+add_executable(client
+  src/client/client.cc
+  src/common/Land.cc
+  src/client/LandShape.cc
+  # and the rest of your sources
+)
+
+target_link_libraries(client
+  PRIVATE
+    gf::graphics
+    gf::net
+)
+
+
 add_executable(server
   src/server/server.cc
 )
@@ -35,11 +50,11 @@ target_link_libraries(server
     gf::net
 )
 
-add_executable(client
-  src/client/client.cc
+add_executable(clientServ
+  src/client/clientServ.cc
 )
 
-target_link_libraries(client
+target_link_libraries(clientServ
   PRIVATE
     gf::net
 )
