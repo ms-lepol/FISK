@@ -44,7 +44,7 @@ int main() {
     gf::ViewContainer views;
 
     gf::ExtendView view;
-    view.setCenter({ 0.0f, 0.0f });
+    //view.setCenter({ 0.0f, 0.0f });
     view.setSize(ScreenSize);
     views.addView(view);
 
@@ -55,8 +55,6 @@ int main() {
 
     // Load a sprite to display
     
-    
-    // Create a graphical text to display
     
    
 
@@ -81,7 +79,7 @@ int main() {
     fisk::LandShape land1 = fisk::LandShape(1, "land1", std::vector<unsigned>(), 1, gf::Color::fromRgb(1,0,0), america);
 
 
-    renderer.clear(gf::Color::Black);
+    renderer.clear(gf::Color::Cyan);
         
     gf::Vector2f text_mov = { 1, 1 };
     srand(time(NULL));
@@ -133,8 +131,7 @@ int main() {
         renderer.setView(view);
     
         renderer.clear();
-        gf::ConvexShape shape = land1.getShape();
-        renderer.draw(shape);
+        land1.draw(renderer);
         renderer.display();
     }
         

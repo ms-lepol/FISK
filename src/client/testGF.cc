@@ -116,8 +116,7 @@ int main() {
         renderer.clear();
         renderer.draw(sprite);
         renderer.draw(text);
-        gf::ConvexShape shape = land1.getShape();
-        renderer.draw(shape);
+        land1.draw(renderer);
         renderer.display();
     }
         
