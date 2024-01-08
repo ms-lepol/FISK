@@ -30,7 +30,7 @@ target_link_libraries(foogame
 add_executable(client
   src/client/client.cc
   src/common/Land.cc
-  src/client/LandShape.cc
+  src/client/LandSprite.cc
   # and the rest of your sources
 )
 

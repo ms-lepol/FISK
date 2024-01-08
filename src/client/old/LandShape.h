@@ -10,7 +10,7 @@
 #include <gf/Text.h>
 #include <gf/Vector.h>
 
-#include "../common/Land.h"
+#include "../../common/Land.h"
 
 namespace fisk {
     class LandShape : private Land {

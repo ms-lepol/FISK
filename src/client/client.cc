@@ -26,7 +26,8 @@
 
 #include <set>
 #include <string>
-#include "LandShape.h"
+
+#include "LandSprite.h"
 
 static constexpr float ZoomInFactor = 0.8f;
 static constexpr float ZoomOutFactor = 1.25f;
@@ -35,7 +36,7 @@ int main() {
     // Create the main window and the renderer
     static constexpr gf::Vector2i ScreenSize(1080, 720);
     
-    gf::Window window("FISK - Client", { 1080, 720 });
+    gf::Window window("FISK - Client", { 1280, 720 });
     gf::RenderWindow renderer(window);
     gf::Vector2f windows_size = window.getSize();
 
@@ -59,7 +60,7 @@ int main() {
    
 
     // Testing a display for the map
-    gf::Polygon america = gf::Polygon();
+    /* gf::Polygon america = gf::Polygon();
     america.addPoint(gf::Vector2f(50,50));
     america.addPoint(gf::Vector2f(300,50));
     america.addPoint(gf::Vector2f(275,150));
@@ -76,10 +77,18 @@ int main() {
     america.addPoint(gf::Vector2f(50,125));
     america.addPoint(gf::Vector2f(25,100));
 
-    fisk::LandShape land1 = fisk::LandShape(1, "land1", std::vector<unsigned>(), 1, gf::Color::fromRgb(1,0,0), america);
+    fisk::LandShape land1 = fisk::La ndShape(1, "land1", std::vector<unsigned>(), 1, gf::Color::fromRgb(1,0,0), america); */
+
+    // Testing a display for the map
+    fisk::LandSprite land1 = fisk::LandSprite("Alaska", 1, gf::Color::fromRgb(1,0,0), "../data/sprites/lands/fisk_alaska_96_159.png", { 96, 159});
 
 
-    renderer.clear(gf::Color::Cyan);
+    gf::Sprite spr;
+    gf::Texture text = gf::Texture("../data/sprites/lands/fisk_alaska_96_159.png");
+    spr.setTexture(text);
+    spr.setPosition({ 96, 159});
+
+    renderer.clear(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
         
     gf::Vector2f text_mov = { 1, 1 };
     srand(time(NULL));
@@ -132,6 +141,7 @@ int main() {
     
         renderer.clear();
         land1.draw(renderer);
+       
         renderer.display();
     }
         

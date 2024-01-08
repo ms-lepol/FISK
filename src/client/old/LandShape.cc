@@ -50,7 +50,7 @@ namespace fisk {
             target.draw(shape, states);
         }
     
-        gf::Font font("../data/font/Kaph-Regular.ttf");
+        gf::Font font("../data/font/PixelSplitter-Bold.ttf");
        
         gf::Vector2i center = this->getCenter();
 

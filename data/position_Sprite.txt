@@ -1,0 +1,46 @@
+AMERIQUE
+
+Alaska - 96_159
+NW_Territory - 186_75
+Groenland - 398_76
+Alberta - 188_223
+Ontario - 290_223
+Quebec - 361_217
+West US - 209_275
+East US - 304_275
+Central - 248_554
+
+Venezuela - 362 404
+Brazil - 383_448
+Peru - 350_448
+Argentine - 375_504
+
+Islande - 550_188
+Grande-Bretagne - 585_227
+Scandinavie - 631_170
+West Europe - 584_262
+South Europe - 635_277
+North Europe - 630_239
+East Europe - 691_173
+
+Moyen-Orient - 714_292 
+Afhganistan - 777_122
+Ural - 865_99
+Sibérie - 902_148
+Mongolie - 1030_134
+Japon - 1051_286
+Chine - 899_310
+Inde - 833_311
+Thailande - 931_363
+
+North Africa - 562_321
+Egypte - 650_332
+East Africa - 698_395
+Congo - 654_414
+South Africa - 653_475
+Madagascar - 760_483
+
+Indonésie 934_390
+Nouvelle Zélande 1052_449
+West Australia 992_484
+East Australia 1049_484

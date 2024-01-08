@@ -31,7 +31,7 @@ int main() {
     
     // Create a graphical text to display
     
-    gf::Font font("../data/font/Kaph-Regular.ttf");
+    gf::Font font("../data/font/PixelSplitter-Bold.ttf");
     
     gf::Text text("DVD", font, 50);
     
