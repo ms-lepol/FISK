@@ -31,7 +31,8 @@
 *.out
 *.app
 
-CMakeLists/
+CMakeFiles/
+CMakeCache.txt
 Makefile
 foogame
 
