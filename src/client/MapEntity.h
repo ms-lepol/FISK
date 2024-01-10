@@ -4,7 +4,9 @@
 #include <gf/Array2D.h>
 #include <gf/Entity.h>
 #include <gf/EntityContainer.h>
+#include <map>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "configMap1.h"
@@ -15,7 +17,7 @@ namespace fisk  {
         private:
             gf::ResourceManager& ressources;
 
-            std::vector<LandEntity*> lands;
+            std::map<std::string, LandEntity*> lands;
             void configureMap1();
 
        public:

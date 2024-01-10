@@ -21,8 +21,8 @@ namespace fisk {
     }
 
     MapEntity::~MapEntity() {
-        for (auto& land : lands) {
-            delete land;
+        for (auto& [key,value] : lands) {
+            delete value;
         }
     }
 
@@ -67,48 +67,49 @@ namespace fisk {
         LandEntity* WesternAustralia = new LandEntity("Western Australia", 0, pathWestAustralia, gf::Vector2i(xWestAustralia,yWestAustralia),ressources);
         LandEntity* EasternAustralia = new LandEntity("Eastern Australia", 0, pathEastAustralia, gf::Vector2i(xEastAustralia,yEastAustralia),ressources);
       
-        lands.push_back(Alaska);
-        lands.push_back(NorthwestTerritory);
-        lands.push_back(Greenland);
-        lands.push_back(Alberta);
-        lands.push_back(Ontario);
-        lands.push_back(Quebec);
-        lands.push_back(WesternUnitedStates);
-        lands.push_back(EasternUnitedStates);
-        lands.push_back(CentralAmerica);
-        lands.push_back(Venezuela);
-        lands.push_back(Peru);
-        lands.push_back(Brazil);
-        lands.push_back(Argentina);
-        lands.push_back(GreatBritain);
-        lands.push_back(Scandinavia);
-        lands.push_back(NorthernEurope);
-        lands.push_back(SouthernEurope);
-        lands.push_back(WesternEurope);
-        lands.push_back(EasternEurope);
-        lands.push_back(NorthAfrica);
-        lands.push_back(Egypt);
-        lands.push_back(EastAfrica);
-        lands.push_back(Congo);
-        lands.push_back(SouthAfrica);
-        lands.push_back(Madagascar);
-        lands.push_back(Ural);
-        lands.push_back(Siberia);
-        lands.push_back(Mongolia);
-        lands.push_back(Japan);
-        lands.push_back(Afghanistan);
-        lands.push_back(China);
-        lands.push_back(MiddleEast);
-        lands.push_back(India);
-        lands.push_back(Indonesia);
-        lands.push_back(NewZealand);
-        lands.push_back(WesternAustralia);
-        lands.push_back(EasternAustralia);
+        lands["Alaska"]=Alaska;
+        lands["NorthwestTerritory"]=NorthwestTerritory;
+        lands["Greenland"]=Greenland;
+        lands["Alberta"]=Alberta;
+        lands["Ontario"]=Ontario;
+        lands["Quebec"]=Quebec;
+        lands["WesternUnitedStates"]=WesternUnitedStates;
+        lands["EasternUnitedStates"]=EasternUnitedStates;
+        lands["CentralAmerica"]=CentralAmerica;
+        lands["Venezuela"]=Venezuela;
+        lands["Peru"]=Peru;
+        lands["Brazil"]=Brazil;
+        lands["Argentina"]=Argentina;
+        lands["GreatBritain"]=GreatBritain;
+        lands["Scandinavia"]=Scandinavia;
+        lands["NorthernEurope"]=NorthernEurope;
+        lands["SouthernEurope"]=SouthernEurope;
+        lands["WesternEurope"]=WesternEurope;
+        lands["EasternEurope"]=EasternEurope;
+        lands["NorthAfrica"]=NorthAfrica;
+        lands["Egypt"]=Egypt;
+        lands["EastAfrica"]=EastAfrica;
+        lands["Congo"]=Congo;
+        lands["SouthAfrica"]=SouthAfrica;
+        lands["Madagascar"]=Madagascar;
+        lands["Ural"]=Ural;
+        lands["Siberia"]=Siberia;
+        lands["Mongolia"]=Mongolia;
+        lands["Japan"]=Japan;
+        lands["Afghanistan"]=Afghanistan;
+        lands["China"]=China;
+        lands["MiddleEast"]=MiddleEast;
+        lands["India"]=India;
+        lands["Indonesia"]=Indonesia;
+        lands["NewZealand"]=NewZealand;
+        lands["WesternAustralia"]=WesternAustralia;
+        lands["EasternAustralia"]=EasternAustralia;
+        
     }
-
+    
     void MapEntity::render(gf::RenderTarget& target, const gf::RenderStates& states) {
-        for (LandEntity* land : lands) {
-           land->render(target);
+        for (auto& [key,value] : lands) {
+            value->render(target);
         }
     }
 }

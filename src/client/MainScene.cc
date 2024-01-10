@@ -1,6 +1,8 @@
 #include "MainScene.h"
 
 #include "GameHub.h"
+#include <gf/Keyboard.h>
+#include <iostream>
 
 namespace fisk {
 
@@ -33,6 +35,7 @@ namespace fisk {
 
     addView(m_WorldView);
     addView(m_HudView);
+  
 
     setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
 
@@ -41,14 +44,25 @@ namespace fisk {
     m_WorldEntities.addEntity(m_ltRoot);
 
     addHudEntity(m_light);
+
+
  */
+    m_WorldEntities.addEntity(m_map);
+
+    m_cameraActions.close.addCloseControl();
+    m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
+    m_cameraActions.close.isActive();
+
     
 
-   /*  m_cameraActions.close.addCloseControl();
     m_cameraActions.zoomIn.addScancodeKeyControl(gf::Scancode::Up);
     m_cameraActions.zoomOut.addScancodeKeyControl(gf::Scancode::Down);
- */
-    m_WorldView.setCenter({ 0.0f, 0.0f });
+ 
+    addAction(m_cameraActions.close);
+    addAction(m_cameraActions.zoomIn);
+    addAction(m_cameraActions.zoomOut);
+
+    m_WorldView.setCenter({ViewSize.x/2,ViewSize.y/2  });
     m_WorldView.setSize(ViewSize);
     m_WorldView.setInitialFramebufferSize(m_game.getRenderer().getSize());
     m_HudView.setInitialFramebufferSize(m_game.getRenderer().getSize());
@@ -63,7 +77,17 @@ namespace fisk {
     // Handle interact
     
     // Handle camera
-    
+    if (m_cameraActions.close.isActive()) {
+      m_game.getWindow().close();
+    }
+    if (m_cameraActions.zoomIn.isActive()) {
+      m_WorldView.zoom(ZoomInFactor);
+      std::cout << "Zoom in" << std::endl;
+    }
+    if (m_cameraActions.zoomOut.isActive()) {
+      m_WorldView.zoom(ZoomOutFactor);
+      std::cout << "Zoom Out" << std::endl;
+    }
   }
 
   void MainScene::doUpdate(gf::Time time) {
@@ -81,7 +105,6 @@ namespace fisk {
     target.setView(m_WorldView);
     m_WorldEntities.render(target, states);
     target.setView(m_HudView);
-    m_map.render(target, states);
     m_HudEntities.render(target, states);
     renderHudEntities(target, states);
   }
