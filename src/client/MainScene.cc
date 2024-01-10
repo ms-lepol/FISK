@@ -42,7 +42,7 @@ namespace fisk {
 
     addHudEntity(m_light);
  */
-    m_WorldEntities.addEntity(m_map);
+    
 
    /*  m_cameraActions.close.addCloseControl();
     m_cameraActions.zoomIn.addScancodeKeyControl(gf::Scancode::Up);
@@ -81,6 +81,7 @@ namespace fisk {
     target.setView(m_WorldView);
     m_WorldEntities.render(target, states);
     target.setView(m_HudView);
+    m_map.render(target, states);
     m_HudEntities.render(target, states);
     renderHudEntities(target, states);
   }

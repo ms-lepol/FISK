@@ -2,6 +2,8 @@
 
 #define pathLands "../data/sprites/lands/"
 
+#define MAP1_NB_LANDS 42
+
 #define pathAfhganistan "../data/sprites/lands/fisk_afhganistan_777_122.png"
 #define xAfhganistan 777
 #define yAfhganistan 122
@@ -30,9 +32,9 @@
 #define xBrazil 383
 #define yBrazil 448
 
-#define pathCentralAmerica "../data/sprites/lands/fisk_central_248_554.png"
+#define pathCentralAmerica "../data/sprites/lands/fisk_central_248_354.png"
 #define xCentralAmerica 248
-#define yCentralAmerica 554
+#define yCentralAmerica 354
 
 #define pathChina "../data/sprites/lands/fisk_chine_899_310.png"
 #define xChina 899

@@ -48,7 +48,6 @@ private:
   gf::EntityContainer m_WorldEntities;
   gf::EntityContainer m_HudEntities;
 
-
   // entities
 
   fisk::MapEntity m_map;
