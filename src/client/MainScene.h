@@ -6,8 +6,10 @@
 
 #include <gf/RenderWindow.h>
 #include <gf/Views.h>
+#include <gf/TextureAtlas.h>
 
 #include "MapEntity.h"
+#include "TurnInterface.h"
 
 namespace fisk {
 
@@ -43,6 +45,8 @@ private:
   gf::ZoomingViewAdaptor adaptor;
   CameraActions m_cameraActions;
 
+  gf::TextureAtlas m_hudAtlas;
+
   // containers
 
   gf::EntityContainer m_WorldEntities;
@@ -51,6 +55,7 @@ private:
   // entities
 
   fisk::MapEntity m_map;
+  fisk::TurnInterface m_turnInterface;
   // actions
 
 };

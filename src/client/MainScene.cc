@@ -2,6 +2,8 @@
 
 #include "GameHub.h"
 #include <gf/Keyboard.h>
+#include <gf/Texture.h>
+#include <gf/TextureAtlas.h>
 #include <iostream>
 
 namespace fisk {
@@ -27,27 +29,24 @@ namespace fisk {
   , m_WorldView({ 0.0f, 0.0f }, ViewSize)
   , adaptor(game.getRenderer(), m_WorldView)
   , m_map(MapEntity(game.resources,1))
+  , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml"))
+  , m_turnInterface(TurnInterface(2,game.resources,m_hudAtlas))
   {
     /* auto ltViewport = gf::RectF::fromPositionSize({ 0.0f, 0.0f }, { 0.5f, 1.0f });
     m_WorldView.setViewport(ltViewport);
     m_HudView.setViewport(ltViewport);
      */
-
     addView(m_WorldView);
     addView(m_HudView);
   
 
+    m_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
+
     setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
 
-  /*   m_WorldEntities.addEntity(m_ltMap);
-    m_WorldEntities.addEntity(m_ltHero);
-    m_WorldEntities.addEntity(m_ltRoot);
-
-    addHudEntity(m_light);
-
-
- */
+ 
     m_WorldEntities.addEntity(m_map);
+    m_HudEntities.addEntity(m_turnInterface);
 
     m_cameraActions.close.addCloseControl();
     m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
@@ -105,7 +104,8 @@ namespace fisk {
     target.setView(m_WorldView);
     m_WorldEntities.render(target, states);
     target.setView(m_HudView);
-    m_HudEntities.render(target, states);
+    //m_HudEntities.render(target, states);
+    m_turnInterface.render(target);
     renderHudEntities(target, states);
   }
 

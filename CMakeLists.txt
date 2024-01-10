@@ -19,6 +19,7 @@ add_executable(client
   src/client/MainScene.cc
   src/client/MapEntity.cc
   src/client/LandEntity.cc
+  src/client/TurnInterface.cc
   src/common/Land.cc
   # and the rest of your sources
 )
