@@ -38,8 +38,9 @@ namespace fisk {
      */
     addView(m_WorldView);
     addView(m_HudView);
-  
-
+    
+    m_HudView.setSize(m_game.getWindow().getSize());
+    
     m_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
 
     setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
@@ -47,6 +48,8 @@ namespace fisk {
  
     m_WorldEntities.addEntity(m_map);
     m_HudEntities.addEntity(m_turnInterface);
+    
+    m_turnInterface.setPosition({static_cast<int>(m_HudView.getSize().x)-m_turnInterface.width,static_cast<int>(m_HudView.getSize().y)/2});
 
     m_cameraActions.close.addCloseControl();
     m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
@@ -55,8 +58,10 @@ namespace fisk {
     
 
     m_cameraActions.zoomIn.addScancodeKeyControl(gf::Scancode::Up);
+    m_cameraActions.zoomIn.setContinuous();
     m_cameraActions.zoomOut.addScancodeKeyControl(gf::Scancode::Down);
- 
+    m_cameraActions.zoomOut.setContinuous();
+
     addAction(m_cameraActions.close);
     addAction(m_cameraActions.zoomIn);
     addAction(m_cameraActions.zoomOut);
@@ -64,6 +69,7 @@ namespace fisk {
     m_WorldView.setCenter({ViewSize.x/2,ViewSize.y/2  });
     m_WorldView.setSize(ViewSize);
     m_WorldView.setInitialFramebufferSize(m_game.getRenderer().getSize());
+    //m_HudView.setSize(ViewSize);
     m_HudView.setInitialFramebufferSize(m_game.getRenderer().getSize());
 
     
@@ -81,11 +87,9 @@ namespace fisk {
     }
     if (m_cameraActions.zoomIn.isActive()) {
       m_WorldView.zoom(ZoomInFactor);
-      std::cout << "Zoom in" << std::endl;
     }
     if (m_cameraActions.zoomOut.isActive()) {
       m_WorldView.zoom(ZoomOutFactor);
-      std::cout << "Zoom Out" << std::endl;
     }
   }
 
@@ -104,8 +108,8 @@ namespace fisk {
     target.setView(m_WorldView);
     m_WorldEntities.render(target, states);
     target.setView(m_HudView);
-    //m_HudEntities.render(target, states);
-    m_turnInterface.render(target);
+    m_HudEntities.render(target, states);
+    
     renderHudEntities(target, states);
   }
 

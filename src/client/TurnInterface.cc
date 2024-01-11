@@ -12,18 +12,24 @@ namespace fisk {
         atlas(atlas)
         {
         //Logic
-        this->turn_order = 0;
+        this->turn_order = 1;
         //Rendering
-        this->m_spr.setPosition({100,y_PosTI});
+        this->m_spr.setPosition({0,0});
+        position = {x_PosTI,y_PosTI};
     }
 
     void TurnInterface::changeTurn() {
         this->turn_order = (this->turn_order + 1) % this->nb_player;
     }
 
-    void TurnInterface::render(gf::RenderTarget& target) {
+    void TurnInterface::setPosition(gf::Vector2i position) {
+        this->position = position;
+    }
+
+    void TurnInterface::render(gf::RenderTarget& target, const gf::RenderStates& states) {
         gf::RenderStates state;
         //rendering block by block
+        m_spr.setPosition(position);
 
         m_spr.setTexture(atlas.getTexture(),atlas.getTextureRect("upEdgeTI"));
         target.draw(m_spr, state);
@@ -77,6 +83,5 @@ namespace fisk {
         target.draw(m_spr, state);
 
 
-        m_spr.setPosition({x_PosTI,y_PosTI});
     }
 }

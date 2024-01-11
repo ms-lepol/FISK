@@ -10,7 +10,7 @@
 #include <gf/ResourceManager.h>
 #include <gf/RenderTarget.h>
 
-#define x_PosTI 1182
+#define x_PosTI 1382
 #define y_PosTI 217
 
 #define texture_path "/sprites/fisk_ui.png"
@@ -27,10 +27,11 @@ namespace fisk {
             gf::ResourceManager& ressources;
             gf::TextureAtlas& atlas;
         public:
+            int width = 96;
             TurnInterface(unsigned nb_player, gf::ResourceManager& rm, gf::TextureAtlas& atlas);
             void changeTurn();
-            void render(gf::RenderTarget& target);
-
+            void render(gf::RenderTarget& target,const gf::RenderStates& states);
+            void setPosition(gf::Vector2i position);
         };
 
 }
