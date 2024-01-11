@@ -20,6 +20,7 @@ add_executable(client
   src/client/MapEntity.cc
   src/client/LandEntity.cc
   src/client/TurnInterface.cc
+  src/client/PhaseIndicator.cc
   src/common/Land.cc
   # and the rest of your sources
 )

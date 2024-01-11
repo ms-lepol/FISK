@@ -10,10 +10,19 @@
 
 #include "MapEntity.h"
 #include "TurnInterface.h"
+#include "PhaseIndicator.h"
 
 namespace fisk {
 
   struct GameHub;
+
+    struct PlayerColor {
+      PlayerColor();
+      gf::Color4f Blue;
+      gf::Color4f Orange;
+      gf::Color4f Green;
+      gf::Color4f Yellow;
+    };
 
   struct CameraActions {
     CameraActions();
@@ -44,6 +53,7 @@ private:
 
   gf::ZoomingViewAdaptor adaptor;
   CameraActions m_cameraActions;
+  PlayerColor m_playerColor;
 
   gf::TextureAtlas m_hudAtlas;
 
@@ -56,6 +66,7 @@ private:
 
   fisk::MapEntity m_map;
   fisk::TurnInterface m_turnInterface;
+  fisk::PhaseIndicator m_phaseIndicator;
   // actions
 
 };

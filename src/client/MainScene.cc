@@ -1,6 +1,7 @@
 #include "MainScene.h"
 
 #include "GameHub.h"
+#include <gf/Color.h>
 #include <gf/Keyboard.h>
 #include <gf/Texture.h>
 #include <gf/TextureAtlas.h>
@@ -16,6 +17,16 @@ namespace fisk {
     static constexpr float ZoomOutFactor = 1.25f;
 
   }
+
+   PlayerColor::PlayerColor()
+   : Orange({(float)255/255,(float)140/255,(float)92/255,1})
+   , Blue({(float)99/255,(float)155/255,(float)255/255,1})
+   , Green({(float)134/255,(float)192/255,(float)108/255,1})
+   , Yellow({(float)251/255,(float)239/255,(float)8/255,1})
+   {
+
+   }
+
    CameraActions::CameraActions()
   : close("Close")
   , zoomIn("ZoomIn")
@@ -31,6 +42,7 @@ namespace fisk {
   , m_map(MapEntity(game.resources,1))
   , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml"))
   , m_turnInterface(TurnInterface(2,game.resources,m_hudAtlas))
+  , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game.resources,m_hudAtlas))
   {
     /* auto ltViewport = gf::RectF::fromPositionSize({ 0.0f, 0.0f }, { 0.5f, 1.0f });
     m_WorldView.setViewport(ltViewport);
@@ -48,14 +60,15 @@ namespace fisk {
  
     m_WorldEntities.addEntity(m_map);
     m_HudEntities.addEntity(m_turnInterface);
+    m_phaseIndicator.setColor(m_playerColor.Orange);
+    m_HudEntities.addEntity(m_phaseIndicator);
     
     m_turnInterface.setPosition({static_cast<int>(m_HudView.getSize().x)-m_turnInterface.width,static_cast<int>(m_HudView.getSize().y)/2});
+    m_phaseIndicator.setPosition({static_cast<int>(m_HudView.getSize().x)/2-m_phaseIndicator.width/2,static_cast<int>(m_HudView.getSize().y) - m_turnInterface.height});
 
     m_cameraActions.close.addCloseControl();
     m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
     m_cameraActions.close.isActive();
-
-    
 
     m_cameraActions.zoomIn.addScancodeKeyControl(gf::Scancode::Up);
     m_cameraActions.zoomIn.setContinuous();

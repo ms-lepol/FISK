@@ -14,8 +14,6 @@
 #define y_PosTI 217
 
 #define texture_path "/sprites/fisk_ui.png"
-#define texture_witdh 576
-#define texture_height 208
 
 namespace fisk {
     class TurnInterface : public gf::Entity {
@@ -24,10 +22,12 @@ namespace fisk {
             unsigned turn_order;
             gf::Sprite m_spr;
             gf::Vector2i position;
+            gf::Vector2i text_position;
             gf::ResourceManager& ressources;
             gf::TextureAtlas& atlas;
         public:
             int width = 96;
+            int height = 72;
             TurnInterface(unsigned nb_player, gf::ResourceManager& rm, gf::TextureAtlas& atlas);
             void changeTurn();
             void render(gf::RenderTarget& target,const gf::RenderStates& states);
