@@ -37,9 +37,9 @@ namespace fisk {
 
         //rendering background
         for (int i = 0;i<(int)phase;i++) {
-            gf::RectangleShape rect({42,10});
+            gf::RectangleShape rect({43,11});
             rect.setColor(color);
-            rect.setPosition({static_cast<float>(position.x + 84 + i*(rect.getSize().x+6)), static_cast<float>(position.y + 60)});
+            rect.setPosition({static_cast<float>(position.x + 83 + i*(rect.getSize().x+5)), static_cast<float>(position.y + 59)});
             m_spr.setPosition(position);
             target.draw(rect, state);
         }
@@ -72,7 +72,7 @@ namespace fisk {
         gf::Font& font = ressources.getFont("font/PixelSplitter-Bold.ttf");
         gf::Text drawn_text(text, font, 25);
         
-        drawn_text.setPosition({static_cast<float>(position.x + width/2 - drawn_text.getLocalBounds().getSize().x/2), static_cast<float>(position.y + (height/2 - drawn_text.getLocalBounds().getSize().y/2))});
+        drawn_text.setPosition({static_cast<float>(position.x + width/2 - drawn_text.getLocalBounds().getSize().x/2), static_cast<float>(position.y + (height/2))});
 
         target.draw(drawn_text, state);
         
