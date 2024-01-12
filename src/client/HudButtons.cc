@@ -40,7 +40,7 @@ namespace fisk {
 
     void HudButtons::callbackCardButton() {
         //Logic
-        gf::Log::info("CardButton clicked");
+        gf::Log::info("CardButton clicked\n");
     }
 
     void HudButtons::placeCardButton(gf::Vector2i position) {

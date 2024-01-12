@@ -43,6 +43,7 @@ private:
   void doHandleActions(gf::Window& window) override;
   void doUpdate(gf::Time time) override;
   void doRender(gf::RenderTarget& target, const gf::RenderStates& states) override;
+  void doProcessEvent(gf::Event& event) override;
 
 private:
   GameHub& m_game;
@@ -78,6 +79,9 @@ private:
   // actions
 
   CameraActions m_cameraActions;
+  gf::Action m_interact;
+
+   gf::Vector2f mousePos;
 
 };
 

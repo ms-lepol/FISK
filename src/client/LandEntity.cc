@@ -1,6 +1,9 @@
 #include "LandEntity.h"
 #include "../common/Constants.h"
 #include <cstddef>
+#include <gf/Rect.h>
+#include <gf/Widgets.h>
+#include <gf/Log.h>
 
 namespace fisk {
 
@@ -10,15 +13,21 @@ namespace fisk {
         land(0, name, std::vector<LandId>(), player_id),
         ressources(rm),
         m_texture(ressources.getTexture(sprite_path)),
-        position(position)
+        position(position),
+        spr_widg(gf::SpriteWidget())
         {
         //Logic
 
         //Rendering
+        spr_widg.setDefaultSprite(m_texture, gf::RectF::fromMinMax({0,0}, {1,1}));
+        spr_widg.setPosition(position);
+        spr_widg.setCallback([this] {
+            gf::Log::info("LandEntity %s : clicked\n", land.getName().c_str());
+        });
+
         this->color = gf::Color::Transparent;
 
-        this->spr.setTexture(m_texture);
-        this->spr.setPosition(this->position);
+      
     }
 
     gf::Color4f LandEntity::getColor() {
@@ -32,6 +41,6 @@ namespace fisk {
     void LandEntity::render(gf::RenderTarget& target) {
         gf::RenderStates state;
 
-        target.draw(spr, state);
+        target.draw(spr_widg, state);
     }
 }

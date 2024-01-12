@@ -105,6 +105,9 @@ namespace fisk {
         lands["WesternAustralia"]=WesternAustralia;
         lands["EasternAustralia"]=EasternAustralia;
         
+        for (auto& [key,value] : lands) {
+            widg_container.addWidget(value->spr_widg);
+        }
     }
     
     void MapEntity::render(gf::RenderTarget& target, const gf::RenderStates& states) {

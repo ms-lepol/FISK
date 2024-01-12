@@ -6,6 +6,7 @@
 #include <gf/Color.h>
 #include <gf/Sprite.h>
 #include <gf/Vector.h>
+#include <gf/Widgets.h>
 #include <string>
 
 #include <gf/RenderTarget.h>
@@ -28,10 +29,12 @@ namespace fisk {
 
 
             gf::Color4f color;
-            gf::Sprite spr;
+            
             gf::Texture& m_texture;
             
         public:
+            gf::SpriteWidget spr_widg;
+
             LandEntity(std::string name, unsigned player_id, std::string sprite_path, gf::Vector2i position, gf::ResourceManager &rm);
             LandEntity();
             void setColor(gf::Color4f color);

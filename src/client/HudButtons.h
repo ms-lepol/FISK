@@ -16,9 +16,7 @@ namespace fisk {
     class HudButtons : public gf::Entity{
         
         private:
-            gf::WidgetContainer widg_container;
-
-
+            
             gf::SpriteWidget widg_quit;
             gf::SpriteWidget widg_card;
             gf::SpriteWidget widg_help;
@@ -31,6 +29,7 @@ namespace fisk {
             void callbackCardButton();
 
         public:
+            gf::WidgetContainer widg_container;
             int size = 64;
             void initTextures();
             void placeCardButton(gf::Vector2i position);

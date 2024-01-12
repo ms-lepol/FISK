@@ -12,4 +12,8 @@ namespace fisk {
        this->owner_id = player_id;
    }
 
+    std::string Land::getName() {
+         return name;
+    }
+
 }

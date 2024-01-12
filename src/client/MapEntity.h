@@ -1,3 +1,4 @@
+#include <gf/WidgetContainer.h>
 #ifndef FISK_MAP_ENTITY_H
 #define FISK_MAP_ENTITY_H value
 #include "LandEntity.h"
@@ -23,6 +24,9 @@ namespace fisk  {
             void configureMap1();
 
        public:
+
+            gf::WidgetContainer widg_container;
+            
             ~MapEntity();
             MapEntity(gf::ResourceManager& rm , unsigned level_id);
             void render(gf::RenderTarget& target, const gf::RenderStates& states);
