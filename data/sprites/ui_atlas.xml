@@ -4,7 +4,7 @@
   <SubTexture name="buttonHelp" x="48" y="0" width="48" height="48"/>
   <SubTexture name="ButtonSetting" x="96" y="0" width="48" height="48"/>
 
-  <SubTexture name="buttonCard" x="176" y="48" width="64" height="64"/>
+  <SubTexture name="buttonCard" x="176" y="0" width="64" height="64"/>
   <SubTexture name="hudState" x="0" y="112" width="304" height="80"/>
 
   <SubTexture name="upEdgeTI" x="336" y="0" width="96" height="32"/>

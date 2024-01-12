@@ -43,6 +43,7 @@ namespace fisk {
   , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml"))
   , m_turnInterface(TurnInterface(2,game.resources,m_hudAtlas))
   , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game.resources,m_hudAtlas))
+  , m_hudButtons(HudButtons(game.resources,m_hudAtlas))
   {
     /* auto ltViewport = gf::RectF::fromPositionSize({ 0.0f, 0.0f }, { 0.5f, 1.0f });
     m_WorldView.setViewport(ltViewport);
@@ -62,10 +63,11 @@ namespace fisk {
     m_HudEntities.addEntity(m_turnInterface);
     m_phaseIndicator.setColor(m_playerColor.Orange);
     m_HudEntities.addEntity(m_phaseIndicator);
+    m_HudEntities.addEntity(m_hudButtons);
     
     m_turnInterface.setPosition({static_cast<int>(m_HudView.getSize().x)-m_turnInterface.width,static_cast<int>(m_HudView.getSize().y)/2});
     m_phaseIndicator.setPosition({static_cast<int>(m_HudView.getSize().x)/2-m_phaseIndicator.width/2,static_cast<int>(m_HudView.getSize().y) - m_turnInterface.height});
-
+    
     m_cameraActions.close.addCloseControl();
     m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
     m_cameraActions.close.isActive();
@@ -84,8 +86,6 @@ namespace fisk {
     m_WorldView.setInitialFramebufferSize(m_game.getRenderer().getSize());
     //m_HudView.setSize(ViewSize);
     m_HudView.setInitialFramebufferSize(m_game.getRenderer().getSize());
-
-    
   }
 
   void MainScene::doHandleActions([[maybe_unused]] gf::Window& window) {

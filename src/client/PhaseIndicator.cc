@@ -31,7 +31,7 @@ namespace fisk {
         this->position = position;
     }
     void PhaseIndicator::render(gf::RenderTarget& target,const gf::RenderStates& states){
-        gf::RenderStates state;
+        
         //rendering block by block
         m_spr.setPosition(position);
 
@@ -41,13 +41,13 @@ namespace fisk {
             rect.setColor(color);
             rect.setPosition({static_cast<float>(position.x + 83 + i*(rect.getSize().x+5)), static_cast<float>(position.y + 59)});
             m_spr.setPosition(position);
-            target.draw(rect, state);
+            target.draw(rect, states);
         }
         
        
         //rendering hud
         m_spr.setTexture(atlas.getTexture(),atlas.getTextureRect("hudState"));
-        target.draw(m_spr, state);
+        target.draw(m_spr, states);
 
         //rendering text
         std::string text;
@@ -72,9 +72,9 @@ namespace fisk {
         gf::Font& font = ressources.getFont("font/PixelSplitter-Bold.ttf");
         gf::Text drawn_text(text, font, 25);
         
-        drawn_text.setPosition({static_cast<float>(position.x + width/2 - drawn_text.getLocalBounds().getSize().x/2), static_cast<float>(position.y + (height/2))});
+        drawn_text.setPosition({static_cast<float>(position.x + (float)width/2 - drawn_text.getLocalBounds().getSize().x/2), static_cast<float>(position.y + ((float)height/2))});
 
-        target.draw(drawn_text, state);
+        target.draw(drawn_text, states);
         
     }
 }

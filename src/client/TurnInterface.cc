@@ -27,18 +27,18 @@ namespace fisk {
     }
 
     void TurnInterface::render(gf::RenderTarget& target, const gf::RenderStates& states) {
-        gf::RenderStates state;
+
         //rendering block by block
         m_spr.setPosition(position);
 
         m_spr.setTexture(atlas.getTexture(),atlas.getTextureRect("upEdgeTI"));
-        target.draw(m_spr, state);
+        target.draw(m_spr, states);
         m_spr.move({0,32});
 
         for (int i = 0; i < nb_player; i++) {
             //rendering background
             m_spr.setTexture(atlas.getTexture(),atlas.getTextureRect("middleTI"));
-            target.draw(m_spr, state);
+            target.draw(m_spr, states);
             m_spr.move({10,0});
             //rendering player circle
             std::string playerCircleTI;
@@ -61,16 +61,16 @@ namespace fisk {
             
             }
             m_spr.setTexture(atlas.getTexture(),atlas.getTextureRect(playerCircleTI));
-            target.draw(m_spr, state);
+            target.draw(m_spr, states);
             //rendering player portrait
             m_spr.setTexture(atlas.getTexture(),atlas.getTextureRect("portrait"));
-            target.draw(m_spr, state);
+            target.draw(m_spr, states);
 
             //rendering turn indicator
             if (i == turn_order) {
                 m_spr.move({48,0});
                 m_spr.setTexture(atlas.getTexture(),atlas.getTextureRect("turnIndicator"));
-                target.draw(m_spr, state);
+                target.draw(m_spr, states);
                 m_spr.move({-48,0});
             }
 
@@ -80,7 +80,7 @@ namespace fisk {
 
 
         m_spr.setTexture(atlas.getTexture(),atlas.getTextureRect("botEdgeTI"));
-        target.draw(m_spr, state);
+        target.draw(m_spr, states);
 
 
     }
