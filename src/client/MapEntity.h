@@ -1,3 +1,5 @@
+#ifndef FISK_MAP_ENTITY_H
+#define FISK_MAP_ENTITY_H value
 #include "LandEntity.h"
 
 #include <array>
@@ -12,7 +14,7 @@
 #include "configMap1.h"
 
 namespace fisk  {
-    
+
     class MapEntity : public gf::Entity {
         private:
             gf::ResourceManager& ressources;
@@ -24,6 +26,7 @@ namespace fisk  {
             ~MapEntity();
             MapEntity(gf::ResourceManager& rm , unsigned level_id);
             void render(gf::RenderTarget& target, const gf::RenderStates& states);
-            
+
     };
 }
+#endif /* ifndef FISK_MAP_ENTITY_H */

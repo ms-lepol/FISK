@@ -1,3 +1,5 @@
+#ifndef FISK_TURN_INTERFACE_H
+#define FISK_TURN_INTERFACE_H value
 #include <gf/Color.h>
 #include <gf/Entity.h>
 #include <gf/Polygon.h>
@@ -35,3 +37,4 @@ namespace fisk {
         };
 
 }
+#endif /* ifndef FISK_TURN_INTERFACE_H */

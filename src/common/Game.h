@@ -1,3 +1,5 @@
+#ifndef FISK_GAME_H
+#define FISK_GAME_H
 #include <vector>
 
 #include "Constants.h"
@@ -41,3 +43,4 @@ namespace fisk {
     };
 
 }
+#endif /* ifndef FISK_GAME_H */

@@ -1,3 +1,5 @@
+#ifndef FISK_ENUMS_H
+#define FISK_ENUMS_H
 #include <cstdint>
 
 namespace fisk {
@@ -19,3 +21,4 @@ namespace fisk {
         Stopped // 2
     };
 }
+#endif /* ifndef FISK_ENUMS_H */
