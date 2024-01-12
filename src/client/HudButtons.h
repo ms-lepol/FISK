@@ -1,3 +1,6 @@
+#ifndef FISK_HUD_BUTTONS_H
+#define FISK_HUD_BUTTONS_H value
+
 #include <gf/Entity.h>
 #include <gf/ResourceManager.h>
 #include <gf/Widgets.h>
@@ -6,6 +9,8 @@
 #include <gf/Log.h>
 #include <gf/RenderTarget.h>
 #include <gf/Vector.h>
+
+
 
 namespace fisk {
     class HudButtons : public gf::Entity{
@@ -27,6 +32,8 @@ namespace fisk {
 
         public:
             int size = 64;
+            void initTextures();
+            void placeCardButton(gf::Vector2i position);
 
             HudButtons(gf::ResourceManager& rm, gf::TextureAtlas& atlas);
 
@@ -35,3 +42,5 @@ namespace fisk {
     };
 
 }
+
+#endif /* ifndef FISK_HUD_BUTTONS_H */

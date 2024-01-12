@@ -40,8 +40,8 @@ namespace fisk {
   , m_WorldView({ 0.0f, 0.0f }, ViewSize)
   , adaptor(game.getRenderer(), m_WorldView)
   , m_map(MapEntity(game.resources,1))
-  , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml"))
-  , m_turnInterface(TurnInterface(2,game.resources,m_hudAtlas))
+  , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
+  , m_turnInterface(TurnInterface(4,game.resources,m_hudAtlas))
   , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game.resources,m_hudAtlas))
   , m_hudButtons(HudButtons(game.resources,m_hudAtlas))
   {
@@ -52,8 +52,7 @@ namespace fisk {
     addView(m_WorldView);
     addView(m_HudView);
     
-    m_HudView.setSize(m_game.getWindow().getSize());
-    
+    m_HudView.setSize(m_game.getWindow().getSize()); 
     m_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
 
     setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
@@ -67,7 +66,8 @@ namespace fisk {
     
     m_turnInterface.setPosition({static_cast<int>(m_HudView.getSize().x)-m_turnInterface.width,static_cast<int>(m_HudView.getSize().y)/2});
     m_phaseIndicator.setPosition({static_cast<int>(m_HudView.getSize().x)/2-m_phaseIndicator.width/2,static_cast<int>(m_HudView.getSize().y) - m_turnInterface.height});
-    
+    m_hudButtons.placeCardButton({static_cast<int>(m_HudView.getSize().x)/2-m_phaseIndicator.width - m_hudButtons.size - 20,static_cast<int>(m_HudView.getSize().y)-m_hudButtons.size});
+
     m_cameraActions.close.addCloseControl();
     m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
     m_cameraActions.close.isActive();
