@@ -1,19 +1,19 @@
-
 #include "LandEntity.h"
+#include "../common/Constants.h"
 #include <cstddef>
 
 namespace fisk {
 
-    
 
-    LandEntity::LandEntity(std::string name, unsigned player_id, std::string sprite_path,gf::Vector2i position,gf::ResourceManager& rm) : 
-        land(0, name, std::vector<unsigned>(), player_id),
+
+    LandEntity::LandEntity(std::string name, PlayerId player_id, std::string sprite_path,gf::Vector2i position,gf::ResourceManager& rm) : 
+        land(0, name, std::vector<LandId>(), player_id),
         ressources(rm),
         m_texture(ressources.getTexture(sprite_path)),
         position(position)
         {
         //Logic
-        
+
         //Rendering
         this->color = gf::Color::Transparent;
 
@@ -31,7 +31,7 @@ namespace fisk {
 
     void LandEntity::render(gf::RenderTarget& target) {
         gf::RenderStates state;
-        
+
         target.draw(spr, state);
     }
 }

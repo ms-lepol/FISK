@@ -1,13 +1,14 @@
 #include "Player.h"
+#include "Constants.h"
 
 namespace fisk {
-    Player::Player(int id_client, int nb_units, gf::Color4f color, std::vector<unsigned> hand){
+    Player::Player(PlayerId id_client, int nb_units, gf::Color4f color, std::vector<CardId> hand){
         this->id_client = id_client;
         this->nb_units = nb_units;
         this->color = color;
         this->hand = hand;
     }
-    Player::Player(int id_client, int nb_units, gf::Color4f color, unsigned card...){
+    Player::Player(PlayerId id_client, int nb_units, gf::Color4f color, CardId card...){
 
     }
 

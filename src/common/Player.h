@@ -1,17 +1,18 @@
 #ifndef FISK_PLAYER_H
 #define FISK_PLAYER_H
+#include "Constants.h"
 #include <gf/Color.h>
 #include <vector>
 namespace fisk {
     class Player {
         private:
-            unsigned id_client;
+            PlayerId id_client;
             unsigned nb_units;
             gf::Color4f color;
-            std::vector<unsigned> hand;
+            std::vector<CardId> hand;
         public:
-            Player(int id_client, int nb_units, gf::Color4f color, std::vector<unsigned> hand);
-            Player(int id_client, int nb_units, gf::Color4f color, unsigned card...);
+            Player(PlayerId id_client, int nb_units, gf::Color4f color, std::vector<CardId> hand);
+            Player(PlayerId id_client, int nb_units, gf::Color4f color, CardId card...);
             int getId_client();
             int getNb_units();
             gf::Color4f getColor();
