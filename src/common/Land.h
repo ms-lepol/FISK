@@ -1,6 +1,8 @@
+#ifndef FISK_LAND_H
+#define FISK_LAND_H
 #include <string>
 #include <vector>
- 
+
 namespace fisk {
 
     class Land {
@@ -23,6 +25,7 @@ namespace fisk {
             void reinforce(unsigned nb_units);
             void attack(unsigned land_id);
             void fortify(unsigned land_id);
-        
+
         };
 }
+#endif /* ifndef FISK_LAND_H */

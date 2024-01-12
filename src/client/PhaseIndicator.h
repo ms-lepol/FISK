@@ -1,3 +1,5 @@
+#ifndef FISK_PHASE_INDICATOR_H
+#define FISK_PHASE_INDICATOR_H value
 #include <gf/Color.h>
 #include <gf/Entity.h>
 #include <gf/Polygon.h>
@@ -39,3 +41,4 @@ namespace fisk {
         };
 
 }
+#endif /* ifndef FISK_PHASE_INDICATOR_H */

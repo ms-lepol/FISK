@@ -1,6 +1,6 @@
 #include "Constants.h"
 #ifndef FISK_CARD_H
-#define FISK_CARD_H value
+#define FISK_CARD_H 
 
 #include "gf/Serialization.h"
 #include "Enums.h"

@@ -1,3 +1,5 @@
+#ifndef FISK_PLAYER_H
+#define FISK_PLAYER_H
 #include <gf/Color.h>
 #include <vector>
 namespace fisk {
@@ -18,3 +20,4 @@ namespace fisk {
             void playCard();
     };
 }
+#endif /* ifndef FISK_PLAYER_H */
