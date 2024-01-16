@@ -35,19 +35,23 @@ target_link_libraries(client
 
 
 add_executable(server
+  src/common/Card.cc
   src/server/server.cc
 )
 
 target_link_libraries(server
   PRIVATE
     gf::net
+    gf::core
 )
 
 add_executable(clientServ
   src/client/clientServ.cc
+  src/common/Card.cc
 )
 
 target_link_libraries(clientServ
   PRIVATE
     gf::net
+    gf::core
 )

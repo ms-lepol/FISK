@@ -1,11 +1,15 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstring>
+#include <gf/Serialization.h>
+#include <gf/Streams.h>
 #include <gf/TcpSocket.h>
 #include <gf/Log.h>
 #include <iostream>
+#include <vector>
 
 #include "../common/networkMisc.h"
+#include "../common/Card.h"
 
 
 void initClient(){
@@ -20,18 +24,22 @@ void initClient(){
         return;
     }
     
-    uint8_t bytes[MAX];
-    
+    fisk::Card card(fisk::Type::Infantery, 0);
+
+    std::vector<uint8_t> bytes(MAX);
+    gf::BufferInputStream buffer(&bytes);
+    gf::Deserializer sa(buffer);
+
     if (socket.recvBytes(bytes) != gf::SocketStatus::Data) {
         // Handle error
         gf::Log::error("(CLIENT) Error while retrieving the socket\n");
         return;
     }
 
-    char msg [MAX];
+    sa | card;
 
-    gf::Log::info("(CLIENT) Received : %s\n", bytes);
-    printf("(CLIENT) Received : %s\n", bytes);
+
+    gf::Log::info("(CLIENT) Received : %d\n", card.getType());
 }
 
 int main(){

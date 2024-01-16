@@ -1,17 +1,19 @@
 #include "Card.h"
 #include "Constants.h"
+#include "Enums.h"
 
 namespace fisk {
-    fisk::LandId Card::getLand() const {
+
+    Card::Card(Type type_unit, LandId land_id):
+        type_unit(type_unit),
+        land_id(land_id)
+    {}
+
+    LandId Card::getLand() const {
         return land_id;
     }
 
-    fisk::Type Card::getType() const {
+    Type Card::getType() const {
         return type_unit;
-    }
-
-    template<typename S>
-    S& operator|(S& sa, Card const& card) {
-        return sa | card.getType() | card.getLand();
     }
 }
