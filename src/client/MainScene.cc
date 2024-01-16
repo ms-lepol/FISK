@@ -51,6 +51,7 @@ namespace fisk {
   , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game.resources,m_hudAtlas))
   , m_hudButtons(HudButtons(game.resources,m_hudAtlas))
   {
+   
     // Views
     addView(m_WorldView);
     addView(m_HudView);
@@ -72,10 +73,12 @@ namespace fisk {
     m_HudEntities.addEntity(m_turnInterface);
     m_HudEntities.addEntity(m_phaseIndicator);
     m_HudEntities.addEntity(m_hudButtons);
+
+    std::cout << "hud size: " << m_HudView.getSize().x << " "<< m_HudView.getSize().y<<std::endl;
     
-    m_turnInterface.setPosition({static_cast<int>(m_HudView.getSize().x)-m_turnInterface.width,static_cast<int>(m_HudView.getSize().y)/2});
-    m_phaseIndicator.setPosition({static_cast<int>(m_HudView.getSize().x)/2-m_phaseIndicator.width/2,static_cast<int>(m_HudView.getSize().y) - m_turnInterface.height});
-    m_hudButtons.placeCardButton({static_cast<int>(m_HudView.getSize().x)/2-m_phaseIndicator.width - m_hudButtons.size - 20,static_cast<int>(m_HudView.getSize().y)-m_hudButtons.size});
+    m_turnInterface.setPosition({static_cast<int>(ViewSize.x)-m_turnInterface.width,static_cast<int>(ViewSize.y)/2});
+    m_phaseIndicator.setPosition({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width/2,static_cast<int>(ViewSize.y) - m_turnInterface.height});
+    m_hudButtons.placeCardButton({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(ViewSize.y)-m_hudButtons.size});
 
 
     // Camera Actions 
@@ -158,8 +161,9 @@ namespace fisk {
 
   void MainScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
     target.setView(m_WorldView);
-    m_WorldEntities.render(target, states);
     target.setView(m_HudView);
+
+    m_WorldEntities.render(target, states);
     m_HudEntities.render(target, states);
     
     renderHudEntities(target, states);

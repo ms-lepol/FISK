@@ -40,7 +40,6 @@ namespace fisk {
 
     void LandEntity::render(gf::RenderTarget& target) {
         gf::RenderStates state;
-
         target.draw(spr_widg, state);
     }
 }
