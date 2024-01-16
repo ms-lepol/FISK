@@ -8,19 +8,25 @@
 
 namespace fisk {
     class Card {
-        public:
-
         fisk::Type type_unit;
         LandId land_id;
+
+        public:
 
         Card(Type type_unit, LandId land_id);
         Type getType() const;
         LandId getLand() const;
+
+        template<typename S>
+        void serialisation(S& sa) {
+            sa | type_unit | land_id;
+        }
     };
 
     template<typename S> // Serializer or Deserializer
     S& operator|(S& sa, Card& card) {
-        return sa | card.type_unit | card.land_id;
+        card.serialisation(sa);
+        return sa;
     }
 }
 

@@ -1,6 +1,7 @@
 #ifndef FISK_LAND_H
 #define FISK_LAND_H
 #include "Constants.h"
+#include <gf/Keyboard.h>
 #include <string>
 #include <vector>
 
@@ -27,6 +28,16 @@ namespace fisk {
             void attack(LandId land_id);
             void fortify(LandId land_id);
 
-        };
+            template<typename S>
+            void serialisation(S& sa) {
+                sa | land_id | nb_units | name | owner_id | neighbors;
+            }
+    };
+
+    template<typename S> // Serializer or Deserializer
+    S& operator|(S& sa, Land& land) {
+        land.serialisation(sa);
+        return sa;
+    }
 }
 #endif /* ifndef FISK_LAND_H */

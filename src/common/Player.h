@@ -19,6 +19,17 @@ namespace fisk {
             void setNb_units(int nb_units);
             void drawCard();
             void playCard();
+
+            template<typename S>
+            void serialisation(S& sa) {
+                sa | id_client | nb_units | color | hand;
+            }
     };
+
+    template<typename S>
+    S& operator|(S& sa, Player& player) {
+        player.serialisation(sa);
+        return sa;
+    }
 }
 #endif /* ifndef FISK_PLAYER_H */
