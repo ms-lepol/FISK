@@ -1,9 +1,15 @@
 #include "LandEntity.h"
 #include "../common/Constants.h"
 #include <cstddef>
+#include <cstdio>
+#include <gf/Color.h>
+#include <gf/Font.h>
 #include <gf/Rect.h>
+#include <gf/Shader.h>
+#include <gf/Text.h>
 #include <gf/Widgets.h>
 #include <gf/Log.h>
+#include <string>
 
 namespace fisk {
 
@@ -25,7 +31,7 @@ namespace fisk {
             gf::Log::info("LandEntity %s : clicked\n", land.getName().c_str());
         });
 
-        this->color = gf::Color::Transparent;
+        this->color = gf::Color::Red;
 
       
     }
@@ -40,6 +46,16 @@ namespace fisk {
 
     void LandEntity::render(gf::RenderTarget& target) {
         gf::RenderStates state;
+
+        if (color!=gf::Color::Transparent){
+            spr_widg.setColor(color);
+        }
+        
         target.draw(spr_widg, state);
+        gf::Font& font = ressources.getFont("font/PixelSplitter-Bold.ttf");
+        std::string text = std::to_string(land.getNb_units());
+        gf::Text txt(text, font, 15);
+        txt.setPosition(position+gf::Vector2i(10,10));
+        target.draw(txt);
     }
 }

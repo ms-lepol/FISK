@@ -16,4 +16,11 @@ namespace fisk {
          return name;
     }
 
+    unsigned Land::getNb_units() {
+        return nb_units;
+    }
+
+    std::vector<LandId> Land::getNeighbors() {
+        return neighbors;
+    }
 }
