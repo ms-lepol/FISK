@@ -24,6 +24,7 @@ namespace fisk {
             
             Land land;
             gf::Vector2i position;
+            gf::Vector2i positionText;
 
             gf::ResourceManager& ressources;
 
@@ -35,7 +36,7 @@ namespace fisk {
         public:
             gf::SpriteWidget spr_widg;
 
-            LandEntity(std::string name, unsigned player_id, std::string sprite_path, gf::Vector2i position, gf::ResourceManager &rm);
+            LandEntity(std::string name, unsigned player_id, std::string sprite_path, gf::Vector2i position,gf::Vector2i positionText, gf::ResourceManager &rm);
             LandEntity();
             void setColor(gf::Color4f color);
             gf::Color4f getColor();
