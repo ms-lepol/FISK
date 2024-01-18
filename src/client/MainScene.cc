@@ -1,6 +1,7 @@
 #include "MainScene.h"
 
 #include "GameHub.h"
+#include "LandEntity.h"
 #include <gf/Color.h>
 #include <gf/Event.h>
 #include <gf/Keyboard.h>
@@ -67,6 +68,10 @@ namespace fisk {
    
     //World entities
     m_WorldEntities.addEntity(m_map);
+    m_map.changeLandColor("Alaska", LandColor().Blue);
+    m_map.changeLandColor("Atlanta", LandColor().Orange);
+    m_map.changeLandColor("Ontario", LandColor().Green);
+    m_map.changeLandColor("Quebec", LandColor().Yellow);
 
     //HUD entities
 
@@ -94,6 +99,7 @@ namespace fisk {
     addAction(m_cameraActions.close);
     addAction(m_cameraActions.zoomIn);
     addAction(m_cameraActions.zoomOut);
+
 
     // Interact Action
     m_interact.addMouseButtonControl(gf::MouseButton::Left);

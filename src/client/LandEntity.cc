@@ -1,20 +1,14 @@
 #include "LandEntity.h"
-#include "MainScene.h"
-#include "../common/Constants.h"
-#include <cstddef>
-#include <cstdio>
-#include <gf/Color.h>
-#include <gf/Font.h>
-#include <gf/Rect.h>
-#include <gf/Shader.h>
-#include <gf/Text.h>
 #include <gf/Vector.h>
-#include <gf/Widgets.h>
-#include <gf/Log.h>
-#include <string>
 
 namespace fisk {
-    
+    LandColor::LandColor(){
+        Blue = gf::Color4f({(float)99/255,(float)155/255,(float)255/255,1});
+        Orange = gf::Color4f({(float)255/255,(float)140/255,(float)92/255,1});
+        Green = gf::Color4f({(float)134/255,(float)192/255,(float)108/255,1});
+        Yellow = gf::Color4f({(float)251/255,(float)239/255,(float)8/255,1});
+        Neutral = gf::Color4f({(float)48/255,(float)104/255,(float)80/255,1});
+    }
 
     LandEntity::LandEntity(std::string name, PlayerId player_id, std::string sprite_path,gf::Vector2i position,gf::Vector2i positionText,gf::ResourceManager& rm) : 
         land(0, name, std::vector<LandId>(), player_id),
@@ -33,7 +27,7 @@ namespace fisk {
             gf::Log::info("LandEntity %s : clicked\n", land.getName().c_str());
         });
 
-        this->color = PlayerColor().Orange;
+        this->color = LandColor().Neutral;
 
       
     }

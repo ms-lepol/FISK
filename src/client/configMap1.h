@@ -35,7 +35,7 @@
 #define yTextSouthAfrica 48
 
 #define pathAtlanta "sprites/lands/fisk_atlanta_188_223.png"
-#define xAtlanta 188
+#define xAtlanta 186
 #define yAtlanta 223
 #define xTextAtlanta 64
 #define yTextAtlanta 23

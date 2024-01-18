@@ -1,8 +1,8 @@
-#include <gf/WidgetContainer.h>
+
 #ifndef FISK_MAP_ENTITY_H
 #define FISK_MAP_ENTITY_H value
 #include "LandEntity.h"
-
+#include <gf/WidgetContainer.h>
 #include <array>
 #include <gf/Array2D.h>
 #include <gf/Entity.h>
@@ -29,6 +29,7 @@ namespace fisk  {
             
             ~MapEntity();
             MapEntity(gf::ResourceManager& rm , unsigned level_id);
+            void changeLandColor(std::string land_name, gf::Color4f color);
             void render(gf::RenderTarget& target, const gf::RenderStates& states);
 
     };

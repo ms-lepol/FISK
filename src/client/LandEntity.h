@@ -16,8 +16,32 @@
 
 #include <gf/ResourceManager.h>
 #include <valarray>
+#include "../common/Constants.h"
+#include <cstddef>
+#include <cstdio>
+#include <gf/Color.h>
+#include <gf/Font.h>
+#include <gf/Rect.h>
+#include <gf/Shader.h>
+#include <gf/Text.h>
+#include <gf/Vector.h>
+#include <gf/Widgets.h>
+#include <gf/Log.h>
+#include <string>
+
+
 
 namespace fisk {
+    struct LandColor {
+        LandColor();
+        gf::Color4f Blue;
+        gf::Color4f Orange;
+        gf::Color4f Green;
+        gf::Color4f Yellow;
+        gf::Color4f Neutral;
+    };
+
+
     class LandEntity : public gf::Entity {
             
         private:
@@ -34,6 +58,7 @@ namespace fisk {
             gf::Texture& m_texture;
             
         public:
+
             gf::SpriteWidget spr_widg;
 
             LandEntity(std::string name, unsigned player_id, std::string sprite_path, gf::Vector2i position,gf::Vector2i positionText, gf::ResourceManager &rm);

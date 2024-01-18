@@ -32,7 +32,7 @@ namespace fisk {
         LandEntity* Alaska = new LandEntity("Alaska", 0, pathAlaska, gf::Vector2i(xAlaska,yAlaska),gf::Vector2i(xTextAlaska,yTextAlaska),ressources);
         LandEntity* NorthwestTerritory = new LandEntity("Northwest Territory", 0, pathNorthAmericaTerr, gf::Vector2i(xNorthAmericaTerr,yNorthAmericaTerr),gf::Vector2i(xTextNorthAmericaTerr,yTextNorthAmericaTerr),ressources);
         LandEntity* Greenland = new LandEntity("Greenland", 0, pathGroenland, gf::Vector2i(xGroenland,yGroenland),gf::Vector2i(xTextGroenland,yTextGroenland),ressources);
-        LandEntity* Alberta = new LandEntity("Alberta", 0, pathAtlanta, gf::Vector2i(xAtlanta,yAtlanta),gf::Vector2i(xTextAtlanta,yTextAtlanta),ressources);
+        LandEntity* Atlanta = new LandEntity("Atlanta", 0, pathAtlanta, gf::Vector2i(xAtlanta,yAtlanta),gf::Vector2i(xTextAtlanta,yTextAtlanta),ressources);
         LandEntity* Ontario = new LandEntity("Ontario", 0, pathOntario, gf::Vector2i(xOntario,yOntario),gf::Vector2i(xTextOntario,yTextOntario),ressources);
         LandEntity* Quebec = new LandEntity("Quebec", 0, pathQuebec, gf::Vector2i(xQuebec,yQuebec),gf::Vector2i(xTextQuebec,yTextQuebec),ressources);
         LandEntity* WesternUnitedStates = new LandEntity("Western United States", 0, pathWestUS, gf::Vector2i(xWestUS,yWestUS),gf::Vector2i(xTextWestUS,yTextWestUS),ressources);
@@ -70,7 +70,7 @@ namespace fisk {
         lands["Alaska"]=Alaska;
         lands["NorthwestTerritory"]=NorthwestTerritory;
         lands["Greenland"]=Greenland;
-        lands["Alberta"]=Alberta;
+        lands["Atlanta"]=Atlanta;
         lands["Ontario"]=Ontario;
         lands["Quebec"]=Quebec;
         lands["WesternUnitedStates"]=WesternUnitedStates;
@@ -108,6 +108,10 @@ namespace fisk {
         for (auto& [key,value] : lands) {
             widg_container.addWidget(value->spr_widg);
         }
+    }
+
+    void MapEntity::changeLandColor(std::string land_name, gf::Color4f color) {
+        if (lands.find(land_name) != lands.end()) lands[land_name]->setColor(color);
     }
     
     void MapEntity::render(gf::RenderTarget& target, const gf::RenderStates& states) {
