@@ -189,7 +189,7 @@
 #define xQuebec 361
 #define yQuebec 217
 #define xTextQuebec 34
-#define yTextQuebec 35
+#define yTextQuebec 34
 
 #define pathScandinavia "sprites/lands/fisk_scandinavia_631_170.png"
 #define xScandinavia 631

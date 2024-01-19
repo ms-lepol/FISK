@@ -1,4 +1,3 @@
-
 #ifndef FISK_MAP_ENTITY_H
 #define FISK_MAP_ENTITY_H value
 #include "LandEntity.h"

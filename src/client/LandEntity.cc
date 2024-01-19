@@ -1,5 +1,10 @@
 #include "LandEntity.h"
+#include <gf/Anchor.h>
+#include <gf/RenderStates.h>
+#include <gf/RenderTarget.h>
 #include <gf/Vector.h>
+
+#define textOffset 1
 
 namespace fisk {
     LandColor::LandColor(){
@@ -11,7 +16,7 @@ namespace fisk {
     }
 
     LandEntity::LandEntity(std::string name, PlayerId player_id, std::string sprite_path,gf::Vector2i position,gf::Vector2i positionText,gf::ResourceManager& rm) : 
-        land(0, name, std::vector<LandId>(), player_id),
+        land(1, name, std::vector<LandId>(), player_id),
         ressources(rm),
         m_texture(ressources.getTexture(sprite_path)),
         position(position),
@@ -19,12 +24,13 @@ namespace fisk {
         spr_widg(gf::SpriteWidget())
         {
         //Logic
-        
+        selected = false;
         //Rendering
         spr_widg.setDefaultSprite(m_texture, gf::RectF::fromMinMax({0,0}, {1,1}));
         spr_widg.setPosition(position);
         spr_widg.setCallback([this] {
             gf::Log::info("LandEntity %s : clicked\n", land.getName().c_str());
+            selected = !selected;
         });
 
         this->color = LandColor().Neutral;
@@ -39,20 +45,41 @@ namespace fisk {
     void LandEntity::setColor(gf::Color4f color) {
         this->color = color;
     }
+    bool LandEntity::isSelected(){
+        return selected;
+    }
 
-    void LandEntity::render(gf::RenderTarget& target) {
-        gf::RenderStates state;
-
+    void LandEntity::render(gf::RenderTarget& target,gf::RenderStates states) {
+        
         if (color!=gf::Color::Transparent){
             spr_widg.setColor(color);
         }
         
-        target.draw(spr_widg, state);
+        target.draw(spr_widg, states);
         gf::Font& font = ressources.getFont("font/PixelSplitter-Bold.ttf");
         std::string text = std::to_string(land.getNb_units());
-        gf::Text txt(text, font, 15);
+        if (land.getNb_units() < 10) text = "0" + text;
+        gf::Text txt(text, font, 10);
         txt.setAnchor(gf::Anchor::Center);
-        txt.setPosition(position+positionText);
-        target.draw(txt);
+        txt.setPosition(position+positionText+gf::Vector2i({0,1}));
+        target.draw(txt,states);
+    }
+
+
+    //Draw an outline if selected
+    void LandEntity::renderSelected(gf::RenderTarget& target, gf::RenderStates states){
+        if (selected){
+            
+            spr_widg.setScale({static_cast<float>((m_texture.getSize().x+10)/m_texture.getSize().x),static_cast<float>((m_texture.getSize().y+10)/m_texture.getSize().y)});
+            spr_widg.setAnchor(gf::Anchor::Center);
+            spr_widg.setColor(gf::Color::White);
+            spr_widg.setPosition(position+gf::Vector2i({m_texture.getSize().x/2,m_texture.getSize().y/2}));
+            target.draw(spr_widg, states);
+            spr_widg.setAnchor(gf::Anchor::TopLeft);
+            spr_widg.setScale({1,1});
+            spr_widg.setColor(color);
+            spr_widg.setPosition(position);
+        }
+        render(target, states);
     }
 }

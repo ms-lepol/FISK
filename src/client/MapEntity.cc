@@ -2,6 +2,8 @@
 #include "LandEntity.h"
 #include <cstdlib>
 #include <iostream>
+#include <string>
+#include <vector>
 
 namespace fisk {
     MapEntity::MapEntity(gf::ResourceManager& rm , unsigned level_id) : 
@@ -115,8 +117,17 @@ namespace fisk {
     }
     
     void MapEntity::render(gf::RenderTarget& target, const gf::RenderStates& states) {
+        std::vector<std::string> keysSelected;
         for (auto& [key,value] : lands) {
-            value->render(target);
+            if (value->isSelected()){
+                keysSelected.push_back(key);
+            } else {
+                value->render(target,states);
+            }
+        }
+        
+        for (auto key : keysSelected){
+            lands[key]->renderSelected(target,states);
         }
     }
 }
