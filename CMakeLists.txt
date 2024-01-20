@@ -14,7 +14,7 @@ find_package(gf REQUIRED COMPONENTS graphics net core)
  
 
 add_executable(client
-  src/client/client.cc
+  src/client.cc
   src/client/GameHub.cc
   src/client/MainScene.cc
   src/client/MapEntity.cc
@@ -22,6 +22,7 @@ add_executable(client
   src/client/TurnInterface.cc
   src/client/PhaseIndicator.cc
   src/client/HudButtons.cc
+  src/client/ClientNetwork.cc
   src/common/Land.cc
   # and the rest of your sources
 )
@@ -35,22 +36,11 @@ target_link_libraries(client
 
 
 add_executable(server
+  src/server.cc
   src/common/Card.cc
-  src/server/server.cc
 )
 
 target_link_libraries(server
-  PRIVATE
-    gf::net
-    gf::core
-)
-
-add_executable(clientServ
-  src/client/clientServ.cc
-  src/common/Card.cc
-)
-
-target_link_libraries(clientServ
   PRIVATE
     gf::net
     gf::core
