@@ -3,7 +3,6 @@
 
 #include <gf/GameManager.h>
 #include "MainScene.h"
-#include "ClientNetwork.h"
 
 namespace fisk {
 
@@ -11,10 +10,7 @@ namespace fisk {
     GameHub();
 
     MainScene mainScene;
-
-    ClientNetwork clientNetwork;
   };
-
 
 }
 

@@ -37,6 +37,7 @@ target_link_libraries(client
 
 add_executable(server
   src/server.cc
+  src/server/ServerNetwork.cc
   src/common/Card.cc
 )
 

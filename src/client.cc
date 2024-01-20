@@ -1,16 +1,43 @@
 #include <cstdlib>
+#include <gf/Sleep.h>
 
 #include "client/GameHub.h"
 #include "client/ClientNetwork.h"
+#include "common/NetworkProtocol.h"
+#include "common/NetworkConstants.h"
 
-int main() {
-  fisk::ClientNetwork clientNetwork;
+int main(int argc, char *argv[]) {
+    fisk::ClientNetwork clientNetwork;
 
-  fisk::GameHub hub;
-  hub.getWindow().setSize({1280,720});
-  hub.run();
+    fisk::GameHub hub;
+    hub.getWindow().setSize({1280,720});
+    hub.run();
 
-  return EXIT_SUCCESS;
+    // Wait connection
+    clientNetwork.connect(fisk::HOSTNAME);
+    gf::sleep(gf::milliseconds(500));
+    assert(clientNetwork.isConnected());
+
+    // Send hello package
+    {
+        fisk::ClientHello data;
+        std::string name("Hello");
+        assert(!name.empty());
+        data.name = name;
+        clientNetwork.send(data);
+    }
+
+    // Receive ack
+    {
+        gf::Packet packet;
+        clientNetwork.queue.wait(packet);
+        assert(packet.getType() == fisk::ServerHello::type);
+
+        auto data = packet.as<fisk::ServerHello>();
+        gf::Log::debug("Player ID : %lu", data.playerId);
+    }
+
+    return EXIT_SUCCESS;
 }
 
 /*

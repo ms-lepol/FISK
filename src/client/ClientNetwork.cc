@@ -40,9 +40,11 @@ namespace fisk {
 
   void ClientNetwork::run(std::string hostname) {
     gf::TcpSocket socket(hostname, PORT);
+    gf::Log::info("(CLIENT) Trying to connect to %s\n", socket.getRemoteAddress().getHostname().c_str());
 
     if (!socket) {
       m_connecting = false;
+      gf::Log::error("(CLIENT) Error while connecting to the socket\n");
       return;
     }
 
