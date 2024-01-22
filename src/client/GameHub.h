@@ -4,8 +4,6 @@
 #include <gf/GameManager.h>
 #include "MainScene.h"
 
-
-
 namespace fisk {
 
   struct GameHub : gf::GameManager {
@@ -13,7 +11,6 @@ namespace fisk {
 
     MainScene mainScene;
   };
-
 
 }
 
