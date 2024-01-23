@@ -1,11 +1,13 @@
 #ifndef FISK_CONSTANTS_H
 #define FISK_CONSTANTS_H
 
+#include <gf/Id.h>
+
 namespace fisk {
-    typedef unsigned PlayerId;
-    typedef unsigned LandId;
-    typedef unsigned CardId;
-    typedef unsigned ContinentId;
+    typedef gf::Id PlayerId;
+    typedef gf::Id LandId;
+    typedef gf::Id CardId;
+    typedef gf::Id ContinentId;
 }
 
 #endif

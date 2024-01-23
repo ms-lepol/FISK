@@ -1,6 +1,9 @@
 #ifndef FISK_CLIENT_NETWORK_H
 #define FISK_CLIENT_NETWORK_H
 
+#include "../common/NetworkConstants.h"
+#include "../common/NetworkProtocol.h"
+
 #include <atomic>
 #include <mutex>
 #include <string>
@@ -8,6 +11,8 @@
 #include <gf/Packet.h>
 #include <gf/Queue.h>
 #include <gf/TcpSocket.h>
+#include <gf/Sleep.h>
+#include <gf/Log.h>
 
 namespace fisk {
 

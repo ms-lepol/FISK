@@ -38,10 +38,25 @@ target_link_libraries(client
 add_executable(server
   src/server.cc
   src/server/ServerNetwork.cc
-  src/common/Card.cc
+  src/server/ServerLobby.cc
+  src/server/ServerPlayer.cc
+  src/server/ServerGroup.cc
+  src/server/GameInstance.cc
+  src/server/GameFactory.cc
 )
 
 target_link_libraries(server
+  PRIVATE
+    gf::net
+    gf::core
+)
+
+add_executable(connect_test
+  src/clientServ.cc
+  src/client/ClientNetwork.cc
+)
+
+target_link_libraries(connect_test
   PRIVATE
     gf::net
     gf::core
