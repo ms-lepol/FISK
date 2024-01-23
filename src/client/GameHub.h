@@ -2,6 +2,7 @@
 #define FISK_GAME_HUB_H
 
 #include <gf/GameManager.h>
+#include "ClientNetwork.h"
 #include "MainScene.h"
 
 namespace fisk {
@@ -10,6 +11,9 @@ namespace fisk {
     GameHub();
 
     MainScene mainScene;
+
+    ClientNetwork clientNetwork;
+    
   };
 
 }

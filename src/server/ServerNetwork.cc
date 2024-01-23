@@ -14,16 +14,19 @@
 #include <string>
 #include <vector>
 #include <csignal>
+#include <cinttypes>
 
 #include "../common/NetworkConstants.h"
+#include "../common/NetworkProtocol.h"
 
 namespace fisk {
 
-    ServerNetwork::ServerNetwork() :
-    m_listener(PORT)
+    ServerNetwork::ServerNetwork(gf::Random& random) :
+    m_listener(PORT),
+    m_random(random)
     {
         if(!m_listener){
-            throw std::runtime_error("Can not start listener.");
+            throw std::runtime_error("(SERVER) Can not start listener.");
         }
 
         std::signal(SIGINT, &ServerNetwork::signalHandler);
@@ -47,7 +50,73 @@ namespace fisk {
                 break;
             }
 
-            // TODO
+            std::vector<gf::Id> to_disconnect;
+
+            for (auto& key : m_players) {
+                auto& player = key.second;
+
+                if (m_selector.isReady(player.socket)) {
+                    gf::Packet packet;
+
+                    switch (player.socket.recvPacket(packet)) {
+
+                        case gf::SocketStatus::Data:
+                            switch (packet.getType()) {
+                                case ClientDisconnect::type:
+                                    gf::Log::info("(SERVER) {%" PRIX64 "} Disconnected.\n", player.id);
+                                    to_disconnect.push_back(player.id);
+                                    break;
+                                default:
+                                    gf::Log::debug("(SERVER) {%" PRIX64 "} Updating.\n", player.id);
+                                    update(player, packet);
+                                    break;
+                            }
+                            break;
+
+                        case gf::SocketStatus::Error:
+                            gf::Log::error("(SERVER) {%" PRIX64 "} Error receiving data.\n", player.id);
+                            // fallthrough
+                        case gf::SocketStatus::Close:
+                            gf::Log::info("(SERVER) {%" PRIX64 "} Socket closed.\n", player.id);
+                            to_disconnect.push_back(player.id);
+                            break;
+                        case gf::SocketStatus::Block:
+                            assert(false);
+                            break;
+                    }
+                }
+            }
+
+            // Accept new connection
+            if (m_selector.isReady(m_listener)) {
+                gf::TcpSocket socket = m_listener.accept();
+
+                if (!socket) continue;
+
+                gf::Id id = m_random.get().computeId(); // assume it's unique
+
+                ServerPlayer playerInstance;
+                playerInstance.id = id;
+                playerInstance.name = ""; // no name yet
+                playerInstance.socket = std::move(socket);
+
+                auto res = m_players.emplace(id, std::move(playerInstance));
+                assert(res.second);
+                auto& player = res.first->second;
+                m_selector.addSocket(player.socket);
+
+                gf::Log::info("(SERVER) {%" PRIX64 "} Connected.\n", player.id);
+            }
+
+            if (!to_disconnect.empty()) {
+                for (auto id : to_disconnect) {
+                    auto it = m_players.find(id);
+                    assert(it != m_players.end());
+                    auto& player = it->second;
+                    m_selector.removeSocket(player.socket);
+                    m_players.erase(it);
+                }
+            }
         }
     }
 
@@ -58,30 +127,48 @@ namespace fisk {
 
     std::atomic_bool ServerNetwork::g_running(true);
 
-        /*for (;;) {
-
-            if(m_selector.wait() == gf::SocketSelectorStatus::Event){
-                for(auto& socket : sockets){
-                    if(m_selector.isReady(socket)){
-                        // Read data from the socket
-                    }
-                }
+    void ServerNetwork::update(ServerPlayer& player, gf::Packet& packet) {
+        switch (packet.getType()) {
+            case ClientHello::type: {
+                gf::Log::info("(SERVER) {%" PRIX64 "} Hello.\n", player.id);
+                auto data = packet.as<ClientHello>();
+                player.name = data.name;
+                // send an acknowledgement to the player
+                ServerHello hello;
+                hello.playerId = player.id;
+                player.send(hello);
+                // send list of lobbys
+                ServerListLobbys list;
+                list.lobbys = getLobbys();
+                player.send(list);
+                break;
             }
 
-            // Accept a new connection ...
-            if(m_selector.isReady(listener)){
-                gf::TcpSocket client = listener.accept();
-                gf::Log::info("(SERVER) Accepting new connections\n");
-                sockets.push_back(std::move(client));
-                m_selector.addSocket(sockets.back());
-                if (client) {
-                // and handle the client...
-                    gf::Log::info("(SERVER) new connection on %s\n", client.getRemoteAddress().getHostname().c_str());
-
-                }
-            }
+            default:
+                gf::Log::debug("(SERVER) {%" PRIX64 "} Nothing to do.\n", player.id);
+            
         }
-        gf::Log::info("(SERVER) Server Closed");
-        }*/
+    }
+
+    std::vector<LobbyData> ServerNetwork::getLobbys() {
+        std::vector<LobbyData> list;
+
+        for (auto& kv : m_lobbys) {
+        auto& lobby  = kv.second;
+        LobbyData data;
+        data.id = lobby.id;
+        data.name = lobby.name;
+        data.players = lobby.getPlayersCount();
+        list.push_back(std::move(data));
+        }
+
+        return list;
+    }
+
+    void ServerNetwork::broadcastLobbys() {
+        ServerListLobbys data;
+        data.lobbys = getLobbys();
+        broadcast(data);
+    }
 
 }

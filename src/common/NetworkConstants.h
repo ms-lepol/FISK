@@ -3,7 +3,7 @@
 
 namespace fisk {
 
-    constexpr const char * HOSTNAME = "127.0.0.1";
+    constexpr const char * HOSTNAME = "localhost";
     constexpr const char * PORT = "25000";
     constexpr unsigned MAX = 2048;
 
