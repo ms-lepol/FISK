@@ -3,7 +3,10 @@
 
 #include <gf/GameManager.h>
 #include "ClientNetwork.h"
+#include "CardScene.h"
 #include "MainScene.h"
+#include "TitleScene.h"
+#include "LobbyScene.h"
 
 namespace fisk {
 
@@ -11,6 +14,9 @@ namespace fisk {
     GameHub();
 
     MainScene mainScene;
+    CardScene cardScene;
+    LobbyScene lobbyScene;
+    TitleScene titleScene;
 
     ClientNetwork clientNetwork;
     

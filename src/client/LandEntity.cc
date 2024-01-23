@@ -5,6 +5,8 @@
 #include <gf/Vector.h>
 
 #define textOffset 1
+#define landOutline 50
+
 
 namespace fisk {
     LandColor::LandColor(){
@@ -68,9 +70,10 @@ namespace fisk {
 
     //Draw an outline if selected
     void LandEntity::renderSelected(gf::RenderTarget& target, gf::RenderStates states){
+        gf::RenderStates statesWithOutline = states;
         if (selected){
             
-            spr_widg.setScale({static_cast<float>((m_texture.getSize().x+10)/m_texture.getSize().x),static_cast<float>((m_texture.getSize().y+10)/m_texture.getSize().y)});
+            spr_widg.setScale({static_cast<float>((m_texture.getSize().x+landOutline)/m_texture.getSize().x),static_cast<float>((m_texture.getSize().y+landOutline)/m_texture.getSize().y)});
             spr_widg.setAnchor(gf::Anchor::Center);
             spr_widg.setColor(gf::Color::White);
             spr_widg.setPosition(position+gf::Vector2i({m_texture.getSize().x/2,m_texture.getSize().y/2}));
@@ -78,8 +81,9 @@ namespace fisk {
             spr_widg.setAnchor(gf::Anchor::TopLeft);
             spr_widg.setScale({1,1});
             spr_widg.setColor(color);
-            spr_widg.setPosition(position);
+            spr_widg.setPosition(position); 
+            
         }
-        render(target, states);
+        render(target, statesWithOutline);
     }
 }

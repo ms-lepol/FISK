@@ -106,10 +106,13 @@ namespace fisk {
         lands["NewZealand"]=NewZealand;
         lands["WesternAustralia"]=WesternAustralia;
         lands["EasternAustralia"]=EasternAustralia;
+
         
         for (auto& [key,value] : lands) {
             widg_container.addWidget(value->spr_widg);
         }
+
+        
     }
 
     void MapEntity::changeLandColor(std::string land_name, gf::Color4f color) {

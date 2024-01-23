@@ -24,6 +24,10 @@ add_executable(client
   src/client/HudButtons.cc
   src/client/ClientNetwork.cc
   src/common/Land.cc
+  src/common/Card.cc
+  src/client/LobbyScene.cc
+  src/client/TitleScene.cc
+  src/client/CardScene.cc
   # and the rest of your sources
 )
 
