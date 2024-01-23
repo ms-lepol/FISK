@@ -52,7 +52,18 @@ namespace fisk {
         const Land& get_land(LandId land) const;
         const Card& get_card(CardId card) const;
         const Continent& get_continent(ContinentId continent) const;
+ 
+        template<typename S>
+        void serialisation(S& sa) {
+            sa | cards | players | lands | continents;
+        }
     };
+
+    template<typename S> // Serializer or Deserializer
+    S& operator|(S& sa, Game& game) {
+        game.serialisation(sa);
+        return sa;
+    }
 
 }
 #endif /* ifndef FISK_GAME_H */
