@@ -26,22 +26,32 @@ namespace fisk {
         /**
          * add a new player and return the ID
          */
-        fisk::PlayerId add_player(Player player);
+        PlayerId add_player(Player player);
 
         /**
          * add a new land and return the ID
          */
-        fisk::LandId add_land(Land land);
+        LandId add_land(Land land);
 
         /**
          * add a new card and return the ID
          */
-        fisk::CardId add_card(Card card);
+        CardId add_card(Card card);
 
         /**
          * add a new continent and return the ID
          */
-        fisk::ContinentId add_continent(Continent continent);
+        ContinentId add_continent(Continent continent);
+
+        Player& get_player(PlayerId player);
+        Land& get_land(LandId land);
+        Card& get_card(CardId card);
+        Continent& get_continent(ContinentId continent);
+
+        const Player& get_player(PlayerId player) const;
+        const Land& get_land(LandId land) const;
+        const Card& get_card(CardId card) const;
+        const Continent& get_continent(ContinentId continent) const;
     };
 
 }

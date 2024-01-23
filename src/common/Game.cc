@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Constants.h"
+#include "Player.h"
 
 namespace fisk {
     Game::Game() {
@@ -23,5 +24,9 @@ namespace fisk {
     ContinentId Game::add_continent(Continent continent) {
         continents.push_back(continent);
         return ContinentId(continents.size());
+    }
+
+    Player& Game::get_player(PlayerId id) {
+        return players[id];
     }
 }
