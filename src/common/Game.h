@@ -12,7 +12,7 @@
 namespace fisk {
 
     class Game {
-        std::vector<fisk::Player> players;
+        std::vector<Player> players;
         std::vector<Land> lands;
         std::vector<Card> cards;
         std::vector<Continent> continents;
@@ -20,6 +20,8 @@ namespace fisk {
         int game_state;
 
         public:
+
+        Game();
 
         /**
          * add a new player and return the ID

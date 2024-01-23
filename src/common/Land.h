@@ -9,7 +9,6 @@ namespace fisk {
 
     class Land {
         protected:
-            LandId land_id;
             unsigned nb_units;
             std::string name;
             std::vector<LandId> neighbors;
@@ -30,7 +29,7 @@ namespace fisk {
 
             template<typename S>
             void serialisation(S& sa) {
-                sa | land_id | nb_units | name | owner_id | neighbors;
+                sa | nb_units | name | owner_id | neighbors;
             }
     };
 

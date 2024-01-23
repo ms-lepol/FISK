@@ -2,18 +2,13 @@
 #include "Constants.h"
 
 namespace fisk {
-    Player::Player(PlayerId id_client, int nb_units, gf::Color4f color, std::vector<CardId> hand){
-        this->id_client = id_client;
+    Player::Player(int nb_units, gf::Color4f color, std::vector<CardId> hand){
         this->nb_units = nb_units;
         this->color = color;
         this->hand = hand;
     }
-    Player::Player(PlayerId id_client, int nb_units, gf::Color4f color, CardId card...){
+    Player::Player(int nb_units, gf::Color4f color, CardId card...){
 
-    }
-
-    int Player::getId_client(){
-        return this->id_client;
     }
 
     int Player::getNb_units(){

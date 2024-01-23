@@ -8,16 +8,15 @@ namespace fisk {
 
     class Continent {
         protected:
-            ContinentId continent_id;
             std::string name;
-            std::vector<unsigned> lands;
+            std::vector<LandId> lands;
         public:
             Continent(std::string name, std::vector<LandId> lands);
             std::string getName();
 
             template<typename S>
             void serialisation(S& sa) {
-                sa | continent_id | name | lands;
+                sa | name | lands;
             }
     };
 

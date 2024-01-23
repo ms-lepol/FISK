@@ -6,13 +6,12 @@
 namespace fisk {
     class Player {
         private:
-            PlayerId id_client;
             unsigned nb_units;
             gf::Color4f color;
             std::vector<CardId> hand;
         public:
-            Player(PlayerId id_client, int nb_units, gf::Color4f color, std::vector<CardId> hand);
-            Player(PlayerId id_client, int nb_units, gf::Color4f color, CardId card...);
+            Player(int nb_units, gf::Color4f color, std::vector<CardId> hand);
+            Player(int nb_units, gf::Color4f color, CardId card...);
             int getId_client();
             int getNb_units();
             gf::Color4f getColor();
@@ -22,7 +21,7 @@ namespace fisk {
 
             template<typename S>
             void serialisation(S& sa) {
-                sa | id_client | nb_units | color | hand;
+                sa | nb_units | color | hand;
             }
     };
 

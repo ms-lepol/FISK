@@ -35,7 +35,7 @@ namespace fisk {
         gf::Log::info("(SERVER) Launching server on port %s\n", fisk::PORT);
     }
 
-    void ServerNetwork::run(){       
+    void ServerNetwork::run(){ 
         static constexpr gf::Time Timeout = gf::seconds(1); // Wake up the server every seconds to see if something happened
 
         while (g_running) {
