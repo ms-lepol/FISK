@@ -1,4 +1,4 @@
-#ifndef FISK_CARD_SCENE_H
+#ifndef  FISK_CARD_SCENE_H
 #define FISK_CARD_SCENE_H
 
 #include <gf/Scene.h>
@@ -11,49 +11,49 @@
 
 namespace fisk {
 
-  struct GameHub;
+    struct GameHub;
 
 
 
-class CardScene : public gf::Scene {
-public:
-  CardScene(GameHub& game);
+    class CardScene : public gf::Scene {
+        public:
+            CardScene(GameHub& game);
 
-private:
-  void doHandleActions(gf::Window& window) override;
-  void doUpdate(gf::Time time) override;
-  void doRender(gf::RenderTarget& target, const gf::RenderStates& states) override;
-  void doProcessEvent(gf::Event& event) override;
+        private:
+            void doHandleActions(gf::Window& window) override;
+            void doUpdate(gf::Time time) override;
+            void doRender(gf::RenderTarget& target, const gf::RenderStates& states) override;
+            void doProcessEvent(gf::Event& event) override;
 
-private:
-  GameHub& m_game;
+        private:
+            GameHub& m_game;
 
-    // views
+            // views
 
-  gf::ExtendView m_WorldView;
-  gf::ScreenView m_HudView;
+            gf::ExtendView m_WorldView;
+            gf::ScreenView m_HudView;
 
-  //rendering
+            //rendering
 
-  gf::TextureAtlas m_hudAtlas;
+            gf::TextureAtlas m_hudAtlas;
 
-  // containers
+            // containers
 
-  gf::EntityContainer m_WorldEntities;
-  gf::EntityContainer m_HudEntities;
+            gf::EntityContainer m_WorldEntities;
+            gf::EntityContainer m_HudEntities;
 
-  // entities
+            // entities
 
-  // widgets
+            // widgets
 
 
-  // actions
+            // actions
 
-  gf::Action m_interact;
+            gf::Action m_interact;
 
-  gf::Vector2f mousePos;
+            gf::Vector2f mousePos;
 
-};
+    };
 
 }
 

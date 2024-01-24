@@ -25,6 +25,8 @@ add_executable(client
   src/client/ClientNetwork.cc
   src/common/Land.cc
   src/common/Card.cc
+  src/common/Continent.cc
+  src/common/Game.cc
   src/client/LobbyScene.cc
   src/client/TitleScene.cc
   src/client/CardScene.cc
@@ -47,6 +49,10 @@ add_executable(server
   src/server/ServerGroup.cc
   src/server/GameInstance.cc
   src/server/GameFactory.cc
+  src/common/Land.cc
+  src/common/Card.cc
+  src/common/Continent.cc
+  src/common/Game.cc
 )
 
 target_link_libraries(server

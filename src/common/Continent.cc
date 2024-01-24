@@ -12,4 +12,8 @@ namespace fisk {
     std::string Continent::getName() {
         return name;
     }
+
+    void Continent::add_land(LandId land) {
+        lands.push_back(land);
+    }
 }

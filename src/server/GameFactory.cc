@@ -101,7 +101,7 @@ namespace fisk {
   GameFactory::~GameFactory() = default;
 
   std::unique_ptr<GameInstance> GameFactory::createInstance() {
-      std::unique_ptr<GameInstance> new_instance(new GameInstance());
+      std::unique_ptr<GameInstance> new_instance(new GameInstance(createModelForMap1()));
       return new_instance;
   }
 

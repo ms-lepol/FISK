@@ -23,4 +23,8 @@ namespace fisk {
     std::vector<LandId> Land::getNeighbors() {
         return neighbors;
     }
+
+    void Land::addNeighbor(LandId id) {
+        neighbors.push_back(id);
+    }
 }
