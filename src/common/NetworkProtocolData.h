@@ -27,7 +27,7 @@ namespace fisk {
   template<typename Archive>
   Archive& operator|(Archive& ar, LobbyData& data) {
     return ar | data.id | data.name | data.players;
-  } 
+  }
 }
 
 #endif // FISK_NETWORK_PROTOCOL_DATA_H

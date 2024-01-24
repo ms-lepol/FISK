@@ -16,8 +16,8 @@ namespace fisk {
         Game model;
 
         public:
-            virtual void start() = 0;
-            virtual bool isFinished() = 0;
+            void start();
+            bool isFinished();
 
     };
 
