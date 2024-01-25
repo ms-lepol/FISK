@@ -26,17 +26,18 @@ private:
 private:
   GameHub& m_game;
 
-    // views
+  std::array<char, 256> m_hostnameBuffer;
+  std::array<char, 256> m_nameBuffer;
+  bool m_connectionAsked;
 
-  gf::ExtendView m_WorldView;
-  gf::ScreenView m_HudView;
+
+    // views
 
   //rendering
 
 
   // containers
 
-  gf::EntityContainer m_WorldEntities;
   gf::EntityContainer m_HudEntities;
 
   // entities

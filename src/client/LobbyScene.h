@@ -7,6 +7,8 @@
 #include <gf/RenderWindow.h>
 #include <gf/Views.h>
 #include <gf/TextureAtlas.h>
+#include <gf/WidgetContainer.h>
+#include <gf/Widgets.h>
 
 
 namespace fisk {
@@ -27,30 +29,27 @@ private:
 private:
   GameHub& m_game;
 
-    // views
-
-  gf::ExtendView m_WorldView;
-  gf::ScreenView m_HudView;
-
-  
   //rendering
-
-
-  gf::TextureAtlas m_hudAtlas;
+  gf::TextureAtlas l_hudAtlas;
 
   // containers
 
-  gf::EntityContainer m_WorldEntities;
-  gf::EntityContainer m_HudEntities;
+  gf::EntityContainer l_WorldEntities;
+  gf::EntityContainer l_HudEntities;
 
   // entities
 
+  
+
+
   // widgets
+  gf::TextButtonWidget l_lobbyButton;
+  gf::WidgetContainer l_hudButtons;
 
 
   // actions
 
-  gf::Action m_interact;
+  gf::Action l_interact;
 
    gf::Vector2f mousePos;
 

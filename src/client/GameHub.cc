@@ -9,10 +9,10 @@ namespace fisk {
     , titleScene(*this) {
 
         
-
+/* 
         mainScene.setWorldViewSize({ 1280, 720 });
         pushScene(mainScene);
-        mainScene.pause();
+        mainScene.pause(); */
         pushScene(lobbyScene);
     }
 } 
