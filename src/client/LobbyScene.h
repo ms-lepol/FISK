@@ -1,10 +1,12 @@
 #ifndef FISK_LOBBY_SCENE_H
 #define FISK_LOBBY_SCENE_H
 
+#include <gf/Entity.h>
 #include <gf/Scene.h>
 #include <gf/Action.h>
 
 #include <gf/RenderWindow.h>
+#include <gf/Sprite.h>
 #include <gf/Views.h>
 #include <gf/TextureAtlas.h>
 #include <gf/WidgetContainer.h>
@@ -14,6 +16,17 @@
 namespace fisk {
 
   struct GameHub;
+
+  class TitleEntity : public gf::Entity {
+    gf::Sprite sprite;
+    gf::Texture& texture;
+    gf::Vector2i direction;
+
+  public:
+    TitleEntity(gf::Texture& texture);
+    void render(gf::RenderTarget& target, const gf::RenderStates& states) override;
+    void update(gf::Time time) override;
+  };
 
 
 class LobbyScene : public gf::Scene {
@@ -30,16 +43,17 @@ private:
   GameHub& m_game;
 
   //rendering
+ 
   gf::TextureAtlas l_hudAtlas;
 
   // containers
 
-  gf::EntityContainer l_WorldEntities;
   gf::EntityContainer l_HudEntities;
 
   // entities
 
-  
+  gf::Entity l_hudBackground;
+  TitleEntity l_title;
 
 
   // widgets
