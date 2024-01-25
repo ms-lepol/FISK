@@ -16,6 +16,9 @@ namespace fisk {
         Game model;
 
         public:
+
+            GameInstance(Game model);
+
             void start();
             bool isFinished();
 

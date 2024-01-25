@@ -7,7 +7,12 @@ namespace fisk {
     , cardScene(*this) 
     , lobbyScene(*this) 
     , titleScene(*this) {
+
+        
+
         mainScene.setWorldViewSize({ 1280, 720 });
         pushScene(mainScene);
+        mainScene.pause();
+        pushScene(lobbyScene);
     }
 } 

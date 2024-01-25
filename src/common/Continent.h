@@ -14,6 +14,8 @@ namespace fisk {
             Continent(std::string name, std::vector<LandId> lands);
             std::string getName();
 
+            void add_land(LandId land);
+
             template<typename S>
             void serialisation(S& sa) {
                 sa | name | lands;
