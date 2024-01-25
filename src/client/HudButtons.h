@@ -14,10 +14,15 @@
 
 
 namespace fisk {
-    class HudButtons : public gf::Entity{
+
+    struct GameHub;
+
+    class HudButtons : public gf::Entity {
         
         private:
-            
+            GameHub& m_game;
+
+
             gf::SpriteWidget widg_quit;
             gf::SpriteWidget widg_card;
             gf::SpriteWidget widg_help;
@@ -25,8 +30,7 @@ namespace fisk {
 
             gf::ResourceManager& ressources;
             gf::TextureAtlas& atlas;
-            GameHub& m_game;
-            
+           
 
             void callbackCardButton();
 

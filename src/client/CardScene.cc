@@ -30,13 +30,12 @@ namespace fisk {
   CardScene::CardScene(GameHub& game)
   : gf::Scene(ViewSize)
   , m_game(game)
-  , m_interact("Interact")
+  , c_interact("Interact")
+  , c_close("Close")
   , c_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
   {
-   
-    // Views
+    //Rendering configuration
     c_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
-    
 
     setClearColor(HUDColor().buttonColor);
 
@@ -47,11 +46,15 @@ namespace fisk {
    
     //HUD entities
 
-   
-    // Interact Action
-    m_interact.addMouseButtonControl(gf::MouseButton::Left);
 
-    addAction(m_interact);
+    c_close.addKeycodeKeyControl(gf::Keycode::Escape);
+    c_close.addKeycodeKeyControl(gf::Keycode::Q);
+
+    // Interact Action
+    c_interact.addMouseButtonControl(gf::MouseButton::Left);
+
+    addAction(c_interact);
+    addAction(c_close);
 
   }
 
@@ -61,9 +64,13 @@ namespace fisk {
     }
     
     // Handle interact
-    if (m_interact.isActive()) {
+    if (c_close.isActive()) {
+      m_game.popScene();
+    }
 
-      m_interact.reset();
+    if (c_interact.isActive()) {
+
+      c_interact.reset();
     }
   }
 
@@ -91,7 +98,7 @@ namespace fisk {
   void CardScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
     c_hand.render(target, states);
     c_hudButtons.render(target, states);
-    renderHudEntities(target, states);
+    
   }
 
 }

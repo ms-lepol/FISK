@@ -47,7 +47,8 @@ namespace fisk {
 
             // actions
 
-            gf::Action m_interact;
+            gf::Action c_interact;
+            gf::Action c_close;
 
             gf::Vector2f mousePos;
 

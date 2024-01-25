@@ -72,6 +72,7 @@ private:
   // actions
 
   gf::Action l_interact;
+  gf::Action l_close;
 
    gf::Vector2f mousePos;
 

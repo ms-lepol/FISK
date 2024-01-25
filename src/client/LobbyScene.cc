@@ -54,6 +54,7 @@ namespace fisk {
         : gf::Scene(ViewSize)
           , m_game(game)
           , l_interact("Interact")
+          , l_close("Close")
           , l_lobbyButton("Ready", game.resources.getFont("font/PixelSplitter-Bold.ttf"),30)
           , l_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
           , l_title(game.resources.getTexture("sprites/fiskTitle.png"))
@@ -89,12 +90,13 @@ namespace fisk {
                 });
                 l_hudButtons.addWidget(l_lobbyButton);
 
-
+            l_close.addKeycodeKeyControl(gf::Keycode::Escape);
 
               // Interact Action
               l_interact.addMouseButtonControl(gf::MouseButton::Left);
 
               addAction(l_interact);
+              addAction(l_close);
 
           }
 
@@ -102,7 +104,9 @@ namespace fisk {
         if (!isActive()) {
             return;
         }
-
+        if (l_close.isActive()) {
+            m_game.getWindow().close();
+        }
         // Handle interact
         if (l_interact.isActive()) {
              

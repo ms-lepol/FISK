@@ -1,5 +1,6 @@
 
 #include "HudButtons.h"
+#include "GameHub.h"
 #include <gf/Log.h>
 #include <iostream>
 
@@ -29,6 +30,7 @@ namespace fisk {
 
         //Logic
         widg_card.setCallback([this] {
+            
             callbackCardButton();
         });
 
@@ -42,7 +44,8 @@ namespace fisk {
     void HudButtons::callbackCardButton() {
         //Logic
         gf::Log::info("CardButton clicked\n");
-        m_game.popScene();
+        m_game.pushScene(m_game.cardScene);
+        
     }
 
     void HudButtons::placeCardButton(gf::Vector2i position) {
