@@ -28,18 +28,17 @@
 #include <gf/Widgets.h>
 #include <gf/Log.h>
 #include <string>
+#include <gf/Anchor.h>
+#include <gf/RenderStates.h>
+#include <gf/RenderTarget.h>
+
+
+#include "FiskColors.h"
 
 
 
 namespace fisk {
-    struct LandColor {
-        LandColor();
-        gf::Color4f Blue;
-        gf::Color4f Orange;
-        gf::Color4f Green;
-        gf::Color4f Yellow;
-        gf::Color4f Neutral;
-    };
+    
 
 
     class LandEntity : public gf::Entity {

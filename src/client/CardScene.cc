@@ -13,6 +13,8 @@
 #include <gf/MouseValues.h>
 #include <iostream>
 
+#include "FiskColors.h"
+
 namespace fisk {
 
   namespace {
@@ -41,7 +43,7 @@ namespace fisk {
     m_HudView.setSize(ViewSize); 
     m_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
 
-    setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
+    setClearColor(HUDColor().backgroundColor);
 
    
 

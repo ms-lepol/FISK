@@ -1,7 +1,9 @@
 #include "LobbyScene.h"
 
+#include "FiskColors.h"
 #include "GameHub.h"
 #include "LandEntity.h"
+#include "LobbyPlayer.h"
 #include <gf/Color.h>
 #include <gf/Event.h>
 #include <gf/Keyboard.h>
@@ -55,19 +57,28 @@ namespace fisk {
           , l_lobbyButton("Ready", game.resources.getFont("font/PixelSplitter-Bold.ttf"),30)
           , l_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
           , l_title(game.resources.getTexture("sprites/fiskTitle.png"))
+          , l_player1(game.resources)
+            , l_player2(game.resources)
+            , l_player3(game.resources)
+            , l_player4(game.resources)
           {
-            gf::Color4f backgroundColor = gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255);
-              setClearColor(backgroundColor);
+            
+              setClearColor(HUDColor().backgroundColor);
 
 
-              //HUD entities0 });
+              //HUD entities;
 
                 l_HudEntities.addEntity(l_title);
+                l_HudEntities.addEntity(l_player1);
+                l_HudEntities.addEntity(l_player2);
+                l_HudEntities.addEntity(l_player3);
+                l_HudEntities.addEntity(l_player4);
+
               //HUD Buttons
                 l_lobbyButton.setPosition({ ViewSize.x/2, ViewSize.y-100 });
                 l_lobbyButton.setRadius(20);
-                l_lobbyButton.setDefaultTextColor(backgroundColor);
-                l_lobbyButton.setDefaultBackgroundColor(gf::Color::fromRgba32(0xE0F8CFFF));
+                l_lobbyButton.setDefaultTextColor(HUDColor().backgroundColor);
+                l_lobbyButton.setDefaultBackgroundColor(HUDColor().buttonColor);
                 l_lobbyButton.setPadding(50);
                 l_lobbyButton.setAnchor(gf::Anchor::Center);
                 l_lobbyButton.setCallback([this] {

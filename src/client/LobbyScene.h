@@ -11,6 +11,9 @@
 #include <gf/TextureAtlas.h>
 #include <gf/WidgetContainer.h>
 #include <gf/Widgets.h>
+#include "FiskColors.h"
+
+#include "LobbyPlayer.h"
 
 
 namespace fisk {
@@ -54,6 +57,11 @@ private:
 
   gf::Entity l_hudBackground;
   TitleEntity l_title;
+  LobbyPlayer l_player1;
+  LobbyPlayer l_player2;
+  LobbyPlayer l_player3;
+  LobbyPlayer l_player4;
+  
 
 
   // widgets

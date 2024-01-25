@@ -11,6 +11,7 @@
 #include <gf/Vector.h>
 #include <gf/MouseValues.h>
 #include <iostream>
+#include "FiskColors.h"
 
 namespace fisk {
 
@@ -22,15 +23,6 @@ namespace fisk {
     static constexpr float ZoomOutFactor = 1.1f;
 
   }
-
-   PlayerColor::PlayerColor()
-   : Orange({(float)255/255,(float)140/255,(float)92/255,1})
-   , Blue({(float)99/255,(float)155/255,(float)255/255,1})
-   , Green({(float)134/255,(float)192/255,(float)108/255,1})
-   , Yellow({(float)251/255,(float)239/255,(float)8/255,1})
-   {
-
-   }
 
    CameraActions::CameraActions()
   : close("Close")

@@ -17,14 +17,6 @@ namespace fisk {
 
   struct GameHub;
 
-    struct PlayerColor {
-      PlayerColor();
-      gf::Color4f Blue;
-      gf::Color4f Orange;
-      gf::Color4f Green;
-      gf::Color4f Yellow;
-    };
-
   struct CameraActions {
     CameraActions();
     
