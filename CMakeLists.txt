@@ -26,7 +26,6 @@ add_executable(client
   src/common/Land.cc
   src/common/Card.cc
   src/common/Continent.cc
-  src/common/Game.cc
   src/client/LobbyScene.cc
   src/client/TitleScene.cc
   src/client/CardScene.cc
@@ -56,17 +55,6 @@ add_executable(server
 )
 
 target_link_libraries(server
-  PRIVATE
-    gf::net
-    gf::core
-)
-
-add_executable(connect_test
-  src/clientServ.cc
-  src/client/ClientNetwork.cc
-)
-
-target_link_libraries(connect_test
   PRIVATE
     gf::net
     gf::core
