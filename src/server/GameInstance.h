@@ -2,6 +2,7 @@
 #define FISK_GAME_INSTANCE_H
 
 #include <gf/Ref.h>
+#include <memory>
 #include <vector>
 #include "../common/NetworkProtocol.h"
 #include "../common/NetworkProtocolData.h"
@@ -17,7 +18,7 @@ namespace fisk {
 
         public:
 
-            GameInstance(Game model);
+            GameInstance(std::unique_ptr<Game> model);
 
             void start();
             bool isFinished();

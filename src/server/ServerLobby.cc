@@ -23,11 +23,11 @@ namespace fisk {
         case ClientReady::type: {
             gf::Log::info("(LOBBY) {%" PRIX64 "} Ready.\n", player.id);
             if (isGameStarted()) {
-            gf::Log::warning("(LOBBY) {%" PRIX64 "} Game already started\n", player.id);
-            ServerError error;
-            error.reason = ServerError::GameAlreadyStarted;
-            player.send(error);
-            break;
+                gf::Log::warning("(LOBBY) {%" PRIX64 "} Game already started\n", player.id);
+                ServerError error;
+                error.reason = ServerError::GameAlreadyStarted;
+                player.send(error);
+                break;
             }
             auto data = packet.as<ClientReady>();
             player.ready = data.ready;
@@ -62,6 +62,7 @@ namespace fisk {
         broadcast(data);
 
         m_instance = m_factory.get().createInstance();
+        gf::Log::info("here\n");
         cloneTo(*m_instance);
         m_instance->start();
     }

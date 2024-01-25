@@ -1,10 +1,12 @@
 #include "GameInstance.h"
+#include <algorithm>
 #include <gf/Log.h>
+#include <memory>
 
 namespace fisk {
 
-    GameInstance::GameInstance(Game model):
-        model(model) {
+    GameInstance::GameInstance(std::unique_ptr<Game> model):
+        model(std::move(*model)) {
     }
 
     void GameInstance::start() {

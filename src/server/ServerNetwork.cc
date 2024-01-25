@@ -72,6 +72,9 @@ namespace fisk {
                                 default:
                                     gf::Log::debug("(SERVER) {%" PRIX64 "} Updating.\n", player.id);
                                     update(player, packet);
+                                    if(player.lobby != nullptr) {
+                                        player.lobby->update(player, packet);
+                                    }
                                     break;
                             }
                             break;
@@ -182,6 +185,7 @@ namespace fisk {
                 ServerLobby& lobby = m_lobbys.find(packet.as<ClientJoinLobby>().lobby)->second;
                 lobby.addPlayer(player);
                 player.lobby = &lobby;
+                break;
             }
 
             default:
