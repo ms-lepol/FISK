@@ -76,10 +76,13 @@ namespace fisk {
 
             if(plotIsFilled){
                if (isReady){
-                   
+                   sprite.setTexture(rm.getTexture("sprites/ready.png"));
                 } else {
-                   
+                   sprite.setTexture(rm.getTexture("sprites/notReady.png"));
                 }
+                sprite.setPosition(positionSprite);
+                target.draw(sprite, states);
+                
             }
 
 

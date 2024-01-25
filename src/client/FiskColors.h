@@ -28,6 +28,8 @@ namespace fisk {
         gf::Color4f backgroundColor;
         gf::Color4f buttonColor;
         gf::Color4f plotUnfilled;
+        gf::Color4f redClose;
+        gf::Color4f greenCheck;
     };
 }
 #endif // FISK_COLORS_H

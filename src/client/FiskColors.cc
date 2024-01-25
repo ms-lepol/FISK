@@ -21,6 +21,7 @@ namespace fisk {
     HUDColor::HUDColor(){
         backgroundColor = gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255);
         buttonColor = gf::Color::fromRgba32(0xE0F8CFFF);
-        plotUnfilled = gf::Color::fromRgba32(0xa2b396FF);
+        plotUnfilled = gf::Color::fromRgba32(0x95aa87FF);
+        redClose = gf::Color::fromRgba32(0xB32F2FFF);
     }
 }
