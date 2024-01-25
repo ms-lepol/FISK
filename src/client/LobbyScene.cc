@@ -81,9 +81,11 @@ namespace fisk {
                 l_lobbyButton.setDefaultBackgroundColor(HUDColor().buttonColor);
                 l_lobbyButton.setPadding(50);
                 l_lobbyButton.setAnchor(gf::Anchor::Center);
-                l_lobbyButton.setCallback([this] {
+                l_lobbyButton.setCallback([this, &game] {
                     std::cout << "Ready" << std::endl;
-                    //MESSAGE ICI MIMIL
+                    game.popScene();
+                    game.pushScene(game.mainScene);
+                   
                 });
                 l_hudButtons.addWidget(l_lobbyButton);
 

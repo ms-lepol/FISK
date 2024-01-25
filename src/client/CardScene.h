@@ -1,12 +1,14 @@
 #ifndef  FISK_CARD_SCENE_H
 #define FISK_CARD_SCENE_H
 
+#include <gf/EntityContainer.h>
 #include <gf/Scene.h>
 #include <gf/Action.h>
 
 #include <gf/RenderWindow.h>
 #include <gf/Views.h>
 #include <gf/TextureAtlas.h>
+#include <gf/WidgetContainer.h>
 
 
 namespace fisk {
@@ -28,19 +30,15 @@ namespace fisk {
         private:
             GameHub& m_game;
 
-            // views
-
-            gf::ExtendView m_WorldView;
-            gf::ScreenView m_HudView;
-
             //rendering
-
-            gf::TextureAtlas m_hudAtlas;
+            
+            
+            gf::TextureAtlas c_hudAtlas;
 
             // containers
 
-            gf::EntityContainer m_WorldEntities;
-            gf::EntityContainer m_HudEntities;
+            gf::WidgetContainer c_hudButtons;
+            gf::EntityContainer c_hand;
 
             // entities
 

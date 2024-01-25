@@ -12,6 +12,18 @@ namespace fisk {
         gf::Color4f Green;
         gf::Color4f Yellow;
         gf::Color4f Neutral;
+
+        gf::Color4f LightBlue;
+        gf::Color4f LightOrange;
+        gf::Color4f LightGreen;
+        gf::Color4f LightYellow;
+        gf::Color4f LightNeutral;
+
+        gf::Color4f DarkBlue;
+        gf::Color4f DarkOrange;
+        gf::Color4f DarkGreen;
+        gf::Color4f DarkYellow;
+        gf::Color4f DarkNeutral;
     };
 
     struct PlayerColor {

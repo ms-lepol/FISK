@@ -7,7 +7,8 @@
 
 namespace fisk {
 
-     HudButtons::HudButtons(gf::ResourceManager& rm, gf::TextureAtlas& atlas) : 
+     HudButtons::HudButtons(gf::ResourceManager& rm, gf::TextureAtlas& atlas, GameHub& game) : 
+        m_game(game),
         ressources(rm), 
         atlas(atlas),
         widg_card(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("buttonCard"),atlas.getTextureRect("buttonCard"),atlas.getTextureRect("buttonCard"))),
@@ -41,6 +42,7 @@ namespace fisk {
     void HudButtons::callbackCardButton() {
         //Logic
         gf::Log::info("CardButton clicked\n");
+        m_game.popScene();
     }
 
     void HudButtons::placeCardButton(gf::Vector2i position) {

@@ -30,20 +30,15 @@ namespace fisk {
   CardScene::CardScene(GameHub& game)
   : gf::Scene(ViewSize)
   , m_game(game)
-  , m_WorldView({ViewSize.x/2,ViewSize.y/2 }, ViewSize)
   , m_interact("Interact")
-  , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
+  , c_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
   {
    
     // Views
-    addView(m_WorldView);
-    addView(m_HudView);
+    c_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
     
-    //Rendering configuration
-    m_HudView.setSize(ViewSize); 
-    m_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
 
-    setClearColor(HUDColor().backgroundColor);
+    setClearColor(HUDColor().buttonColor);
 
    
 
@@ -53,19 +48,11 @@ namespace fisk {
     //HUD entities
 
    
-    std::cout << "hud size: " << m_HudView.getSize().x << " "<< m_HudView.getSize().y<<std::endl;
-    
-    
-
     // Interact Action
     m_interact.addMouseButtonControl(gf::MouseButton::Left);
 
     addAction(m_interact);
 
-
-    m_WorldView.setInitialFramebufferSize(m_game.getRenderer().getSize());
-    //m_HudView.setSize(ViewSize);
-    m_HudView.setInitialFramebufferSize(m_game.getRenderer().getSize());
   }
 
   void CardScene::doHandleActions([[maybe_unused]] gf::Window& window) {
@@ -75,12 +62,6 @@ namespace fisk {
     
     // Handle interact
     if (m_interact.isActive()) {
-    /*   
-      m_hudButtons.widg_container.pointTo(mousePos);
-      m_hudButtons.widg_container.triggerAction();
-      
-      m_map.widg_container.pointTo(mousePos);
-      m_map.widg_container.triggerAction(); */
 
       m_interact.reset();
     }
@@ -94,9 +75,7 @@ namespace fisk {
       }
     }
 
-    m_WorldEntities.update(time);
-    m_HudEntities.update(time);
-
+    c_hand.update(time);
 
   }
 
@@ -110,12 +89,8 @@ namespace fisk {
   }
 
   void CardScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
-    target.setView(m_WorldView);
-    target.setView(m_HudView);
-
-    m_WorldEntities.render(target, states);
-    m_HudEntities.render(target, states);
-    
+    c_hand.render(target, states);
+    c_hudButtons.render(target, states);
     renderHudEntities(target, states);
   }
 

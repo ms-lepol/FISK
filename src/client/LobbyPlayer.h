@@ -5,6 +5,7 @@
 #include <gf/Font.h>
 #include <gf/ResourceManager.h>
 #include <gf/Sprite.h>
+#include <gf/TextureAtlas.h>
 #include <gf/Vector.h>
 #include <string>
 #include <gf/RenderTarget.h>
@@ -26,6 +27,8 @@ namespace fisk {
 
             gf::Font& font;
             gf::ResourceManager& rm;
+
+            gf::TextureAtlas l_hudAtlas;
 
             bool plotIsFilled;
             bool isReady;

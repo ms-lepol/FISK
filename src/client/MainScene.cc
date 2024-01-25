@@ -42,7 +42,7 @@ namespace fisk {
   , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
   , m_turnInterface(TurnInterface(4,game.resources,m_hudAtlas))
   , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game.resources,m_hudAtlas))
-  , m_hudButtons(HudButtons(game.resources,m_hudAtlas))
+  , m_hudButtons(HudButtons(game.resources,m_hudAtlas,game))
   {
    
     // Views

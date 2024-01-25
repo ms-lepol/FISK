@@ -1,6 +1,7 @@
 #include "LobbyPlayer.h"
 #include "FiskColors.h"
 #include <gf/Font.h>
+#include <gf/Log.h>
 #include <gf/ResourceManager.h>
 #include <gf/Text.h>
 
@@ -13,7 +14,8 @@ namespace fisk {
     int LobbyPlayer::nextPlot = 0;
 
     LobbyPlayer::LobbyPlayer(gf::ResourceManager& rm): rm(rm)
-    ,font(rm.getFont("font/PixelSplitter-Bold.ttf")){
+    ,font(rm.getFont("font/PixelSplitter-Bold.ttf"))
+    ,l_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",rm)){
         const int marginX = 50;
         const int marginY = 20;
 
@@ -23,6 +25,7 @@ namespace fisk {
         int line2y = ViewSize.y / 2 + marginY;
     
 
+        l_hudAtlas.setTexture(rm.getTexture("sprites/fisk_ui.png"));
 
         nextPlot++;
         switch (LobbyPlayer::nextPlot) {
@@ -43,9 +46,10 @@ namespace fisk {
         }
 
         positionName = { position.x + width/2, position.y + height/2};
-        positionSprite = { position.x + 400, position.y + 50 };
+        positionSprite = { position.x + width, position.y + height/2 - 32 };
         color = HUDColor().plotUnfilled;
         sprite = gf::Sprite();
+        sprite.setPosition(positionSprite);
         name = "Waiting for player...";
         plotIsFilled = false;
         isReady = false;
@@ -55,7 +59,8 @@ namespace fisk {
             if (plotIsFilled){
                 color = HUDColor().buttonColor;
             }
-            
+
+
             gf::RoundedRectangleShape rect;
             rect.setSize({ width, height });
             rect.setRadius(10);
@@ -74,15 +79,14 @@ namespace fisk {
            
             target.draw(text, states);
 
-            if(plotIsFilled){
+            if(!plotIsFilled){
                if (isReady){
-                   sprite.setTexture(rm.getTexture("sprites/ready.png"));
+                   sprite.setTexture(l_hudAtlas.getTexture(), l_hudAtlas.getTextureRect("greenCheck"));
                 } else {
-                   sprite.setTexture(rm.getTexture("sprites/notReady.png"));
+                   sprite.setTexture(l_hudAtlas.getTexture(), l_hudAtlas.getTextureRect("redCross"));
                 }
                 sprite.setPosition(positionSprite);
                 target.draw(sprite, states);
-                
             }
 
 

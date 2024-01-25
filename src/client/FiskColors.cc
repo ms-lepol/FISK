@@ -1,4 +1,5 @@
 #include "FiskColors.h"
+#include <gf/Vector.h>
 
 namespace fisk {
 
@@ -8,6 +9,20 @@ namespace fisk {
         Green = gf::Color4f({(float)134/255,(float)192/255,(float)108/255,1});
         Yellow = gf::Color4f({(float)251/255,(float)239/255,(float)8/255,1});
         Neutral = gf::Color4f({(float)48/255,(float)104/255,(float)80/255,1});
+
+
+        LightBlue = gf::Color::fromRgba32(0x88b3FFFF);
+        LightOrange = gf::Color::fromRgba32(0xffab88FF);
+        LightGreen = gf::Color::fromRgba32(0x9cc48aFF);
+        LightYellow = gf::Color::fromRgba32(0xfff759FF);
+        LightNeutral = gf::Color::fromRgba32(0x4a9172FF);
+
+
+        DarkBlue = gf::Color::fromRgba32(0x2274ffFF);
+        DarkOrange = gf::Color::fromRgba32(0xf76326FF);
+        DarkGreen = gf::Color::fromRgba32(0x63cc4bFF);
+        DarkYellow = gf::Color::fromRgba32(0xd0c600FF);
+        DarkNeutral = gf::Color::fromRgba32(0x1a4030FF);
     }
 
      PlayerColor::PlayerColor()

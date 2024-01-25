@@ -1,3 +1,4 @@
+#include "CardScene.h"
 #ifndef FISK_HUD_BUTTONS_H
 #define FISK_HUD_BUTTONS_H value
 
@@ -24,6 +25,7 @@ namespace fisk {
 
             gf::ResourceManager& ressources;
             gf::TextureAtlas& atlas;
+            GameHub& m_game;
             
 
             void callbackCardButton();
@@ -34,7 +36,7 @@ namespace fisk {
             void initTextures();
             void placeCardButton(gf::Vector2i position);
 
-            HudButtons(gf::ResourceManager& rm, gf::TextureAtlas& atlas);
+            HudButtons(gf::ResourceManager& rm, gf::TextureAtlas& atlas, GameHub& game);
 
             void render(gf::RenderTarget& target, const gf::RenderStates& states);
 
