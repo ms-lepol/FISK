@@ -41,6 +41,8 @@ namespace fisk {
 
               //HUD Buttons
                 l_lobbyButton.setPosition({ 100, 100 });
+                l_lobbyButton.setBackgroundOutlineThickness(10);
+                l_lobbyButton.setDefaultBackgroundOutlineColor(gf::Color::fromRgba32(0x000000FF));
                 l_lobbyButton.setAnchor(gf::Anchor::Center);
                 l_lobbyButton.setCallback([this] {
                     std::cout << "Ready" << std::endl;
