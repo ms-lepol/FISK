@@ -10,9 +10,7 @@ namespace fisk {
 
   ClientNetwork::ClientNetwork()
   : m_connecting(false)
-  {
-    
-  }
+  {}
 
   bool ClientNetwork::isConnecting() {
     return m_connecting;
@@ -58,6 +56,7 @@ namespace fisk {
 
       switch (m_socket.recvPacket(packet)) {
         case gf::SocketStatus::Data:
+            gf::Log::info("(CLIENT) recv data\n");
           queue.push(std::move(packet));
           break;
         case gf::SocketStatus::Error:

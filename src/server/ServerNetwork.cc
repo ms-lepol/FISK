@@ -1,5 +1,6 @@
 #include "ServerNetwork.h"
 #include <algorithm>
+#include <cassert>
 #include <cstdint>
 #include <gf/Serialization.h>
 #include <gf/SocketTypes.h>
@@ -17,6 +18,9 @@
 
 #include "../common/NetworkConstants.h"
 #include "../common/NetworkProtocol.h"
+#include "GameFactory.h"
+#include "Map1Factory.h"
+#include "ServerPlayer.h"
 
 namespace fisk {
 
@@ -141,6 +145,43 @@ namespace fisk {
                 list.lobbys = getLobbys();
                 player.send(list);
                 break;
+            }
+
+            case ClientCreateLobby::type: {
+                gf::Log::info("(SERVER) {%" PRIX64 "} Create lobby.\n", player.id);
+                if(player.lobby != nullptr) {
+                    gf::Log::warning("(SERVER) PlayerAlreadyInLobby\n");
+                    ServerError data;
+                    data.reason = ServerError::PlayerAlreadyInLobby;
+                    player.send(data);
+                    break;
+                }
+                auto data = packet.as<ClientCreateLobby>();
+                ServerLobby lobby(map_factory);
+                lobby.id = m_random.get().computeId();
+                lobby.name = data.name;
+
+                lobby.addPlayer(player);
+
+                auto res = m_lobbys.emplace(lobby.id, std::move(lobby));
+                assert(res.second);
+                player.lobby = &res.first->second;
+                broadcastLobbys();
+                break;
+            }
+
+            case ClientJoinLobby::type: {
+                gf::Log::info("(SERVER) {%" PRIX64 "} Join lobby.\n", player.id);
+                if(player.lobby != nullptr) {
+                    gf::Log::warning("(SERVER) PlayerAlreadyInLobby\n");
+                    ServerError data;
+                    data.reason = ServerError::PlayerAlreadyInLobby;
+                    player.send(data);
+                    break;
+                }
+                ServerLobby& lobby = m_lobbys.find(packet.as<ClientJoinLobby>().lobby)->second;
+                lobby.addPlayer(player);
+                player.lobby = &lobby;
             }
 
             default:

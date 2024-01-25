@@ -6,6 +6,7 @@
 #include <map>
 
 #include "../common/Constants.h"
+#include "Map1Factory.h"
 #include "ServerPlayer.h"
 #include "ServerLobby.h"
 
@@ -58,6 +59,9 @@ namespace fisk {
     static void signalHandler(int sig);
 
   private:
+    
+    Map1Factory map_factory;
+
     gf::Ref<gf::Random> m_random;
     gf::TcpListener m_listener;
     gf::SocketSelector m_selector;

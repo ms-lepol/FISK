@@ -4,6 +4,7 @@
 #include "GameHub.h"
 #include "LandEntity.h"
 #include "LobbyPlayer.h"
+#include "../common/NetworkProtocol.h"
 #include <gf/Color.h>
 #include <gf/Event.h>
 #include <gf/Keyboard.h>
@@ -84,9 +85,9 @@ namespace fisk {
                 l_lobbyButton.setAnchor(gf::Anchor::Center);
                 l_lobbyButton.setCallback([this, &game] {
                     std::cout << "Ready" << std::endl;
-                    game.popScene();
-                    game.pushScene(game.mainScene);
-                   
+                    ClientReady data;
+                    data.ready = true;
+                    m_game.clientNetwork.send(data);
                 });
                 l_hudButtons.addWidget(l_lobbyButton);
 

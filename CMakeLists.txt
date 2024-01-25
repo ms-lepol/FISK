@@ -49,7 +49,7 @@ add_executable(server
   src/server/ServerPlayer.cc
   src/server/ServerGroup.cc
   src/server/GameInstance.cc
-  src/server/GameFactory.cc
+  src/server/Map1Factory.cc
   src/common/Land.cc
   src/common/Card.cc
   src/common/Continent.cc
