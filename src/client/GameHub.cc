@@ -4,8 +4,10 @@
 #include <gf/Sleep.h>
 #include <gf/Time.h>
 
-
 namespace fisk {
+
+    constexpr gf::Vector2f ViewSize = { 1280.0f, 720.0f };
+
     GameHub::GameHub() : GameManager("FISK", { "../data/" })
     , mainScene(*this)
     , cardScene(*this)
@@ -42,6 +44,8 @@ namespace fisk {
                 clientNetwork.send(msg);
             }
         }
+        cardScene.setWorldViewSize({720,480});
+        cardScene.setWorldViewCenter({ViewSize.x/2,ViewSize.y/2});
         /* 
         mainScene.setWorldViewSize({ 1280, 720 });
         pushScene(mainScene);

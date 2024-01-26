@@ -61,20 +61,37 @@ namespace fisk {
 
     //Draw an outline if selected
     void LandEntity::renderSelected(gf::RenderTarget& target, gf::RenderStates states){
-        gf::RenderStates statesWithOutline = states;
         if (selected){
-            
-            spr_widg.setScale({static_cast<float>((m_texture.getSize().x+landOutline)/m_texture.getSize().x),static_cast<float>((m_texture.getSize().y+landOutline)/m_texture.getSize().y)});
-            spr_widg.setAnchor(gf::Anchor::Center);
-            spr_widg.setColor(gf::Color::White);
-            spr_widg.setPosition(position+gf::Vector2i({m_texture.getSize().x/2,m_texture.getSize().y/2}));
-            target.draw(spr_widg, states);
-            spr_widg.setAnchor(gf::Anchor::TopLeft);
-            spr_widg.setScale({1,1});
+            gf::Color4f color;
+
+            if (this->color==LandColor().Neutral){
+                color = LandColor().DarkNeutral;
+            }
+            if (this->color==LandColor().Orange){
+                color = LandColor().DarkOrange;
+                
+            }
+            if (this->color==LandColor().Blue){
+                color = LandColor().DarkBlue;
+                
+            }
+            if (this->color==LandColor().Green){
+                color = LandColor().DarkGreen;
+                
+            }
+            if (this->color==LandColor().Yellow){
+                color = LandColor().DarkYellow;
+                
+            }
             spr_widg.setColor(color);
-            spr_widg.setPosition(position); 
-            
         }
-        render(target, statesWithOutline);
+        target.draw(spr_widg, states);
+        gf::Font& font = ressources.getFont("font/PixelSplitter-Bold.ttf");
+        std::string text = std::to_string(land.getNb_units());
+        if (land.getNb_units() < 10) text = "0" + text;
+        gf::Text txt(text, font, 10);
+        txt.setAnchor(gf::Anchor::Center);
+        txt.setPosition(position+positionText+gf::Vector2i({0,1}));
+        target.draw(txt,states);
     }
 }

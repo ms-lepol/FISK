@@ -37,7 +37,7 @@ namespace fisk {
     //Rendering configuration
     c_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
 
-    setClearColor(HUDColor().buttonColor);
+    setClearColor(LandColor().DarkBlue);
 
    
 

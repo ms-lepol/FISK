@@ -10,6 +10,8 @@
 #include <gf/Keyboard.h>
 #include <gf/Log.h>
 #include <gf/Mouse.h>
+#include <gf/Packet.h>
+#include <gf/Serialization.h>
 #include <gf/Texture.h>
 #include <gf/TextureAtlas.h>
 #include <gf/Vector.h>
@@ -91,13 +93,13 @@ namespace fisk {
                 });
                 l_hudButtons.addWidget(l_lobbyButton);
 
-            l_close.addKeycodeKeyControl(gf::Keycode::Escape);
+                l_close.addKeycodeKeyControl(gf::Keycode::Escape);
 
-              // Interact Action
-              l_interact.addMouseButtonControl(gf::MouseButton::Left);
+                // Interact Action
+                l_interact.addMouseButtonControl(gf::MouseButton::Left);
 
-              addAction(l_interact);
-              addAction(l_close);
+                addAction(l_interact);
+                addAction(l_close);
 
           }
 
@@ -122,6 +124,7 @@ namespace fisk {
 
     void LobbyScene::doUpdate(gf::Time time) {
         gf::Event event;
+        gf::Packet packeta;
         while (m_game.getWindow().pollEvent(event)){;
             if (event.type == gf::EventType::MouseMoved) {
                 mousePos = event.mouseCursor.coords;
@@ -129,6 +132,10 @@ namespace fisk {
         }
 
         l_HudEntities.update(time);
+        //Handle packets
+        if (m_game.clientNetwork.queue.poll(packeta)) {
+            packeta.getType();
+        }
 
 
     }
