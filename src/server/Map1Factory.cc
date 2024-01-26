@@ -1,11 +1,13 @@
 #include "Map1Factory.h"
 #include "GameInstance.h"
+#include <gf/Log.h>
 #include <memory>
 
 namespace fisk {
 
     std::unique_ptr<Game> createModelForMap1(){
         std::unique_ptr<Game> model(new Game());
+        gf::Log::info("here\n");
         ContinentId Europe = model->add_continent(Continent("Europe", {}));
         ContinentId NorthAmerica = model->add_continent(Continent("North America", {}));
         ContinentId SouthAmerica = model->add_continent(Continent("South America", {}));
@@ -13,9 +15,12 @@ namespace fisk {
         ContinentId Africa = model->add_continent(Continent("Africa", {}));
         ContinentId Oceania = model->add_continent(Continent("Oceania", {}));
 
+        gf::Log::info("here\n");
 
         LandId Alaska = model->add_land(Land(0, "Alaska", {}, gf::InvalidId));
+        gf::Log::info("here\n");
         model->get_continent(NorthAmerica).add_land(Alaska);
+        gf::Log::info("here\n");
         LandId NorthwestTerritory = model->add_land(Land(0, "NorthwestTerritory", {}, gf::InvalidId));
         model->get_continent(NorthAmerica).add_land(NorthwestTerritory);
         LandId Greenland = model->add_land(Land(0, "Greenland", {}, gf::InvalidId));
@@ -93,7 +98,6 @@ namespace fisk {
         model->get_land(Alaska).addNeighbor(NorthwestTerritory);
         model->get_land(Alaska).addNeighbor(Atlanta);
         //TODO add all neigbors BOTH WAYS :)
-
 
         return model;
     }

@@ -62,7 +62,6 @@ namespace fisk {
         broadcast(data);
 
         m_instance = m_factory.get().createInstance();
-        gf::Log::info("here\n");
         cloneTo(*m_instance);
         m_instance->start();
     }
