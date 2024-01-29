@@ -2,6 +2,7 @@
 #include "Constants.h"
 
 namespace fisk {
+    Player::Player() {}
     Player::Player(int nb_units, gf::Color4f color, std::vector<CardId> hand){
         this->nb_units = nb_units;
         this->color = color;

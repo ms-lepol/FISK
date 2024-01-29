@@ -1,5 +1,6 @@
 #ifndef FISK_GAME_H
 #define FISK_GAME_H
+#include <gf/Id.h>
 #include <vector>
 
 #include "Constants.h"
@@ -8,6 +9,8 @@
 #include "Land.h"
 #include "Card.h"
 #include "Continent.h"
+
+using namespace gf::literals;
 
 namespace fisk {
 
@@ -20,6 +23,8 @@ namespace fisk {
         int game_state;
 
         public:
+
+        static constexpr gf::Id type = "Game"_id;
 
         Game();
 

@@ -12,16 +12,11 @@
 #include <gf/ResourceManager.h>
 #include <gf/RenderTarget.h>
 
+#include "../common/Enums.h"
+
 #define texture_path "/sprites/fisk_ui.png"
 
 namespace fisk {
-    enum class TurnPhase {
-        Reinforce = 0,
-        Attack = 1,
-        Fortify = 2,
-        End = 3
-    };
-
     class PhaseIndicator : public gf::Entity {
         private:
             TurnPhase phase = TurnPhase::End;

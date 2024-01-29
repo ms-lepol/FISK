@@ -31,6 +31,8 @@ add_executable(client
   src/client/LobbyScene.cc
   src/client/TitleScene.cc
   src/client/CardScene.cc
+  src/common/Game.cc
+  src/common/Player.cc
   # and the rest of your sources
 )
 

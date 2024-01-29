@@ -13,6 +13,7 @@ namespace fisk {
 
         public:
 
+        Card();
         Card(Type type_unit, LandId land_id);
         Type getType() const;
         LandId getLand() const;

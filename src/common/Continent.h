@@ -11,6 +11,7 @@ namespace fisk {
             std::string name;
             std::vector<LandId> lands;
         public:
+            Continent();
             Continent(std::string name, std::vector<LandId> lands);
             std::string getName();
 

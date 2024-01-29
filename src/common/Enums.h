@@ -12,7 +12,8 @@ namespace fisk {
     enum class TurnPhase : uint8_t{
         Fortify, // 0
         Attack, // 1
-        Reinforce // 2
+        Reinforce, // 2
+        End
     };
 
     enum class GameState : uint8_t{
