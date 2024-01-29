@@ -18,7 +18,7 @@ namespace fisk {
     {}
 
     ClientNetwork::~ClientNetwork() {
-        if(hasGameModel()) delete m_game;
+        if(hasGameModel()) delete m_model;
         if(hasPlayerList()) delete m_players;
         if(hasLobbyList()) delete m_lobbies;
     }
@@ -129,9 +129,9 @@ namespace fisk {
                     }
                     if(packet.getType() == Game::type) {
                         if(hasLobbyList()) {
-                            *m_game = packet.as<Game>();
+                            *m_model = packet.as<Game>();
                         } else {
-                            m_game = new Game(packet.as<Game>());
+                            m_model = new Game(packet.as<Game>());
                         }
                     }
                     queue.push(std::move(packet));
@@ -150,7 +150,7 @@ namespace fisk {
     }
 
     bool ClientNetwork::hasGameModel() const {
-        return static_cast<bool>(m_game);
+        return static_cast<bool>(m_model);
     }
 
     bool ClientNetwork::hasLobbyList() const {
@@ -162,7 +162,7 @@ namespace fisk {
     }
 
     const Game& ClientNetwork::getGameModel() const {
-        return *m_game;
+        return *m_model;
     }
 
     const ServerListLobbys& ClientNetwork::getLobbyList() const {

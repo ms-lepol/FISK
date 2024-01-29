@@ -61,7 +61,7 @@ namespace fisk {
 
         ServerListLobbys* m_lobbies;
         ServerListLobbyPlayers* m_players;
-        Game* m_game;
+        Game* m_model;
     };
 
 }
