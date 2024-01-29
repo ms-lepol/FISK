@@ -4,6 +4,9 @@
 #include "Continent.h"
 
 namespace fisk {
+
+    Continent::Continent(){}
+
     Continent::Continent(std::string name, std::vector<LandId> lands):
         name(name),
         lands(lands)

@@ -14,6 +14,7 @@ namespace fisk {
             std::vector<LandId> neighbors;
             PlayerId owner_id;
         public:
+            Land();
             Land(unsigned nb_units, std::string name, std::vector<LandId> neighbors, PlayerId player_id);
             unsigned getNb_units();
             std::string getName();

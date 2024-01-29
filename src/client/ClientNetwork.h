@@ -2,6 +2,7 @@
 #define FISK_CLIENT_NETWORK_H
 
 #include "../common/NetworkConstants.h"
+#include "../common/Game.h"
 #include "../common/NetworkProtocol.h"
 
 #include <atomic>
@@ -19,6 +20,7 @@ namespace fisk {
     class ClientNetwork {
     public:
         ClientNetwork();
+        ~ClientNetwork();
 
         bool isConnecting();
         bool isConnected();
@@ -31,6 +33,14 @@ namespace fisk {
             packet.is(data);
             m_socket.sendPacket(packet);
         }
+
+        bool hasLobbyList() const;
+        bool hasPlayerList() const;
+        bool hasGameModel() const;
+
+        const ServerListLobbys& getLobbyList() const;
+        const ServerListLobbyPlayers& getPlayerList() const;
+        const Game& getGameModel() const;
     
     public:
     gf::Queue<gf::Packet> queue;
@@ -42,6 +52,10 @@ namespace fisk {
         gf::TcpSocket m_socket;
         std::mutex m_mutex;
         std::atomic_bool m_connecting;
+
+        ServerListLobbys* m_lobbies;
+        ServerListLobbyPlayers* m_players;
+        Game* m_game;
     };
 
 }

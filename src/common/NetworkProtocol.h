@@ -1,4 +1,4 @@
-#ifndef FISK_NETWORK_PROTOCOL_H
+#ifndef FISK_NETWORK_PROTOCOL_H 
 #define FISK_NETWORK_PROTOCOL_H
 
 #include <gf/Id.h>
