@@ -185,6 +185,7 @@ namespace fisk {
                 ServerLobby& lobby = m_lobbys.find(packet.as<ClientJoinLobby>().lobby)->second;
                 lobby.addPlayer(player);
                 player.lobby = &lobby;
+                
                 break;
             }
 

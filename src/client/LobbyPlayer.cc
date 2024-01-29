@@ -18,6 +18,7 @@ namespace fisk {
     ,l_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",rm)){
         const int marginX = 50;
         const int marginY = 20;
+        player_id = 0;
 
         int line1x = ViewSize.x / 2 - width - marginX;
         int line1y = ViewSize.y / 2 - height - marginY;
@@ -54,6 +55,7 @@ namespace fisk {
         plotIsFilled = false;
         isReady = false;
     }
+    
 
     void LobbyPlayer::render(gf::RenderTarget& target, const gf::RenderStates& states){
             if (plotIsFilled){
@@ -79,7 +81,7 @@ namespace fisk {
            
             target.draw(text, states);
 
-            if(!plotIsFilled){
+            if(plotIsFilled){
                if (isReady){
                    sprite.setTexture(l_hudAtlas.getTexture(), l_hudAtlas.getTextureRect("greenCheck"));
                 } else {
@@ -90,6 +92,29 @@ namespace fisk {
             }
 
 
+    }
+
+    void LobbyPlayer::setName(std::string name){
+        this->name = name;
+    }
+
+    void LobbyPlayer::setPlotIsFilled(bool plotIsFilled){
+        this->plotIsFilled = plotIsFilled;
+    }
+
+    void LobbyPlayer::setId(gf::Id id){
+        this->player_id = id;
+    }
+
+    void LobbyPlayer::setReady(bool isReady){
+        this->isReady = isReady;
+    }
+
+    void LobbyPlayer::reset(){
+        name = "Waiting for player...";
+        plotIsFilled = false;
+        isReady = false;
+        player_id = 0;
     }
 
     void LobbyPlayer::update(gf::Time time){

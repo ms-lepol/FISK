@@ -1,5 +1,6 @@
 #include "LobbyScene.h"
 
+#include "ClientNetwork.h"
 #include "FiskColors.h"
 #include "GameHub.h"
 #include "LandEntity.h"
@@ -132,11 +133,7 @@ namespace fisk {
         }
 
         l_HudEntities.update(time);
-        //Handle packets
-        if (m_game.clientNetwork.queue.poll(packeta)) {
-            packeta.getType();
-        }
-
+        m_game.clientNetwork.update(); 
 
     }
 
@@ -156,5 +153,89 @@ namespace fisk {
         
         renderHudEntities(target, states);
     }
+
+     void LobbyScene::addPlayer(gf::Id id_player, std::string name){
+
+        if (id_player == l_player1.getId() || id_player == l_player2.getId() || id_player == l_player3.getId() || id_player == l_player4.getId()){
+            return;
+        }
+
+        if (l_player1.getId() == 0){
+            gf::Log::info("Player 1\n");
+            l_player1.setName(name);
+            l_player1.setPlotIsFilled(true);
+            l_player1.setId(id_player);
+        } else if (l_player2.getId() == 0){
+            gf::Log::info("Player 2\n");
+            l_player2.setName(name);
+            l_player2.setPlotIsFilled(true);
+            l_player2.setId(id_player);
+        } else if (l_player3.getId() == 0){
+            l_player3.setName(name);
+            l_player3.setPlotIsFilled(true);
+            l_player3.setId(id_player);
+        } else if (l_player4.getId() == 0){
+            l_player4.setName(name);
+            l_player4.setPlotIsFilled(true);
+            l_player4.setId(id_player);
+        }
+    }
+
+    void LobbyScene::removePlayer(gf::Id id_player){
+        if (id_player == l_player1.getId()){
+            l_player1.reset();
+        } else if (id_player == l_player2.getId()){
+            l_player2.reset();
+        } else if (id_player == l_player3.getId()){
+            l_player3.reset();
+        } else if (id_player == l_player4.getId()){
+            l_player4.reset();
+        }
+    }
+
+    void LobbyScene::setPlayerReady(gf::Id id_player, bool isReady){
+        if (id_player == l_player1.getId()){
+            l_player1.setReady(isReady);
+        } else if (id_player == l_player2.getId()){
+            l_player2.setReady(isReady);
+        } else if (id_player == l_player3.getId()){
+            l_player3.setReady(isReady);
+        } else if (id_player == l_player4.getId()){
+            l_player4.setReady(isReady);
+        }
+    }
+
+    void LobbyScene::setPlayerPlot(gf::Id id_player, bool plotIsFilled){
+        if (id_player == l_player1.getId()){
+            l_player1.setPlotIsFilled(plotIsFilled);
+        } else if (id_player == l_player2.getId()){
+            l_player2.setPlotIsFilled(plotIsFilled);
+        } else if (id_player == l_player3.getId()){
+            l_player3.setPlotIsFilled(plotIsFilled);
+        } else if (id_player == l_player4.getId()){
+            l_player4.setPlotIsFilled(plotIsFilled);
+        }
+    }
+
+    void LobbyScene::setPlayerName(gf::Id id_player, std::string name){
+        if (id_player == l_player1.getId()){
+            l_player1.setName(name);
+        } else if (id_player == l_player2.getId()){
+            l_player2.setName(name);
+        } else if (id_player == l_player3.getId()){
+            l_player3.setName(name);
+        } else if (id_player == l_player4.getId()){
+            l_player4.setName(name);
+        }
+    }
+
+    void LobbyScene::resetPlayers(){
+        l_player1.reset();
+        l_player2.reset();
+        l_player3.reset();
+        l_player4.reset();
+    }
+
+   
 
 }

@@ -3,6 +3,7 @@
 #include <gf/Entity.h>
 #include <gf/Color.h>
 #include <gf/Font.h>
+#include <gf/Id.h>
 #include <gf/ResourceManager.h>
 #include <gf/Sprite.h>
 #include <gf/TextureAtlas.h>
@@ -29,6 +30,7 @@ namespace fisk {
             gf::ResourceManager& rm;
 
             gf::TextureAtlas l_hudAtlas;
+            gf::Id player_id;
 
             bool plotIsFilled;
             bool isReady;
@@ -36,6 +38,29 @@ namespace fisk {
             LobbyPlayer(gf::ResourceManager& rm);
             void render(gf::RenderTarget& target, const gf::RenderStates& states) override;
             void update(gf::Time time) override;
+
+            void setName(std::string name);
+            void setPlotIsFilled(bool plotIsFilled);
+            void setId(gf::Id id);
+            void setReady(bool isReady);
+            void reset();
+
+            gf::Id getId() const {
+                return player_id;
+            }
+
+            bool getPlotIsFilled() const {
+                return plotIsFilled;
+            }
+
+            bool getReady() const {
+                return isReady;
+            }
+
+            std::string getName() const {
+                return name;
+            }
+            
     };
 }
 #endif // FISK_LOBBY_PLAYER_H

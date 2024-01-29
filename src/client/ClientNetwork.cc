@@ -5,11 +5,13 @@
 
 #include "../common/NetworkProtocol.h"
 #include "../common/NetworkConstants.h"
-
+#include "CardScene.h"
+#include "GameHub.h"
 namespace fisk {
 
-  ClientNetwork::ClientNetwork()
+  ClientNetwork::ClientNetwork(GameHub& game)
   : m_connecting(false)
+  , m_game(game)
   {}
 
   bool ClientNetwork::isConnecting() {
@@ -35,6 +37,51 @@ namespace fisk {
     m_socket = gf::TcpSocket();
     m_connecting = false;
   }
+
+  void updateLobby(gf::Packet& packet,GameHub& m_game) {
+    ServerListLobbyPlayers data = packet.as<ServerListLobbyPlayers>();
+    m_game.lobbyScene.resetPlayers();
+    for (auto& player : data.players) {
+      m_game.lobbyScene.addPlayer(player.id,player.name);
+    }
+  }
+
+  void ClientNetwork::update() {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    gf::Packet packeta;
+
+    while (queue.poll(packeta)) {
+   
+
+      switch (packeta.getType()) {
+        case ServerStartGame::type: {
+          gf::Log::info("(CLIENT) Starting game.\n");
+          auto data = packeta.as<ServerStartGame>();
+          m_game.popScene();
+          m_game.pushScene(m_game.mainScene);
+          break;
+        }
+
+
+        case ServerJoinLobby::type: {
+          gf::Log::info("(CLIENT) Joining lobby.\n");
+          auto data = packeta.as<ClientJoinLobby>();
+          break;
+        }
+        case ServerListLobbyPlayers::type:
+          updateLobby(packeta,m_game);
+          break;
+        case ServerReady::type: {
+          gf::Log::info("(CLIENT) Ready.\n");
+          break;
+        }
+        default:
+          gf::Log::error("(CLIENT) Unknown packet type: %lu\n", packeta.getType());
+          break;
+      }
+    }
+  }
+ 
 
   void ClientNetwork::run(std::string hostname) {
     gf::TcpSocket socket(hostname, PORT);

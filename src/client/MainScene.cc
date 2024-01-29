@@ -141,7 +141,8 @@ namespace fisk {
         mousePos = event.mouseCursor.coords;
       }
     }
-
+    m_game.clientNetwork.update(); 
+    
     m_WorldEntities.update(time);
     m_HudEntities.update(time);
 

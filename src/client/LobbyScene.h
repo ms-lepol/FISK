@@ -35,6 +35,12 @@ namespace fisk {
 class LobbyScene : public gf::Scene {
 public:
   LobbyScene(GameHub& game);
+  void addPlayer(gf::Id id, std::string name);
+  void removePlayer(gf::Id id);
+  void setPlayerReady(gf::Id id, bool isReady);
+  void setPlayerPlot(gf::Id id, bool plotIsFilled);
+  void setPlayerName(gf::Id id, std::string name);
+  void resetPlayers();
 
 private:
   void doHandleActions(gf::Window& window) override;
@@ -42,6 +48,7 @@ private:
   void doRender(gf::RenderTarget& target, const gf::RenderStates& states) override;
   void doProcessEvent(gf::Event& event) override;
 
+  
 private:
   GameHub& m_game;
 

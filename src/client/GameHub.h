@@ -2,11 +2,12 @@
 #define FISK_GAME_HUB_H
 
 #include <gf/GameManager.h>
-#include "ClientNetwork.h"
+
 #include "CardScene.h"
 #include "MainScene.h"
 #include "TitleScene.h"
 #include "LobbyScene.h"
+#include "ClientNetwork.h"
 
 namespace fisk {
 

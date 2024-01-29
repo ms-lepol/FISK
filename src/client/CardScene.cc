@@ -83,7 +83,7 @@ namespace fisk {
     }
 
     c_hand.update(time);
-
+    m_game.clientNetwork.update(); 
   }
 
   void CardScene::doProcessEvent(gf::Event& event) {

@@ -76,7 +76,7 @@ namespace fisk {
 
     m_HudEntities.update(time);
 
-
+    m_game.clientNetwork.update(); 
   }
 
   void TitleScene::doProcessEvent(gf::Event& event) {

@@ -12,7 +12,8 @@ namespace fisk {
     , mainScene(*this)
     , cardScene(*this)
     , lobbyScene(*this)
-    , titleScene(*this) {
+    , titleScene(*this)
+    , clientNetwork(*this) {
 
 
         clientNetwork.connect(HOSTNAME);

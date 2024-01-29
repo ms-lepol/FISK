@@ -4,6 +4,7 @@
 #include "../common/NetworkConstants.h"
 #include "../common/NetworkProtocol.h"
 
+
 #include <atomic>
 #include <mutex>
 #include <string>
@@ -14,11 +15,14 @@
 #include <gf/Sleep.h>
 #include <gf/Log.h>
 
+
 namespace fisk {
+
+    struct GameHub;
 
     class ClientNetwork {
     public:
-        ClientNetwork();
+        ClientNetwork(GameHub& game);
 
         bool isConnecting();
         bool isConnected();
@@ -34,11 +38,13 @@ namespace fisk {
     
     public:
     gf::Queue<gf::Packet> queue;
+    void update();
 
     private:
     void run(std::string hostname);
 
     private:
+        GameHub& m_game;
         gf::TcpSocket m_socket;
         std::mutex m_mutex;
         std::atomic_bool m_connecting;
