@@ -55,6 +55,7 @@ add_executable(server
   src/common/Land.cc
   src/common/Card.cc
   src/common/Continent.cc
+  src/common/Player.cc
   src/common/Game.cc
 )
 
