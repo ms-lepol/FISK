@@ -68,7 +68,8 @@ namespace fisk {
         LandEntity* NewZealand = new LandEntity("New Zealand", 0, pathNewZealand, gf::Vector2i(xNewZealand,yNewZealand),gf::Vector2i(xTextNewZealand,yTextNewZealand),ressources);
         LandEntity* WesternAustralia = new LandEntity("Western Australia", 0, pathWestAustralia, gf::Vector2i(xWestAustralia,yWestAustralia),gf::Vector2i(xTextWestAustralia,yTextWestAustralia),ressources);
         LandEntity* EasternAustralia = new LandEntity("Eastern Australia", 0, pathEastAustralia, gf::Vector2i(xEastAustralia,yEastAustralia),gf::Vector2i(xTextEastAustralia,yTextEastAustralia),ressources);
-      
+        LandEntity* Thailande = new LandEntity("Thailande", 0, pathThai, gf::Vector2i(xThai,yThai),gf::Vector2i(xTextThai,yTextThai),ressources);
+
         lands["Alaska"]=Alaska;
         lands["NorthwestTerritory"]=NorthwestTerritory;
         lands["Greenland"]=Greenland;
@@ -106,6 +107,7 @@ namespace fisk {
         lands["NewZealand"]=NewZealand;
         lands["WesternAustralia"]=WesternAustralia;
         lands["EasternAustralia"]=EasternAustralia;
+        lands["Thailande"]=Thailande;
 
         
         for (auto& [key,value] : lands) {
