@@ -1,6 +1,7 @@
 #ifndef FISK_GAME_INSTANCE_H
 #define FISK_GAME_INSTANCE_H
 
+#include <gf/Packet.h>
 #include <gf/Ref.h>
 #include <memory>
 #include <vector>
@@ -21,6 +22,7 @@ namespace fisk {
             GameInstance(std::unique_ptr<Game> model);
 
             void start();
+            void update(ServerPlayer& player, gf::Packet& packet);
             bool isFinished();
 
     };

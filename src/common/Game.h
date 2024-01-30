@@ -1,5 +1,6 @@
 #ifndef FISK_GAME_H
 #define FISK_GAME_H
+#include <cstddef>
 #include <gf/Id.h>
 #include <vector>
 
@@ -57,6 +58,8 @@ namespace fisk {
         const Land& get_land(LandId land) const;
         const Card& get_card(CardId card) const;
         const Continent& get_continent(ContinentId continent) const;
+
+        size_t nb_lands() const;
  
         template<typename S>
         void serialisation(S& sa) {

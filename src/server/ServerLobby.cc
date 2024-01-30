@@ -60,6 +60,9 @@ namespace fisk {
                 break;
             }
         }
+        if(isGameStarted()) {
+            m_instance->update(player, packet);
+        }
     }
 
     void ServerLobby::broadcastPlayers() {

@@ -2,6 +2,7 @@
 #include "Constants.h"
 #include "Continent.h"
 #include "Player.h"
+#include <cstddef>
 
 namespace fisk {
     Game::Game() {
@@ -37,5 +38,9 @@ namespace fisk {
 
     Land& Game::get_land(LandId id) {
         return lands[id];
+    }
+
+    size_t Game::nb_lands() const {
+        return lands.size();
     }
 }
