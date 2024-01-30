@@ -129,7 +129,7 @@ namespace fisk {
                         }
                     }
                     if(packet.getType() == Game::type) {
-                        if(hasLobbyList()) {
+                        if(hasGameModel()) {
                             *m_model = packet.as<Game>();
                         } else {
                             m_model = new Game(packet.as<Game>());
