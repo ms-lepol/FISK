@@ -8,13 +8,12 @@ namespace fisk {
 
     constexpr gf::Vector2f ViewSize = { 1280.0f, 720.0f };
 
-    GameHub::GameHub() : GameManager("FISK", { "../data/" })
+    GameHub::GameHub(std::string client_name) : GameManager("FISK", { "../data/" })
     , mainScene(*this)
     , cardScene(*this)
     , lobbyScene(*this)
     , titleScene(*this)
-    , clientNetwork(*this) {
-
+    , clientNetwork(*this, client_name) {
 
         clientNetwork.connect(HOSTNAME);
 
@@ -23,7 +22,7 @@ namespace fisk {
         }
         {
             ClientHello hello;
-            hello.name = "Michel";
+            hello.name = client_name;
             clientNetwork.send(hello);
             gf::Packet packet;
             clientNetwork.queue.wait(packet);

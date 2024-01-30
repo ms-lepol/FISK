@@ -208,7 +208,7 @@ namespace fisk {
                 ServerLobby& lobby = m_lobbys.find(packet.as<ClientJoinLobby>().lobby)->second;
                 lobby.removePlayer(player);
                 if(lobby.isEmpty()){
-                    // Erase lobby
+                    m_lobbys.erase(packet.as<ClientJoinLobby>().lobby);
                 }
                 player.lobby = nullptr;
                 break;

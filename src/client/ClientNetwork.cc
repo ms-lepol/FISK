@@ -9,12 +9,13 @@
 #include "GameHub.h"
 namespace fisk {
 
-    ClientNetwork::ClientNetwork(GameHub& game)
+    ClientNetwork::ClientNetwork(GameHub& game, std::string name)
         : m_connecting(false),
         m_model(nullptr),
         m_players(nullptr),
         m_lobbies(nullptr),
-        m_game(game)
+        m_game(game),
+        m_client_name(name)
     {}
 
     ClientNetwork::~ClientNetwork() {

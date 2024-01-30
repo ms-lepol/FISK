@@ -12,15 +12,14 @@
 namespace fisk {
 
   struct GameHub : gf::GameManager {
-    GameHub();
+    GameHub(std::string client_name = "Michel");
 
     MainScene mainScene;
     CardScene cardScene;
     LobbyScene lobbyScene;
     TitleScene titleScene;
 
-    ClientNetwork clientNetwork;
-    
+    ClientNetwork clientNetwork;    
   };
 
 }

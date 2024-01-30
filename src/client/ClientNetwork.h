@@ -23,7 +23,7 @@ namespace fisk {
 
     class ClientNetwork {
     public:
-        ClientNetwork(GameHub& game);
+        ClientNetwork(GameHub& game, std::string name);
         ~ClientNetwork();
 
         bool isConnecting();
@@ -62,6 +62,7 @@ namespace fisk {
         ServerListLobbys* m_lobbies;
         ServerListLobbyPlayers* m_players;
         Game* m_model;
+        std::string m_client_name;
     };
 
 }
