@@ -62,7 +62,6 @@ namespace fisk {
 
     while (queue.poll(packeta)) {
    
-
       switch (packeta.getType()) {
         case ServerStartGame::type: {
           gf::Log::info("(CLIENT) Starting game.\n");
@@ -71,8 +70,6 @@ namespace fisk {
           m_game.pushScene(m_game.mainScene);
           break;
         }
-
-
         case ServerJoinLobby::type: {
           gf::Log::info("(CLIENT) Joining lobby.\n");
           auto data = packeta.as<ClientJoinLobby>();
@@ -114,29 +111,31 @@ namespace fisk {
             switch (m_socket.recvPacket(packet)) {
                 case gf::SocketStatus::Data:
                     gf::Log::info("(CLIENT) recv data\n");
-                    if(packet.getType() == ServerListLobbys::type) {
-                        if(hasLobbyList()) {
-                            *m_lobbies = packet.as<ServerListLobbys>();
-                        } else {
-                            m_lobbies = new ServerListLobbys(packet.as<ServerListLobbys>());
+                    switch (packet.getType()) {
+                        case ServerListLobbys::type: {
+                            if(hasLobbyList()) {
+                                *m_lobbies = packet.as<ServerListLobbys>();
+                            } else {
+                                m_lobbies = new ServerListLobbys(packet.as<ServerListLobbys>());
+                            }
                         }
-                    }
-                    if(packet.getType() == ServerListLobbyPlayers::type) {
-                        if(hasPlayerList()) {
-                            *m_players = packet.as<ServerListLobbyPlayers>();
-                        } else {
-                            m_players = new ServerListLobbyPlayers(packet.as<ServerListLobbyPlayers>());
+                        case ServerListLobbyPlayers::type: {
+                            if(hasPlayerList()) {
+                                *m_players = packet.as<ServerListLobbyPlayers>();
+                            } else {
+                                m_players = new ServerListLobbyPlayers(packet.as<ServerListLobbyPlayers>());
+                            }
                         }
-                    }
-                    if(packet.getType() == Game::type) {
-                        if(hasLobbyList()) {
-                            *m_model = packet.as<Game>();
-                        } else {
-                            m_model = new Game(packet.as<Game>());
+                        case Game::type: {
+                            if(hasLobbyList()) {
+                                *m_model = packet.as<Game>();
+                            } else {
+                                m_model = new Game(packet.as<Game>());
+                            }
                         }
+                        queue.push(std::move(packet));
+                        break;
                     }
-                    queue.push(std::move(packet));
-                    break;
                 case gf::SocketStatus::Error:
                     gf::Log::error("(CLIENT) Error while receiving a packet from server\n");
                     return;

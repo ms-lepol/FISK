@@ -34,6 +34,15 @@ namespace fisk {
     }
 
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {
+        switch (packet.getType()) {
+            case ClientGameClickLand::type: {
+                //
+            }
+
+            case ClientGameCardButton::type: {
+                //
+            }
+        }
     }
 
     bool GameInstance::isFinished() {
