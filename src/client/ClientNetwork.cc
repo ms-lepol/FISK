@@ -128,7 +128,6 @@ namespace fisk {
                             }
                             break;
                         }
-<<<<<<< HEAD
                         case Game::type: {
                             if(hasGameModel()) {
                                 *m_model = packet.as<Game>();
@@ -136,14 +135,6 @@ namespace fisk {
                                 m_model = new Game(packet.as<Game>());
                             }
                             break;
-=======
-                    }
-                    if(packet.getType() == Game::type) {
-                        if(hasGameModel()) {
-                            *m_model = packet.as<Game>();
-                        } else {
-                            m_model = new Game(packet.as<Game>());
->>>>>>> 3c02dc6c31ed7af8654a62ec6fe0f2b77f1ac4c2
                         }
                     }
                     queue.push(std::move(packet));
