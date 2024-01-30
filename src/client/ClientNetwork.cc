@@ -126,12 +126,21 @@ namespace fisk {
                                 m_players = new ServerListLobbyPlayers(packet.as<ServerListLobbyPlayers>());
                             }
                         }
+<<<<<<< HEAD
                         case Game::type: {
                             if(hasLobbyList()) {
                                 *m_model = packet.as<Game>();
                             } else {
                                 m_model = new Game(packet.as<Game>());
                             }
+=======
+                    }
+                    if(packet.getType() == Game::type) {
+                        if(hasGameModel()) {
+                            *m_model = packet.as<Game>();
+                        } else {
+                            m_model = new Game(packet.as<Game>());
+>>>>>>> 8ec1259f915ebec2a3959c4dbbf5b1e61851287a
                         }
                         queue.push(std::move(packet));
                         break;
