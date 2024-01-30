@@ -57,8 +57,6 @@ namespace fisk {
 
   private:
     static void signalHandler(int sig);
-
-  private:
     
     Map1Factory map_factory;
 

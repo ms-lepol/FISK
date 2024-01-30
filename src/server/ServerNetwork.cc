@@ -70,7 +70,7 @@ namespace fisk {
                                     to_disconnect.push_back(player.id);
                                     break;
                                 default:
-                                    gf::Log::debug("(SERVER) {%" PRIX64 "} Updating.\n", player.id);
+                                    //gf::Log::debug("(SERVER) {%" PRIX64 "} Updating.\n", player.id);
                                     update(player, packet);
                                     if(player.lobby != nullptr) {
                                         player.lobby->update(player, packet);
@@ -136,7 +136,7 @@ namespace fisk {
     void ServerNetwork::update(ServerPlayer& player, gf::Packet& packet) {
         switch (packet.getType()) {
             case ClientHello::type: {
-                gf::Log::info("(SERVER) {%" PRIX64 "} Hello.\n", player.id);
+                gf::Log::info("(SERVER) {%" PRIX64 "} Hello received.\n", player.id);
                 auto data = packet.as<ClientHello>();
                 player.name = data.name;
                 // send an acknowledgement to the player
@@ -183,14 +183,39 @@ namespace fisk {
                     break;
                 }
                 ServerLobby& lobby = m_lobbys.find(packet.as<ClientJoinLobby>().lobby)->second;
+                if(lobby.getPlayersCount() == 4){
+                    gf::Log::warning("(SERVER) FullLobby\n");
+                    ServerError data;
+                    data.reason = ServerError::FullLobby;
+                    player.send(data);
+                    break;
+                }
                 lobby.addPlayer(player);
                 player.lobby = &lobby;
                 
                 break;
             }
 
-            default:
-                gf::Log::debug("(SERVER) {%" PRIX64 "} Nothing to do.\n", player.id);
+            case ClientLeaveLobby::type: {
+                gf::Log::info("(SERVER) {%" PRIX64 "} Leave lobby.\n", player.id);
+                if(player.lobby == nullptr) {
+                    gf::Log::warning("(SERVER) PlayerNotInLobby\n");
+                    ServerError data;
+                    data.reason = ServerError::PlayerNotInLobby;
+                    player.send(data);
+                    break;
+                }
+                ServerLobby& lobby = m_lobbys.find(packet.as<ClientJoinLobby>().lobby)->second;
+                lobby.removePlayer(player);
+                if(lobby.isEmpty()){
+                    // Erase lobby
+                }
+                player.lobby = nullptr;
+                break;
+            }
+
+            //default:
+                //gf::Log::debug("(SERVER) {%" PRIX64 "} Nothing to do.\n", player.id);
             
         }
     }
@@ -199,12 +224,12 @@ namespace fisk {
         std::vector<LobbyData> list;
 
         for (auto& kv : m_lobbys) {
-        auto& lobby  = kv.second;
-        LobbyData data;
-        data.id = lobby.id;
-        data.name = lobby.name;
-        data.players = lobby.getPlayersCount();
-        list.push_back(std::move(data));
+            auto& lobby  = kv.second;
+            LobbyData data;
+            data.id = lobby.id;
+            data.name = lobby.name;
+            data.players = lobby.getPlayersCount();
+            list.push_back(std::move(data));
         }
 
         return list;

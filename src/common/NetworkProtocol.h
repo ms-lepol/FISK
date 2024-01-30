@@ -4,6 +4,7 @@
 #include <gf/Id.h>
 #include <gf/SerializationOps.h>
 
+#include "Land.h"
 #include "NetworkProtocolData.h"
 
 using namespace gf::literals;
@@ -194,6 +195,27 @@ namespace fisk {
         Archive& operator|(Archive& ar, ClientReady& data) {
             return ar | data.ready;
         }
+
+    // Client game
+
+    struct ClientGameClickLand {
+        static constexpr gf::Id type = "ClientGameClickLand"_id;
+        Land land;
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ClientGameClickLand& data) {
+            return ar | data.land;
+        } 
+
+    struct ClientGameCardButton { // Player click on cards button
+        static constexpr gf::Id type = "ClientGameCardButton"_id;
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ClientGameCardButton& data) {
+            return ar ;
+        } 
 
 }
 

@@ -20,45 +20,45 @@ namespace fisk {
         assert(player.lobby == this);
 
         switch (packet.getType()) {
-        case ClientCreateLobby::type: {
-            gf::Log::info("(LOBBY) {%" PRIX64 "} Creating lobby.\n", player.id);
-            broadcastPlayers();
-            break;
-        }
-
-        case ClientJoinLobby::type: {
-            gf::Log::info("(LOBBY) {%" PRIX64 "} Joining lobby.\n", player.id);
-            broadcastPlayers();
-            break;
-        }
-
-        case ClientLeaveLobby::type: {
-            gf::Log::info("(LOBBY) {%" PRIX64 "} Leaving lobby.\n", player.id);
-            broadcastPlayers();
-            break;
-        }
-
-        case ClientReady::type: {
-            gf::Log::info("(LOBBY) {%" PRIX64 "} Ready.\n", player.id);
-            if (isGameStarted()) {
-                gf::Log::warning("(LOBBY) {%" PRIX64 "} Game already started\n", player.id);
-                ServerError error;
-                error.reason = ServerError::GameAlreadyStarted;
-                player.send(error);
+            case ClientCreateLobby::type: {
+                gf::Log::info("(LOBBY) {%" PRIX64 "} Creating lobby.\n", player.id);
+                broadcastPlayers();
                 break;
             }
-            auto data = packet.as<ClientReady>();
-            player.ready = data.ready;
-            // send an acknowledgement to the player
-            ServerReady ready;
-            ready.ready = data.ready;
-            player.send(ready);
-            // broadcast new state
-            broadcastPlayers();
-            // Check if everyone is ready
-            startGameIfReady();
-            break;
-        }
+
+            case ClientJoinLobby::type: {
+                gf::Log::info("(LOBBY) {%" PRIX64 "} Joining lobby.\n", player.id);
+                broadcastPlayers();
+                break;
+            }
+
+            case ClientLeaveLobby::type: {
+                gf::Log::info("(LOBBY) {%" PRIX64 "} Leaving lobby.\n", player.id);
+                broadcastPlayers();
+                break;
+            }
+
+            case ClientReady::type: {
+                gf::Log::info("(LOBBY) {%" PRIX64 "} Ready.\n", player.id);
+                if (isGameStarted()) {
+                    gf::Log::warning("(LOBBY) {%" PRIX64 "} Game already started\n", player.id);
+                    ServerError error;
+                    error.reason = ServerError::GameAlreadyStarted;
+                    player.send(error);
+                    break;
+                }
+                auto data = packet.as<ClientReady>();
+                player.ready = data.ready;
+                // send an acknowledgement to the player
+                ServerReady ack;
+                ack.ready = data.ready;
+                player.send(ack);
+                // broadcast new state
+                broadcastPlayers();
+                // Check if everyone is ready
+                startGameIfReady();
+                break;
+            }
         }
     }
 
