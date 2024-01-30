@@ -93,10 +93,182 @@ namespace fisk {
         model->get_continent(Oceania).add_land(WesternAustralia);
         LandId EasternAustralia = model->add_land(Land(0, "EasternAustralia", {}, gf::InvalidId));
         model->get_continent(Oceania).add_land(EasternAustralia);
-
+        LandId Thailande = model->add_land(Land(0, "Thailande", {}, gf::InvalidId));
+        model->get_continent(Asia).add_land(Thailande);
 
         model->get_land(Alaska).addNeighbor(NorthwestTerritory);
         model->get_land(Alaska).addNeighbor(Atlanta);
+        model->get_land(Alaska).addNeighbor(Mongolia);
+
+
+        model->get_land(NorthwestTerritory).addNeighbor(Alaska);
+        model->get_land(NorthwestTerritory).addNeighbor(Greenland);
+        model->get_land(NorthwestTerritory).addNeighbor(Ontario);
+        model->get_land(NorthwestTerritory).addNeighbor(Atlanta);
+        model->get_land(NorthwestTerritory).addNeighbor(Quebec);
+
+        model->get_land(Greenland).addNeighbor(NorthwestTerritory);
+        model->get_land(Greenland).addNeighbor(Quebec);
+        model->get_land(Greenland).addNeighbor(GreatBritain);
+
+        model->get_land(Atlanta).addNeighbor(Alaska);
+        model->get_land(Atlanta).addNeighbor(NorthwestTerritory);
+        model->get_land(Atlanta).addNeighbor(Ontario);
+        model->get_land(Atlanta).addNeighbor(WesternUnitedStates);
+
+        model->get_land(Ontario).addNeighbor(NorthwestTerritory);
+        model->get_land(Ontario).addNeighbor(Greenland);
+        model->get_land(Ontario).addNeighbor(Quebec);
+        model->get_land(Ontario).addNeighbor(WesternUnitedStates);
+        model->get_land(Ontario).addNeighbor(EasternUnitedStates);
+        model->get_land(Ontario).addNeighbor(Atlanta);
+
+        model->get_land(Quebec).addNeighbor(Greenland);
+        model->get_land(Quebec).addNeighbor(Ontario);
+        model->get_land(Quebec).addNeighbor(EasternUnitedStates);
+
+        model->get_land(WesternUnitedStates).addNeighbor(Atlanta);
+        model->get_land(WesternUnitedStates).addNeighbor(Ontario);
+        model->get_land(WesternUnitedStates).addNeighbor(EasternUnitedStates);
+        model->get_land(WesternUnitedStates).addNeighbor(CentralAmerica);
+
+        model->get_land(EasternUnitedStates).addNeighbor(Ontario);
+        model->get_land(EasternUnitedStates).addNeighbor(Quebec);
+        model->get_land(EasternUnitedStates).addNeighbor(WesternUnitedStates);   
+        model->get_land(EasternUnitedStates).addNeighbor(CentralAmerica);
+
+        model->get_land(CentralAmerica).addNeighbor(WesternUnitedStates);
+        model->get_land(CentralAmerica).addNeighbor(EasternUnitedStates);
+        model->get_land(CentralAmerica).addNeighbor(Venezuela);
+
+        model->get_land(Venezuela).addNeighbor(CentralAmerica);
+        model->get_land(Venezuela).addNeighbor(Peru);
+        model->get_land(Venezuela).addNeighbor(Brazil);
+
+        model->get_land(Peru).addNeighbor(Venezuela);
+        model->get_land(Peru).addNeighbor(Brazil);
+        model->get_land(Peru).addNeighbor(Argentina);
+
+        model->get_land(Brazil).addNeighbor(Venezuela);
+        model->get_land(Brazil).addNeighbor(Peru);
+        model->get_land(Brazil).addNeighbor(Argentina);
+        model->get_land(Brazil).addNeighbor(NorthAfrica);
+
+        model->get_land(Argentina).addNeighbor(Peru);
+        model->get_land(Argentina).addNeighbor(Brazil);
+
+        model->get_land(GreatBritain).addNeighbor(Greenland);
+        model->get_land(GreatBritain).addNeighbor(WesternEurope);
+        model->get_land(GreatBritain).addNeighbor(NorthernEurope);
+
+        
+        model->get_land(Scandinavia).addNeighbor(NorthernEurope);
+        model->get_land(Scandinavia).addNeighbor(EasternEurope);
+
+        model->get_land(NorthernEurope).addNeighbor(GreatBritain);
+        model->get_land(NorthernEurope).addNeighbor(WesternEurope);
+        model->get_land(NorthernEurope).addNeighbor(SouthernEurope);
+        model->get_land(NorthernEurope).addNeighbor(Scandinavia);
+
+        model->get_land(SouthernEurope).addNeighbor(WesternEurope);
+        model->get_land(SouthernEurope).addNeighbor(NorthernEurope);
+        model->get_land(SouthernEurope).addNeighbor(EasternEurope);
+        model->get_land(SouthernEurope).addNeighbor(Egypt);
+
+        model->get_land(WesternEurope).addNeighbor(GreatBritain);
+        model->get_land(WesternEurope).addNeighbor(NorthernEurope);
+        model->get_land(WesternEurope).addNeighbor(SouthernEurope);
+        model->get_land(WesternEurope).addNeighbor(NorthAfrica);
+
+        model->get_land(EasternEurope).addNeighbor(Scandinavia);
+        model->get_land(EasternEurope).addNeighbor(NorthernEurope);
+        model->get_land(EasternEurope).addNeighbor(SouthernEurope);
+        model->get_land(EasternEurope).addNeighbor(Afghanistan);
+
+        model->get_land(NorthAfrica).addNeighbor(Brazil);
+        model->get_land(NorthAfrica).addNeighbor(WesternEurope);
+        model->get_land(NorthAfrica).addNeighbor(Egypt);
+        model->get_land(NorthAfrica).addNeighbor(EastAfrica);
+        model->get_land(NorthAfrica).addNeighbor(Congo);
+
+        model->get_land(Egypt).addNeighbor(NorthAfrica);
+        model->get_land(Egypt).addNeighbor(SouthernEurope);
+        model->get_land(Egypt).addNeighbor(EastAfrica);
+        model->get_land(Egypt).addNeighbor(MiddleEast);
+
+        model->get_land(EastAfrica).addNeighbor(NorthAfrica);
+        model->get_land(EastAfrica).addNeighbor(Egypt);
+        model->get_land(EastAfrica).addNeighbor(Congo);
+        model->get_land(EastAfrica).addNeighbor(MiddleEast);
+        model->get_land(EastAfrica).addNeighbor(Madagascar);
+        model->get_land(EastAfrica).addNeighbor(SouthAfrica);
+
+        model->get_land(Congo).addNeighbor(NorthAfrica);
+        model->get_land(Congo).addNeighbor(EastAfrica);
+        model->get_land(Congo).addNeighbor(SouthAfrica);
+
+        model->get_land(SouthAfrica).addNeighbor(EastAfrica);
+        model->get_land(SouthAfrica).addNeighbor(Congo);
+        model->get_land(SouthAfrica).addNeighbor(Madagascar);
+
+        model->get_land(Madagascar).addNeighbor(EastAfrica);
+        model->get_land(Madagascar).addNeighbor(SouthAfrica);
+
+        model->get_land(Ural).addNeighbor(Siberia);
+        model->get_land(Ural).addNeighbor(Afghanistan);
+
+        model->get_land(Siberia).addNeighbor(Ural);
+        model->get_land(Siberia).addNeighbor(Mongolia);
+        model->get_land(Siberia).addNeighbor(China);
+
+        model->get_land(Mongolia).addNeighbor(Siberia);
+        model->get_land(Mongolia).addNeighbor(China);
+        model->get_land(Mongolia).addNeighbor(Japan);
+        model->get_land(Mongolia).addNeighbor(Afghanistan);
+
+        model->get_land(Japan).addNeighbor(Mongolia);
+        model->get_land(Japan).addNeighbor(China);
+
+        model->get_land(Afghanistan).addNeighbor(Ural);
+        model->get_land(Afghanistan).addNeighbor(Mongolia);
+        model->get_land(Afghanistan).addNeighbor(China);
+        model->get_land(Afghanistan).addNeighbor(MiddleEast);
+
+
+        model->get_land(China).addNeighbor(Siberia);
+        model->get_land(China).addNeighbor(Mongolia);
+        model->get_land(China).addNeighbor(Afghanistan);
+        model->get_land(China).addNeighbor(India);
+        model->get_land(China).addNeighbor(Thailande);
+
+        model->get_land(MiddleEast).addNeighbor(Egypt);
+        model->get_land(MiddleEast).addNeighbor(EastAfrica);
+        model->get_land(MiddleEast).addNeighbor(Afghanistan);
+        model->get_land(MiddleEast).addNeighbor(India);
+        model->get_land(MiddleEast).addNeighbor(SouthernEurope);
+        model->get_land(MiddleEast).addNeighbor(EasternEurope);
+
+        model->get_land(India).addNeighbor(MiddleEast);
+        model->get_land(India).addNeighbor(China);
+        model->get_land(India).addNeighbor(Thailande);
+        model->get_land(India).addNeighbor(Afghanistan);
+
+        model->get_land(Indonesia).addNeighbor(Thailande);
+        model->get_land(Indonesia).addNeighbor(NewZealand);
+        model->get_land(Indonesia).addNeighbor(WesternAustralia);
+
+        model->get_land(NewZealand).addNeighbor(Indonesia);
+        model->get_land(NewZealand).addNeighbor(WesternAustralia);
+
+        model->get_land(WesternAustralia).addNeighbor(Indonesia);
+        model->get_land(WesternAustralia).addNeighbor(NewZealand);
+        model->get_land(WesternAustralia).addNeighbor(EasternAustralia);
+
+        model->get_land(EasternAustralia).addNeighbor(WesternAustralia);
+        model->get_land(EasternAustralia).addNeighbor(NewZealand);
+
+
+
         //TODO add all neigbors BOTH WAYS :)
 
         return model;

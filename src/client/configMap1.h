@@ -205,7 +205,7 @@
 
 #define pathThai "sprites/lands/fisk_thailande_931_363.png"
 #define xThai 931
-#define yThai 363
+#define yThai 366
 #define xTextThai 31
 #define yTextThai 23
 
