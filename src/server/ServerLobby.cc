@@ -14,18 +14,18 @@ namespace fisk {
     : m_factory(factory),
     m_instance(nullptr)
     {
-        gf::Log::info("(LOBBY) {%" PRIX64 "} Created lobby.\n", id);
+        gf::Log::info("(LOBBY) Lobby Created.\n");
     }
 
     void ServerLobby::addPlayer(ServerPlayer& player) {
         ServerGroup::addPlayer(player);
-        gf::Log::info("(LOBBY) {%" PRIX64 "} Added Player to Lobby.\n", player.id);
+        gf::Log::info("(LOBBY) {%" PRIX64 "} Added Client to Lobby.\n", player.id);
         broadcastPlayers();
     }
 
     void ServerLobby::removePlayer(ServerPlayer& player) {
         ServerGroup::removePlayer(player);
-        gf::Log::info("(LOBBY) {%" PRIX64 "} Removed Player from Lobby.\n", player.id);
+        gf::Log::info("(LOBBY) {%" PRIX64 "} Removed Client from Lobby.\n", player.id);
         broadcastPlayers();
     }
 
@@ -36,7 +36,7 @@ namespace fisk {
             case ClientReady::type: {
                 gf::Log::info("(LOBBY) {%" PRIX64 "} Ready.\n", player.id);
                 if (isGameStarted()) {
-                    gf::Log::warning("(LOBBY) {%" PRIX64 "} Game already started\n", player.id);
+                    gf::Log::warning("(LOBBY) Game has already started.\n");
                     ServerError error;
                     error.reason = ServerError::GameAlreadyStarted;
                     player.send(error);

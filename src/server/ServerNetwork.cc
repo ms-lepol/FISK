@@ -66,7 +66,7 @@ namespace fisk {
                         case gf::SocketStatus::Data:
                             switch (packet.getType()) {
                                 case ClientDisconnect::type:
-                                    gf::Log::info("(SERVER) {%" PRIX64 "} Disconnected.\n", player.id);
+                                    gf::Log::info("(SERVER) Client {%" PRIX64 "} Disconnected.\n", player.id);
                                     to_disconnect.push_back(player.id);
                                     break;
                                 default:
@@ -80,10 +80,10 @@ namespace fisk {
                             break;
 
                         case gf::SocketStatus::Error:
-                            gf::Log::error("(SERVER) {%" PRIX64 "} Error receiving data.\n", player.id);
+                            gf::Log::error("(SERVER) Client {%" PRIX64 "} Error receiving data.\n", player.id);
                             // fallthrough
                         case gf::SocketStatus::Close:
-                            gf::Log::info("(SERVER) {%" PRIX64 "} Socket closed.\n", player.id);
+                            gf::Log::info("(SERVER) Client {%" PRIX64 "} Socket closed.\n", player.id);
                             to_disconnect.push_back(player.id);
                             break;
                         case gf::SocketStatus::Block:
@@ -111,7 +111,7 @@ namespace fisk {
                 auto& player = res.first->second;
                 m_selector.addSocket(player.socket);
 
-                gf::Log::info("(SERVER) {%" PRIX64 "} Connected.\n", player.id);
+                gf::Log::info("(SERVER) Client {%" PRIX64 "} Connected.\n", player.id);
             }
 
             if (!to_disconnect.empty()) {
@@ -121,8 +121,8 @@ namespace fisk {
                     auto& player = it->second;
                     player.lobby->removePlayer(player);
                     if(player.lobby->isEmpty()) {
-                        gf::Log::info("(SERVER) {%" PRIX64 "} Deleted Lobby\n", player.lobby->id);
                         auto find = m_lobbys.find(player.lobby->id);
+                        gf::Log::info("(SERVER) {%" PRIX64 "} Deleted Lobby {%" PRIX64 "}\n", player.id, find->second.id);
                         if(find != m_lobbys.end()) m_lobbys.erase(find);
                     }
                     m_selector.removeSocket(player.socket);
@@ -145,11 +145,11 @@ namespace fisk {
                 gf::Log::info("(SERVER) {%" PRIX64 "} Hello received.\n", player.id);
                 auto data = packet.as<ClientHello>();
                 player.name = data.name;
-                // send an acknowledgement to the player
+                gf::Log::debug("(SERVER) {%" PRIX64 "} Sending an acknowledgement to the client.\n", player.id);
                 ServerHello hello;
                 hello.playerId = player.id;
                 player.send(hello);
-                // send list of lobbys
+                gf::Log::debug("(SERVER) {%" PRIX64 "} Sending the list of lobbys to the client.\n", player.id);
                 ServerListLobbys list;
                 list.lobbys = getLobbys();
                 player.send(list);
@@ -157,7 +157,7 @@ namespace fisk {
             }
 
             case ClientCreateLobby::type: {
-                gf::Log::info("(SERVER) {%" PRIX64 "} Create lobby.\n", player.id);
+                gf::Log::info("(SERVER) {%" PRIX64 "} Creating lobby...\n", player.id);
                 if(player.lobby != nullptr) {
                     gf::Log::warning("(SERVER) PlayerAlreadyInLobby\n");
                     ServerError data;
@@ -175,12 +175,13 @@ namespace fisk {
                 auto res = m_lobbys.emplace(lobby.id, std::move(lobby));
                 assert(res.second);
                 player.lobby = &res.first->second;
+                gf::Log::info("(SERVER) {%" PRIX64 "} Created Lobby {%" PRIX64 "}.\n", player.id, lobby.id);
                 broadcastLobbys();
                 break;
             }
 
             case ClientJoinLobby::type: {
-                gf::Log::info("(SERVER) {%" PRIX64 "} Join lobby.\n", player.id);
+                gf::Log::info("(SERVER) {%" PRIX64 "} Joining lobby.\n", player.id);
                 if(player.lobby != nullptr) {
                     gf::Log::warning("(SERVER) PlayerAlreadyInLobby\n");
                     ServerError data;
@@ -203,7 +204,7 @@ namespace fisk {
             }
 
             case ClientLeaveLobby::type: {
-                gf::Log::info("(SERVER) {%" PRIX64 "} Leave lobby.\n", player.id);
+                gf::Log::info("(SERVER) {%" PRIX64 "} Leaving lobby.\n", player.id);
                 if(player.lobby == nullptr) {
                     gf::Log::warning("(SERVER) PlayerNotInLobby\n");
                     ServerError data;
@@ -214,7 +215,7 @@ namespace fisk {
                 ServerLobby& lobby = m_lobbys.find(packet.as<ClientJoinLobby>().lobby)->second;
                 lobby.removePlayer(player);
                 if(lobby.isEmpty()){
-                    gf::Log::info("(SERVER) {%" PRIX64 "} Deleted Lobby\n", lobby.id);
+                    gf::Log::info("(SERVER) {%" PRIX64 "} Deleted Lobby {%" PRIX64 "}\n", player.id, lobby.id);
                     m_lobbys.erase(packet.as<ClientJoinLobby>().lobby);
                 }
                 player.lobby = nullptr;

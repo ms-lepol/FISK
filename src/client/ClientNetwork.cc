@@ -3,6 +3,7 @@
 #include <gf/Log.h>
 #include <thread>
 #include <csignal>
+#include <cinttypes>
 
 #include "../common/NetworkProtocol.h"
 #include "../common/NetworkConstants.h"
@@ -76,6 +77,7 @@ namespace fisk {
           gf::Log::info("(CLIENT) Hello.\n");
           auto data = packeta.as<ServerHello>();
           m_game.clientNetwork.setClientId(data.playerId);
+          gf::Log::info("(CLIENT) My ID {%" PRIX64 "}", data.playerId);
           break;
         }
         case ServerStartGame::type: {
@@ -92,6 +94,9 @@ namespace fisk {
             } 
             else {
                 m_players = new ServerListLobbyPlayers(packeta.as<ServerListLobbyPlayers>());
+            }
+            for(auto player : m_players->players){
+                gf::Log::debug("(CLIENT)\t - %s\n", player.name.c_str());
             }
             break;
         }
