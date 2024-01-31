@@ -14,6 +14,8 @@ namespace fisk {
         public:
         ServerLobby(GameFactory& factory);
 
+        void removePlayer(ServerPlayer& player) override;
+
         void update(ServerPlayer& player, gf::Packet& packet);
 
         bool isGameStarted();

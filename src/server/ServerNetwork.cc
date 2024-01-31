@@ -211,6 +211,7 @@ namespace fisk {
                     m_lobbys.erase(packet.as<ClientJoinLobby>().lobby);
                 }
                 player.lobby = nullptr;
+                broadcastLobbys();
                 break;
             }
 

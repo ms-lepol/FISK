@@ -54,6 +54,9 @@ namespace fisk {
     void run(std::string hostname);
 
     private:
+        static void signalHandler(int sig);
+        static std::atomic_bool g_running;
+
         GameHub& m_game;
         gf::TcpSocket m_socket;
         std::mutex m_mutex;
