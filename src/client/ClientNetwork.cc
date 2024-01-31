@@ -122,6 +122,7 @@ namespace fisk {
                     gf::Log::info("(CLIENT) recv data\n");
                     switch (packet.getType()) {
                         case ServerListLobbys::type: {
+                            gf::Log::info("(Client) Lobby List");
                             if(hasLobbyList()) {
                                 *m_lobbies = packet.as<ServerListLobbys>();
                             } else {
@@ -130,6 +131,7 @@ namespace fisk {
                             break;
                         }
                         case ServerListLobbyPlayers::type: {
+                            gf::Log::info("(Client) Lobby Player List");
                             if(hasPlayerList()) {
                                 *m_players = packet.as<ServerListLobbyPlayers>();
                             } else {
@@ -138,6 +140,7 @@ namespace fisk {
                             break;
                         }
                         case Game::type: {
+                            gf::Log::info("(Client) Game");
                             if(hasGameModel()) {
                                 *m_model = packet.as<Game>();
                             } else {
