@@ -153,7 +153,6 @@ namespace fisk {
             switch (m_socket.recvPacket(packet)) {
                 case gf::SocketStatus::Data:
                     gf::Log::info("(CLIENT) recv data\n");
-                        
                     queue.push(std::move(packet));
                     break;
                 case gf::SocketStatus::Error:
@@ -161,13 +160,13 @@ namespace fisk {
                     return;
                 case gf::SocketStatus::Close:
                     gf::Log::info("(CLIENT) End of connection to the server\n");
+
                     return;
                 case gf::SocketStatus::Block:
                     assert(false);
                     break;
             }
         }
-        disconnect();
     }
 
     bool ClientNetwork::hasGameModel() const {

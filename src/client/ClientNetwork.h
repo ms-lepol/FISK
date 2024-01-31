@@ -72,7 +72,6 @@ namespace fisk {
         ServerListLobbyPlayers* m_players;
         Game* m_model;
         
-        gf::Id m_client_id;
         PlayerData m_player_data;
     };
 
