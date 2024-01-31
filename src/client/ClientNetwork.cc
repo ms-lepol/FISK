@@ -86,22 +86,23 @@ namespace fisk {
           break;
         }
         case ServerListLobbyPlayers::type: {
-           if(hasPlayerList()) {
+            gf::Log::info("(CLIENT) Lobby Player List\n");
+            if(hasPlayerList()) {
                 *m_players = packeta.as<ServerListLobbyPlayers>();
-            } else {
+            } 
+            else {
                 m_players = new ServerListLobbyPlayers(packeta.as<ServerListLobbyPlayers>());
             }
             break;
-          break;
         }
-       
-        case ServerReady::type: {;
+        case ServerReady::type: {
+            gf::Log::info("(CLIENT) Ready.\n");
             auto data = packeta.as<ServerReady>();
             m_player_data.ready = data.ready;
-          gf::Log::info("(CLIENT) Ready.\n");
-          break;
+            break;
         }
         case ServerListLobbys::type: {
+            gf::Log::info("(CLIENT) Lobby List.\n");
             if(hasLobbyList()) {
                 *m_lobbies = packeta.as<ServerListLobbys>();
             } else {
@@ -110,6 +111,7 @@ namespace fisk {
             break;
         }
         case Game::type: {
+            gf::Log::info("(CLIENT) Game Model.\n");
             if(hasGameModel()) {
                 *m_model = packeta.as<Game>();
             } else {

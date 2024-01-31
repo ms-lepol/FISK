@@ -14,7 +14,7 @@ namespace fisk {
     : m_factory(factory),
     m_instance(nullptr)
     {
-
+        gf::Log::info("(LOBBY) {%" PRIX64 "} Created lobby.\n", id);
     }
 
     void ServerLobby::addPlayer(ServerPlayer& player) {
@@ -33,12 +33,6 @@ namespace fisk {
         assert(player.lobby == this);
 
         switch (packet.getType()) {
-            case ClientCreateLobby::type: {
-                gf::Log::info("(LOBBY) {%" PRIX64 "} Created lobby.\n", player.id);
-                broadcastPlayers();
-                break;
-            }
-
             case ClientReady::type: {
                 gf::Log::info("(LOBBY) {%" PRIX64 "} Ready.\n", player.id);
                 if (isGameStarted()) {
