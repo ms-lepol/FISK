@@ -89,14 +89,7 @@ namespace fisk {
                 l_lobbyButton.setCallback([this, &game] {
                     std::cout << "Ready" << std::endl;
                     ClientReady data;
-                    if (game.clientNetwork.hasPlayerList()){
-                        auto& l_players = game.clientNetwork.getPlayerList();
-                        for (auto& player : l_players.players) {
-                            if (player.id == game.clientNetwork.getClientId()){
-                                data.ready = !player.ready;
-                            }
-                        }
-                    }
+                    data.ready = !game.clientNetwork.isClientReady();
                     m_game.clientNetwork.send(data);
                 });
                 l_hudButtons.addWidget(l_lobbyButton);
@@ -142,6 +135,8 @@ namespace fisk {
         l_HudEntities.update(time);
         m_game.clientNetwork.update(); 
         resetPlayers();
+
+        //Update the players list
         if (m_game.clientNetwork.hasPlayerList()) {
             auto& l_players = m_game.clientNetwork.getPlayerList();
             for (auto& player : l_players.players) {
@@ -168,6 +163,7 @@ namespace fisk {
         renderHudEntities(target, states);
     }
 
+    //Use a lambda
      void LobbyScene::addPlayer(gf::Id id_player, std::string name){
 
         if (id_player == l_player1.getId() || id_player == l_player2.getId() || id_player == l_player3.getId() || id_player == l_player4.getId()){
@@ -193,6 +189,7 @@ namespace fisk {
         }
     }
 
+    //Use a lambda
     void LobbyScene::setPlayerReady(gf::Id id_player, bool isReady){
         if (id_player == l_player1.getId()){
             l_player1.setReady(isReady);

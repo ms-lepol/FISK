@@ -15,10 +15,11 @@ namespace fisk {
         m_model(nullptr),
         m_players(nullptr),
         m_lobbies(nullptr),
-        m_game(game),
-        m_client_name(name)
+        m_game(game)
     {
         std::signal(SIGINT, &ClientNetwork::signalHandler);
+        m_player_data.name = name;
+        m_player_data.ready = false;
     }
 
     ClientNetwork::~ClientNetwork() {
@@ -52,11 +53,15 @@ namespace fisk {
     }
 
     void ClientNetwork::setClientId(gf::Id id) {
-        m_client_id = id;
+        m_player_data.id = id;
     }
 
     gf::Id ClientNetwork::getClientId() const {
-        return m_client_id;
+        return m_player_data.id;
+    }
+
+    bool ClientNetwork::isClientReady() const {
+        return m_player_data.ready;
     }
  
 
@@ -90,7 +95,9 @@ namespace fisk {
           break;
         }
        
-        case ServerReady::type: {
+        case ServerReady::type: {;
+            auto data = packeta.as<ServerReady>();
+            m_player_data.ready = data.ready;
           gf::Log::info("(CLIENT) Ready.\n");
           break;
         }

@@ -46,6 +46,8 @@ namespace fisk {
         gf::Id getClientId() const;
         void setClientId(gf::Id id);
 
+        bool isClientReady() const;
+
         const ServerListLobbys& getLobbyList() const;
         const ServerListLobbyPlayers& getPlayerList() const;
         const Game& getGameModel() const;
@@ -69,8 +71,9 @@ namespace fisk {
         ServerListLobbys* m_lobbies;
         ServerListLobbyPlayers* m_players;
         Game* m_model;
-        std::string m_client_name;
+        
         gf::Id m_client_id;
+        PlayerData m_player_data;
     };
 
 }
