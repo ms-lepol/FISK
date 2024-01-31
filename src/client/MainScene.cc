@@ -2,8 +2,10 @@
 
 #include "GameHub.h"
 #include "LandEntity.h"
+#include <cstddef>
 #include <gf/Color.h>
 #include <gf/Event.h>
+#include <gf/Id.h>
 #include <gf/Keyboard.h>
 #include <gf/Mouse.h>
 #include <gf/Texture.h>
@@ -11,7 +13,7 @@
 #include <gf/Vector.h>
 #include <gf/MouseValues.h>
 #include <iostream>
-#include "FiskColors.h"
+#include "../common/FiskColors.h"
 
 namespace fisk {
 
@@ -142,6 +144,16 @@ namespace fisk {
       }
     }
     m_game.clientNetwork.update(); 
+
+    if (m_game.clientNetwork.hasGameModel()){
+      auto& l_model = m_game.clientNetwork.getGameModel();
+      for (std::size_t i = 0;i<l_model.get_nb_lands();i++){
+        //Get the color & change it
+        auto player_id = l_model.get_land(i).getOwner();
+        gf::Color4f newcolor =  (player_id!=gf::InvalidId) ?  l_model.get_player(l_model.get_land(i).getOwner()).getColor() : LandColor().Neutral;
+        m_map.changeLandColor(l_model.get_land(i).getName(),  newcolor);
+      }
+    }
     
     m_WorldEntities.update(time);
     m_HudEntities.update(time);

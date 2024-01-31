@@ -11,7 +11,7 @@
 #include <gf/TextureAtlas.h>
 #include <gf/WidgetContainer.h>
 #include <gf/Widgets.h>
-#include "FiskColors.h"
+#include "../common/FiskColors.h"
 
 #include "LobbyPlayer.h"
 

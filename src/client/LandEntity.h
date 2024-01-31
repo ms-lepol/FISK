@@ -33,7 +33,7 @@
 #include <gf/RenderTarget.h>
 
 
-#include "FiskColors.h"
+#include "../common/FiskColors.h"
 
 
 

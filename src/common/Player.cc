@@ -16,7 +16,7 @@ namespace fisk {
         return this->nb_units;
     }
 
-    gf::Color4f Player::getColor(){
+    const gf::Color4f Player::getColor() const{
         return this->color;
     }
 

@@ -19,7 +19,7 @@ namespace fisk {
             unsigned getNb_units() const;
             std::string getName() const;
             std::vector<LandId> getNeighbors() const;
-            PlayerId getPlayer_id();
+            const PlayerId getOwner() const;
             void setOwner_id(PlayerId player_id);
             void addNeighbor(LandId neighbor);
             void removeNeighbor(LandId neighbor);

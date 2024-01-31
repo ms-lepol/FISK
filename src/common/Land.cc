@@ -26,6 +26,10 @@ namespace fisk {
         return neighbors;
     }
 
+    const PlayerId Land::getOwner() const {
+        return owner_id;
+    }
+
     void Land::addNeighbor(LandId id) {
         neighbors.push_back(id);
     }

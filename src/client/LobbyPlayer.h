@@ -12,7 +12,7 @@
 #include <gf/RenderTarget.h>
 #include <gf/Shapes.h>
 
-#include "FiskColors.h"
+#include "../common/FiskColors.h"
 
 namespace fisk {
     class LobbyPlayer : public gf::Entity {
