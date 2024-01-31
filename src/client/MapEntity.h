@@ -19,14 +19,13 @@ namespace fisk  {
         private:
             gf::ResourceManager& ressources;
 
-            std::map<std::string, LandEntity*> lands;
+            std::map<std::string, std::unique_ptr<LandEntity>> lands;
             void configureMap1();
 
        public:
 
             gf::WidgetContainer widg_container;
             
-            ~MapEntity();
             MapEntity(gf::ResourceManager& rm , unsigned level_id);
             void changeLandColor(std::string land_name, gf::Color4f color);
             void render(gf::RenderTarget& target, const gf::RenderStates& states);
