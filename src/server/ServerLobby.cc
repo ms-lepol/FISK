@@ -1,4 +1,5 @@
 #include "ServerLobby.h"
+#include "ServerGroup.h"
 #include "ServerPlayer.h"
 #include "../common/NetworkProtocol.h"
 
@@ -14,6 +15,12 @@ namespace fisk {
     m_instance(nullptr)
     {
 
+    }
+
+    void ServerLobby::removePlayer(ServerPlayer& player) {
+        ServerGroup::removePlayer(player);
+        
+        broadcastPlayers();
     }
 
     void ServerLobby::update(ServerPlayer& player, gf::Packet& packet) {

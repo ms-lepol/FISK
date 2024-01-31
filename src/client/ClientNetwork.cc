@@ -2,6 +2,7 @@
 
 #include <gf/Log.h>
 #include <thread>
+#include <csignal>
 
 #include "../common/NetworkProtocol.h"
 #include "../common/NetworkConstants.h"
@@ -16,7 +17,9 @@ namespace fisk {
         m_lobbies(nullptr),
         m_game(game),
         m_client_name(name)
-    {}
+    {
+        std::signal(SIGINT, &ClientNetwork::signalHandler);
+    }
 
     ClientNetwork::~ClientNetwork() {
         if(hasGameModel()) delete m_model;
@@ -89,6 +92,12 @@ namespace fisk {
     }
   }
  
+    void ClientNetwork::signalHandler(int sig) {
+        assert(sig == SIGINT);
+        g_running = false;
+    }
+
+    std::atomic_bool ClientNetwork::g_running(true);
 
     void ClientNetwork::run(std::string hostname) {
         gf::TcpSocket socket(hostname, PORT);
@@ -105,7 +114,7 @@ namespace fisk {
             m_socket = std::move(socket);
         }
 
-        for (;;) {
+        while (g_running) {
             gf::Packet packet;
 
             switch (m_socket.recvPacket(packet)) {
@@ -150,6 +159,7 @@ namespace fisk {
                     break;
             }
         }
+        disconnect();
     }
 
     bool ClientNetwork::hasGameModel() const {
