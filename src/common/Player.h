@@ -15,7 +15,7 @@ namespace fisk {
             Player(int nb_units, gf::Color4f color, CardId card...);
             int getId_client();
             int getNb_units();
-            gf::Color4f getColor();
+            const gf::Color4f getColor() const;
             void setNb_units(int nb_units);
             void drawCard();
             void playCard();

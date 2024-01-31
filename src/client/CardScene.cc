@@ -12,9 +12,7 @@
 #include <gf/Vector.h>
 #include <gf/MouseValues.h>
 #include <iostream>
-
-#include "FiskColors.h"
-
+#include "../common/FiskColors.h"
 namespace fisk {
 
   namespace {

@@ -34,6 +34,10 @@ namespace fisk {
         return players[id];
     }
 
+    const Player& Game::get_player(PlayerId id) const{
+        return players[id];
+    }
+
     Continent& Game::get_continent(ContinentId id) {
         return continents[id];
     }
@@ -44,6 +48,10 @@ namespace fisk {
 
     const Land& Game::get_land(LandId id ) const {
         return lands[id];
+    }
+
+    const std::size_t Game::get_nb_lands() const {
+        return lands.size();
     }
 
     size_t Game::nb_lands() const {

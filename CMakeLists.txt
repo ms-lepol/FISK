@@ -23,7 +23,7 @@ add_executable(client
   src/client/PhaseIndicator.cc
   src/client/HudButtons.cc
   src/client/ClientNetwork.cc
-  src/client/FiskColors.cc
+  src/common/FiskColors.cc
   src/client/LobbyPlayer.cc
   src/common/Land.cc
   src/common/Card.cc
@@ -57,6 +57,7 @@ add_executable(server
   src/common/Continent.cc
   src/common/Player.cc
   src/common/Game.cc
+  src/common/FiskColors.cc
 )
 
 target_link_libraries(server

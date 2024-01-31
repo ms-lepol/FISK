@@ -2,6 +2,7 @@
 #define FISK_GAME_H
 #include <cstddef>
 #include <gf/Id.h>
+#include <iterator>
 #include <vector>
 
 #include "Constants.h"
@@ -53,6 +54,8 @@ namespace fisk {
         Land& get_land(LandId land);
         Card& get_card(CardId card);
         Continent& get_continent(ContinentId continent);
+
+        const std::size_t get_nb_lands() const;
 
         bool is_neighbours_correct() const;
 

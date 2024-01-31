@@ -9,6 +9,7 @@
 #include <gf/TextureAtlas.h>
 #include <gf/Vector.h>
 #include <string>
+#include "../common/FiskColors.h"
 #include <gf/ResourceManager.h>
 #include <gf/RenderTarget.h>
 

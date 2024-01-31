@@ -1,5 +1,5 @@
 #include "LobbyPlayer.h"
-#include "FiskColors.h"
+#include "../common/FiskColors.h"
 #include <gf/Font.h>
 #include <gf/Log.h>
 #include <gf/ResourceManager.h>

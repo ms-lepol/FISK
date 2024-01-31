@@ -1,7 +1,7 @@
 #include "LobbyScene.h"
 
 #include "ClientNetwork.h"
-#include "FiskColors.h"
+#include "../common/FiskColors.h"
 #include "GameHub.h"
 #include "LandEntity.h"
 #include "LobbyPlayer.h"

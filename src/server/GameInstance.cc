@@ -7,6 +7,8 @@
 #include <gf/Vector.h>
 #include <memory>
 #include <vector>
+#include "../common/FiskColors.h"
+
 
 namespace fisk {
 
@@ -19,10 +21,10 @@ namespace fisk {
 
         const int nb_land_by_player = 4;
         const auto player_colors = gf::vec(
-            gf::Color::Red,
-            gf::Color::Blue,
-            gf::Color::Green,
-            gf::Color::Yellow
+            PlayerColor().Orange,
+            PlayerColor().Blue,
+            PlayerColor().Green,
+            PlayerColor().Yellow
         );
 
         for(unsigned i=0; i < this->getPlayers().size(); ++i) {
