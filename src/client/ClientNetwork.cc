@@ -51,6 +51,13 @@ namespace fisk {
         m_connecting = false;
     }
 
+    void ClientNetwork::setClientId(gf::Id id) {
+        m_client_id = id;
+    }
+
+    gf::Id ClientNetwork::getClientId() const {
+        return m_client_id;
+    }
  
 
   void ClientNetwork::update() {
@@ -60,6 +67,12 @@ namespace fisk {
     while (queue.poll(packeta)) {
    
       switch (packeta.getType()) {
+        case ServerHello::type: {
+          gf::Log::info("(CLIENT) Hello.\n");
+          auto data = packeta.as<ServerHello>();
+          m_game.clientNetwork.setClientId(data.playerId);
+          break;
+        }
         case ServerStartGame::type: {
           gf::Log::info("(CLIENT) Starting game.\n");
           auto data = packeta.as<ServerStartGame>();

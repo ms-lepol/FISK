@@ -89,7 +89,14 @@ namespace fisk {
                 l_lobbyButton.setCallback([this, &game] {
                     std::cout << "Ready" << std::endl;
                     ClientReady data;
-                    data.ready = true;
+                    if (game.clientNetwork.hasPlayerList()){
+                        auto& l_players = game.clientNetwork.getPlayerList();
+                        for (auto& player : l_players.players) {
+                            if (player.id == game.clientNetwork.getClientId()){
+                                data.ready = !player.ready;
+                            }
+                        }
+                    }
                     m_game.clientNetwork.send(data);
                 });
                 l_hudButtons.addWidget(l_lobbyButton);

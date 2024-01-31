@@ -7,6 +7,7 @@
 
 
 #include <atomic>
+#include <gf/Id.h>
 #include <mutex>
 #include <string>
 
@@ -42,6 +43,9 @@ namespace fisk {
         bool hasPlayerList() const;
         bool hasGameModel() const;
 
+        gf::Id getClientId() const;
+        void setClientId(gf::Id id);
+
         const ServerListLobbys& getLobbyList() const;
         const ServerListLobbyPlayers& getPlayerList() const;
         const Game& getGameModel() const;
@@ -66,6 +70,7 @@ namespace fisk {
         ServerListLobbyPlayers* m_players;
         Game* m_model;
         std::string m_client_name;
+        gf::Id m_client_id;
     };
 
 }
