@@ -121,8 +121,9 @@ namespace fisk {
                     auto& player = it->second;
                     player.lobby->removePlayer(player);
                     if(player.lobby->isEmpty()) {
-                        m_lobbys.erase(m_lobbys.find(player.lobby->id));
-                        gf::Log::info("(SERVER) Deleted Lobby");
+                        gf::Log::info("(SERVER) {%" PRIX64 "} Deleted Lobby\n", player.lobby->id);
+                        auto find = m_lobbys.find(player.lobby->id);
+                        if(find != m_lobbys.end()) m_lobbys.erase(find);
                     }
                     m_selector.removeSocket(player.socket);
                     m_players.erase(it);
@@ -213,8 +214,8 @@ namespace fisk {
                 ServerLobby& lobby = m_lobbys.find(packet.as<ClientJoinLobby>().lobby)->second;
                 lobby.removePlayer(player);
                 if(lobby.isEmpty()){
+                    gf::Log::info("(SERVER) {%" PRIX64 "} Deleted Lobby\n", lobby.id);
                     m_lobbys.erase(packet.as<ClientJoinLobby>().lobby);
-                    gf::Log::info("(SERVER) Deleted Lobby");
                 }
                 player.lobby = nullptr;
                 broadcastLobbys();
