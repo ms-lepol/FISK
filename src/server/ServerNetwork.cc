@@ -29,7 +29,7 @@ namespace fisk {
     m_random(random)
     {
         if(!m_listener){
-            throw std::runtime_error("(SERVER) Can not start listener.");
+            throw std::runtime_error("(SERVER) Can not start listener.\n");
         }
 
         std::signal(SIGINT, &ServerNetwork::signalHandler);
@@ -119,6 +119,11 @@ namespace fisk {
                     auto it = m_players.find(id);
                     assert(it != m_players.end());
                     auto& player = it->second;
+                    player.lobby->removePlayer(player);
+                    if(player.lobby->isEmpty()) {
+                        m_lobbys.erase(m_lobbys.find(player.lobby->id));
+                        gf::Log::info("(SERVER) Deleted Lobby");
+                    }
                     m_selector.removeSocket(player.socket);
                     m_players.erase(it);
                 }
@@ -209,6 +214,7 @@ namespace fisk {
                 lobby.removePlayer(player);
                 if(lobby.isEmpty()){
                     m_lobbys.erase(packet.as<ClientJoinLobby>().lobby);
+                    gf::Log::info("(SERVER) Deleted Lobby");
                 }
                 player.lobby = nullptr;
                 broadcastLobbys();

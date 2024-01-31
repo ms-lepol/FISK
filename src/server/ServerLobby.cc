@@ -39,18 +39,6 @@ namespace fisk {
                 break;
             }
 
-            case ClientJoinLobby::type: {
-                gf::Log::info("(LOBBY) {%" PRIX64 "} Joining lobby.\n", player.id);
-                broadcastPlayers();
-                break;
-            }
-
-            case ClientLeaveLobby::type: {
-                gf::Log::info("(LOBBY) {%" PRIX64 "} Leaving lobby.\n", player.id);
-                broadcastPlayers();
-                break;
-            }
-
             case ClientReady::type: {
                 gf::Log::info("(LOBBY) {%" PRIX64 "} Ready.\n", player.id);
                 if (isGameStarted()) {
