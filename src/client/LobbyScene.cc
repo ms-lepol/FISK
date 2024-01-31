@@ -134,7 +134,14 @@ namespace fisk {
 
         l_HudEntities.update(time);
         m_game.clientNetwork.update(); 
-
+        resetPlayers();
+        if (m_game.clientNetwork.hasPlayerList()) {
+            auto& l_players = m_game.clientNetwork.getPlayerList();
+            for (auto& player : l_players.players) {
+                addPlayer(player.id, player.name);
+                setPlayerReady(player.id, player.ready);
+            }
+        }
     }
 
     void LobbyScene::doProcessEvent(gf::Event& event) {
@@ -161,12 +168,10 @@ namespace fisk {
         }
 
         if (l_player1.getId() == 0){
-            gf::Log::info("Player 1\n");
             l_player1.setName(name);
             l_player1.setPlotIsFilled(true);
             l_player1.setId(id_player);
         } else if (l_player2.getId() == 0){
-            gf::Log::info("Player 2\n");
             l_player2.setName(name);
             l_player2.setPlotIsFilled(true);
             l_player2.setId(id_player);
@@ -178,18 +183,6 @@ namespace fisk {
             l_player4.setName(name);
             l_player4.setPlotIsFilled(true);
             l_player4.setId(id_player);
-        }
-    }
-
-    void LobbyScene::removePlayer(gf::Id id_player){
-        if (id_player == l_player1.getId()){
-            l_player1.reset();
-        } else if (id_player == l_player2.getId()){
-            l_player2.reset();
-        } else if (id_player == l_player3.getId()){
-            l_player3.reset();
-        } else if (id_player == l_player4.getId()){
-            l_player4.reset();
         }
     }
 
