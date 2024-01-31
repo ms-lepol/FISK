@@ -17,9 +17,15 @@ namespace fisk {
 
     }
 
+    void ServerLobby::addPlayer(ServerPlayer& player) {
+        ServerGroup::addPlayer(player);
+        gf::Log::info("(LOBBY) {%" PRIX64 "} Added Player to Lobby.\n", player.id);
+        broadcastPlayers();
+    }
+
     void ServerLobby::removePlayer(ServerPlayer& player) {
         ServerGroup::removePlayer(player);
-        
+        gf::Log::info("(LOBBY) {%" PRIX64 "} Removed Player from Lobby.\n", player.id);
         broadcastPlayers();
     }
 
@@ -28,7 +34,7 @@ namespace fisk {
 
         switch (packet.getType()) {
             case ClientCreateLobby::type: {
-                gf::Log::info("(LOBBY) {%" PRIX64 "} Creating lobby.\n", player.id);
+                gf::Log::info("(LOBBY) {%" PRIX64 "} Created lobby.\n", player.id);
                 broadcastPlayers();
                 break;
             }

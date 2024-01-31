@@ -17,7 +17,7 @@ namespace fisk {
   public:
     virtual ~ServerGroup();
 
-    void addPlayer(ServerPlayer& player);
+    virtual void addPlayer(ServerPlayer& player);
     virtual void removePlayer(ServerPlayer& player);
 
     std::vector<PlayerData> getPlayers();
