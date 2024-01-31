@@ -54,6 +54,9 @@ namespace fisk {
         Card& get_card(CardId card);
         Continent& get_continent(ContinentId continent);
 
+        bool is_neighbours_correct() const;
+
+
         const Player& get_player(PlayerId player) const;
         const Land& get_land(LandId land) const;
         const Card& get_card(CardId card) const;

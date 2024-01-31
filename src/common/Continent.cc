@@ -12,10 +12,13 @@ namespace fisk {
         lands(lands)
     {}
 
-    std::string Continent::getName() {
+    std::string Continent::getName() const{
         return name;
     }
 
+    std::vector<LandId> Continent::get_lands() const {
+        return lands;
+    }
     void Continent::add_land(LandId land) {
         lands.push_back(land);
     }

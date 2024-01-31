@@ -3,6 +3,8 @@
 #include "Continent.h"
 #include "Player.h"
 #include <cstddef>
+#include <iostream>
+#include <stdio.h>
 
 namespace fisk {
     Game::Game() {
@@ -40,7 +42,26 @@ namespace fisk {
         return lands[id];
     }
 
+    const Land& Game::get_land(LandId id ) const {
+        return lands[id];
+    }
+
     size_t Game::nb_lands() const {
         return lands.size();
+    }
+
+    bool Game::is_neighbours_correct() const  {
+       bool is_correct = true;
+       for (auto continent :continents){
+        for (auto land : continent.get_lands()){
+            for (auto neighbor : get_land(land).getNeighbors()){
+                if (std::find(get_land(neighbor).getNeighbors().begin(), get_land(neighbor).getNeighbors().end(), land) == get_land(neighbor).getNeighbors().end()){
+                    std::cout << "Land " << get_land(land).getName() << " is not a neighbor of " << get_land(neighbor).getName() << std::endl;
+                    is_correct = false;
+                }
+            }
+        }
+       }
+        return is_correct;
     }
 }

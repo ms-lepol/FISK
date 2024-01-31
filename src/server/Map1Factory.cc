@@ -267,9 +267,18 @@ namespace fisk {
         model->get_land(EasternAustralia).addNeighbor(WesternAustralia);
         model->get_land(EasternAustralia).addNeighbor(NewZealand);
 
+        model->get_land(Thailande).addNeighbor(India);
+        model->get_land(Thailande).addNeighbor(China);
+        model->get_land(Thailande).addNeighbor(Indonesia);
+        
 
-
-        //TODO add all neigbors BOTH WAYS :)
+        
+        //Checks if the neighbors are correct
+        if (!model->is_neighbours_correct()) {
+            gf::Log::warning("The neighbors are not correct\n");
+        } else {
+            gf::Log::info("The neighbors are correct\n");
+        }
 
         return model;
     }

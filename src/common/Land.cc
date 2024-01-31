@@ -14,15 +14,15 @@ namespace fisk {
         this->owner_id = player_id;
     }
 
-    std::string Land::getName() {
+    std::string Land::getName() const{
          return name;
     }
 
-    unsigned Land::getNb_units() {
+    unsigned Land::getNb_units() const {
         return nb_units;
     }
 
-    std::vector<LandId> Land::getNeighbors() {
+    std::vector<LandId> Land::getNeighbors() const {
         return neighbors;
     }
 

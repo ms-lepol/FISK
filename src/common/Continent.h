@@ -13,7 +13,8 @@ namespace fisk {
         public:
             Continent();
             Continent(std::string name, std::vector<LandId> lands);
-            std::string getName();
+            std::string getName() const;
+            std::vector<LandId> get_lands() const;
 
             void add_land(LandId land);
 
