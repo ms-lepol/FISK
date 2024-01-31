@@ -30,6 +30,10 @@ namespace fisk {
         return owner_id;
     }
 
+    void Land::setOwner_id(PlayerId id) {
+        owner_id = id;
+    }
+
     void Land::addNeighbor(LandId id) {
         neighbors.push_back(id);
     }

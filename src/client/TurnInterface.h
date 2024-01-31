@@ -32,6 +32,8 @@ namespace fisk {
             int width = 96;
             int height = 72;
             TurnInterface(unsigned nb_player, gf::ResourceManager& rm, gf::TextureAtlas& atlas);
+            void setNbPlayer(unsigned nb_player);
+            void setTurnOrder(gf::Color4f color);
             void changeTurn();
             void render(gf::RenderTarget& target,const gf::RenderStates& states);
             void setPosition(gf::Vector2i position);

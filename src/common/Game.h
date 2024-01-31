@@ -11,6 +11,7 @@
 #include "Land.h"
 #include "Card.h"
 #include "Continent.h"
+#include "Enums.h"
 
 using namespace gf::literals;
 
@@ -23,6 +24,8 @@ namespace fisk {
         std::vector<Continent> continents;
 
         int game_state;
+        PlayerId current_player;
+        TurnPhase current_phase;
 
         public:
 
@@ -54,8 +57,13 @@ namespace fisk {
         Land& get_land(LandId land);
         Card& get_card(CardId card);
         Continent& get_continent(ContinentId continent);
+        PlayerId get_current_player() const;
+        TurnPhase get_current_phase() const;
+
+        void set_current_player(PlayerId player);
 
         const std::size_t get_nb_lands() const;
+        const std::size_t get_nb_players() const;
 
         bool is_neighbours_correct() const;
 
@@ -69,7 +77,7 @@ namespace fisk {
  
         template<typename S>
         void serialisation(S& sa) {
-            sa | cards | players | lands | continents;
+            sa | cards | players | lands | continents | current_player | current_phase;
         }
     };
 

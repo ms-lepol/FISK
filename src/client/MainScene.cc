@@ -42,7 +42,7 @@ namespace fisk {
   , m_map(MapEntity(game.resources,1))
   
   , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
-  , m_turnInterface(TurnInterface(4,game.resources,m_hudAtlas))
+  , m_turnInterface(TurnInterface(0,game.resources,m_hudAtlas))
   , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game.resources,m_hudAtlas))
   , m_hudButtons(HudButtons(game.resources,m_hudAtlas,game))
   {
@@ -145,6 +145,7 @@ namespace fisk {
     }
     m_game.clientNetwork.update(); 
 
+    //Update the map
     if (m_game.clientNetwork.hasGameModel()){
       auto& l_model = m_game.clientNetwork.getGameModel();
       for (std::size_t i = 0;i<l_model.get_nb_lands();i++){
@@ -153,6 +154,16 @@ namespace fisk {
         gf::Color4f newcolor =  (player_id!=gf::InvalidId) ?  l_model.get_player(l_model.get_land(i).getOwner()).getColor() : LandColor().Neutral;
         m_map.changeLandColor(l_model.get_land(i).getName(),  newcolor);
       }
+    }
+
+    //Update the turn interface
+    if (m_game.clientNetwork.hasGameModel()){
+      auto& l_model = m_game.clientNetwork.getGameModel();
+      m_turnInterface.setTurnOrder(l_model.get_player(l_model.get_current_player()).getColor());
+    }
+    if (m_game.clientNetwork.hasPlayerList()){
+      auto& l_playerList = m_game.clientNetwork.getPlayerList();
+      m_turnInterface.setNbPlayer(l_playerList.players.size());
     }
     
     m_WorldEntities.update(time);

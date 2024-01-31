@@ -22,8 +22,26 @@ namespace fisk {
         this->turn_order = (this->turn_order + 1) % this->nb_player;
     }
 
+    void TurnInterface::setTurnOrder(gf::Color4f color) {
+        if (color == PlayerColor().Yellow) {
+            this->turn_order = 0;
+        } else if (color == PlayerColor().Orange) {
+            this->turn_order = 1;
+        } else if (color == PlayerColor().Blue) {
+            this->turn_order = 2;
+        } else if (color == PlayerColor().Green) {
+            this->turn_order = 3;
+        } else {
+            this->turn_order = -1;
+        }
+    }
+
     void TurnInterface::setPosition(gf::Vector2i position) {
         this->position = position;
+    }
+
+    void TurnInterface::setNbPlayer(unsigned nb_player) {
+        this->nb_player = nb_player;
     }
 
     void TurnInterface::render(gf::RenderTarget& target, const gf::RenderStates& states) {
