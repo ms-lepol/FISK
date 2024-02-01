@@ -42,6 +42,10 @@ namespace fisk {
         neighbors.push_back(id);
     }
 
+    void Land::setNb_units(unsigned nb_units) {
+        this->nb_units = nb_units;
+    }
+
     void Land::reinforce(unsigned nb_units){
         this->nb_units += nb_units;
     }

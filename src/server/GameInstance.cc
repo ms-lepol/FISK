@@ -54,7 +54,7 @@ namespace fisk {
                 ;
             }
         }
-        model.set_current_player(PlayerId(0));
+        model.set_current_player(PlayerId(1));
 
         broadcast(model);
     }

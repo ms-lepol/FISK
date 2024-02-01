@@ -7,7 +7,7 @@ namespace fisk {
 
     std::unique_ptr<Game> createModelForMap1(){
         std::unique_ptr<Game> model(new Game());
-        gf::Log::debug("here\n");
+        //gf::Log::info("here\n");
         ContinentId Europe = model->add_continent(Continent("Europe", {}));
         ContinentId NorthAmerica = model->add_continent(Continent("North America", {}));
         ContinentId SouthAmerica = model->add_continent(Continent("South America", {}));
@@ -15,10 +15,10 @@ namespace fisk {
         ContinentId Africa = model->add_continent(Continent("Africa", {}));
         ContinentId Oceania = model->add_continent(Continent("Oceania", {}));
 
-        gf::Log::debug("here\n");
+        //gf::Log::info("here\n");
 
         LandId Alaska = model->add_land(Land(0, "Alaska", {}, gf::InvalidId));
-        gf::Log::debug("here\n");
+        //gf::Log::info("here\n");
         model->get_continent(NorthAmerica).add_land(Alaska);
         gf::Log::debug("here\n");
         LandId NorthwestTerritory = model->add_land(Land(0, "NorthwestTerritory", {}, gf::InvalidId));
@@ -96,6 +96,7 @@ namespace fisk {
         LandId Thailande = model->add_land(Land(0, "Thailande", {}, gf::InvalidId));
         model->get_continent(Asia).add_land(Thailande);
 
+        //gf::Log::debug("here\n");
         model->get_land(Alaska).addNeighbor(NorthwestTerritory);
         model->get_land(Alaska).addNeighbor(Atlanta);
         model->get_land(Alaska).addNeighbor(Mongolia);
@@ -271,7 +272,7 @@ namespace fisk {
         model->get_land(Thailande).addNeighbor(China);
         model->get_land(Thailande).addNeighbor(Indonesia);
         
-
+        gf::Log::info("here\n");
         
         //Checks if the neighbors are correct
         if (!model->is_neighbours_correct()) {
