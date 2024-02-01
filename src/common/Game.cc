@@ -12,17 +12,17 @@ namespace fisk {
 
     PlayerId Game::add_player(Player player) {
         players.push_back(player);
-        return PlayerId(players.size()-1);
+        return PlayerId(players.size());
     }
 
     CardId Game::add_card(Card card) {
         cards.push_back(card);
-        return CardId(cards.size()-1);
+        return CardId(cards.size());
     }
 
     LandId Game::add_land(Land land) {
         lands.push_back(land);
-        return LandId(lands.size()-1);
+        return LandId(lands.size());
     }
 
     ContinentId Game::add_continent(Continent continent) {
@@ -31,27 +31,27 @@ namespace fisk {
     }
 
     Player& Game::get_player(PlayerId id) {
-        return players[id];
+        return players[id-1];
     }
 
     const Player& Game::get_player(PlayerId id) const{
-        return players[id];
+        return players[id-1];
     }
 
     Continent& Game::get_continent(ContinentId id) {
-        return continents[id];
+        return continents[id-1];
     }
 
     const Continent& Game::get_continent(ContinentId id) const {
-        return continents[id];
+        return continents[id-1];
     }
 
     Land& Game::get_land(LandId id) {
-        return lands[id];
+        return lands[id-1];
     }
 
     const Land& Game::get_land(LandId id ) const {
-        return lands[id];
+        return lands[id-1];
     }
 
     const std::size_t Game::get_nb_lands() const {
