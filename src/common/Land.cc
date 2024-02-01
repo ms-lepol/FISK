@@ -37,4 +37,16 @@ namespace fisk {
     void Land::addNeighbor(LandId id) {
         neighbors.push_back(id);
     }
+
+    void Land::reinforce(unsigned nb_units){
+        this->nb_units += nb_units;
+    }
+
+    void Land::attack(LandId land_id){
+
+    }
+
+    void Land::fortify(LandId land_id){
+
+    }
 }

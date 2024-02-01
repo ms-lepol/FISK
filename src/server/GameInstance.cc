@@ -20,7 +20,7 @@ namespace fisk {
     }
 
     void GameInstance::start() {
-        gf::Log::info("GameInstance started");
+        gf::Log::info("(GAME) GameInstance started\n");
 
         const int nb_land_by_player = 4;
         const auto player_colors = gf::vec(
