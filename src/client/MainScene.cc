@@ -148,12 +148,12 @@ namespace fisk {
     //Update the map
     if (m_game.clientNetwork.hasGameModel()){
       auto& l_model = m_game.clientNetwork.getGameModel();
-      for (std::size_t i = 0;i<l_model.get_nb_lands();i++){
+      for (std::size_t i = 1;i<l_model.get_nb_lands()+1;i++){
         //Get the color & change it
         auto player_id = l_model.get_land(i).getOwner();
         gf::Color4f newcolor =  (player_id!=gf::InvalidId) ?  l_model.get_player(l_model.get_land(i).getOwner()).getColor() : LandColor().Neutral;
         m_map.changeLandColor(l_model.get_land(i).getName(),  newcolor);
-       
+        m_map.changeLandNbUnit(l_model.get_land(i).getName(), l_model.get_land(i).getNb_units());
       }
     }
 

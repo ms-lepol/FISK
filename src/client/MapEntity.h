@@ -28,6 +28,7 @@ namespace fisk  {
             
             MapEntity(gf::ResourceManager& rm , unsigned level_id);
             void changeLandColor(std::string land_name, gf::Color4f color);
+            void changeLandNbUnit(std::string land_name, unsigned nb_unit);
             void render(gf::RenderTarget& target, const gf::RenderStates& states);
 
     };

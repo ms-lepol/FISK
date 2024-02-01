@@ -63,6 +63,7 @@ namespace fisk {
             LandEntity(std::string name, PlayerId player_id, std::string sprite_path, gf::Vector2i position,gf::Vector2i positionText, gf::ResourceManager &rm);
             LandEntity();
             void setColor(gf::Color4f color);
+            void setNbUnit(unsigned nb_unit);
             bool isSelected();
             gf::Color4f getColor();
 

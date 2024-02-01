@@ -38,6 +38,11 @@ namespace fisk {
     void LandEntity::setColor(gf::Color4f color) {
         this->color = color;
     }
+
+    void LandEntity::setNbUnit(unsigned nb_unit) {
+        land.setNb_units(nb_unit);
+    }
+
     bool LandEntity::isSelected(){
         return selected;
     }

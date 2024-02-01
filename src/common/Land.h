@@ -17,10 +17,12 @@ namespace fisk {
             Land();
             Land(unsigned nb_units, std::string name, std::vector<LandId> neighbors, PlayerId player_id);
             unsigned getNb_units() const;
+            void setNb_units(unsigned nb_units);
             std::string getName() const;
             std::vector<LandId> getNeighbors() const;
             const PlayerId getOwner() const;
             void setOwner_id(PlayerId player_id);
+
             void addNeighbor(LandId neighbor);
             void removeNeighbor(LandId neighbor);
             //Actions of the player

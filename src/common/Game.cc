@@ -27,7 +27,7 @@ namespace fisk {
 
     ContinentId Game::add_continent(Continent continent) {
         continents.push_back(continent);
-        return ContinentId(continents.size()-1);
+        return ContinentId(continents.size());
     }
 
     Player& Game::get_player(PlayerId id) {

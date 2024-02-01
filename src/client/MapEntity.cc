@@ -76,6 +76,10 @@ namespace fisk {
     void MapEntity::changeLandColor(std::string land_name, gf::Color4f color) {
         if (lands.find(land_name) != lands.end()) lands[land_name]->setColor(color);
     }
+
+    void MapEntity::changeLandNbUnit(std::string land_name, unsigned nb_unit) {
+        if (lands.find(land_name) != lands.end()) lands[land_name]->setNbUnit(nb_unit);
+    }
     
     void MapEntity::render(gf::RenderTarget& target, const gf::RenderStates& states) {
         std::vector<std::string> keysSelected;
