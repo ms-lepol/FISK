@@ -1,4 +1,5 @@
 #include <gf/Log.h>
+#include <gf/Dice.h>
 #include <string>
 #include <vector>
 #include "Constants.h"
@@ -6,9 +7,11 @@
 
 namespace fisk {
 
-    Land::Land() {}
+    Land::Land()
+    {}
 
-    Land::Land(unsigned nb_units, std::string name, std::vector<LandId> neighbors, PlayerId player_id) {
+    Land::Land(unsigned nb_units, std::string name, std::vector<LandId> neighbors, PlayerId player_id)
+    {
         this->nb_units = nb_units;
         this->name = name;
         this->neighbors = neighbors;
@@ -43,23 +46,24 @@ namespace fisk {
         this->nb_units += nb_units;
     }
 
-    bool Land::attack(Land other){
-        if(other.owner_id == owner_id) {
-            gf::Log::error("(GAME) Cannot attack already conquered land\n");
-            return false;
-        }
+    bool Land::attack(Land other, std::vector<int> attack_dices, std::vector<int> defence_dices){
+        // Verification and dice roll has been made before the call of this function
+        assert(other.owner_id != owner_id);
+        // Calculating dice results
+        auto a_dice = attack_dices.begin();
+        auto d_dice = defence_dices.begin();
 
-        //
+        while(d_dice != defence_dices.end() && a_dice != attack_dices.end()){
+            
+        }
 
         return true;
     }   
 
     bool Land::fortify(Land other){
-        if(other.owner_id != owner_id) {
-            gf::Log::error("(GAME) Cannot fortify other player's land\n");
-            return false;
-        }
+        assert(other.owner_id == owner_id);
         //
+
 
         return true;
     }

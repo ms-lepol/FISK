@@ -1,7 +1,10 @@
 #ifndef FISK_LAND_H
 #define FISK_LAND_H
 #include "Constants.h"
+#include <gf/Dice.h>
 #include <gf/Keyboard.h>
+#include <gf/Random.h>
+#include <gf/Ref.h>
 #include <string>
 #include <vector>
 
