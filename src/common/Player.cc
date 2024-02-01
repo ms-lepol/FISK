@@ -1,36 +1,37 @@
 #include "Player.h"
 #include "Constants.h"
 #include "FiskColors.h"
+#include <gf/Log.h>
 
 namespace fisk {
     Player::Player() {}
-    Player::Player(int nb_units, Player::Color color, std::vector<CardId> hand){
-        this->nb_units = nb_units;
-        this->color = color;
-        this->hand = hand;
-    }
-
-    Player::Player(int nb_units, Player::Color color, CardId card...){
-
-    }
+    Player::Player(int nb_units, Player::Color color, std::vector<CardId> hand):
+        nb_units(nb_units),
+        color(color),
+        hand(hand)
+    {}
 
     int Player::getNb_units(){
         return this->nb_units;
     }
 
-    const uint8_t Player::getColor() const{
-        return static_cast<uint8_t>(this->color);
+    Player::Color Player::getColor() const{
+        return color;
     }
 
     const gf::Color4f Player::getColor4f() const{
         switch (this->color) {
-            case Player::Color::RED:
+            case Color::RED:
+                gf::Log::info("red\n");
                 return PlayerColor().Orange;
-            case Player::Color::BLUE:
+            case Color::BLUE:
+                gf::Log::info("Blue\n");
                 return PlayerColor().Blue;
-            case Player::Color::GREEN:
+            case Color::GREEN:
+                gf::Log::info("green\n");
                 return PlayerColor().Green;
-            case Player::Color::YELLOW:
+            case Color::YELLOW:
+                gf::Log::info("Yellow\n");
                 return PlayerColor().Yellow;
         }
         return PlayerColor().Neutral;
