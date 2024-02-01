@@ -7,22 +7,28 @@ namespace fisk {
     class Player {
         private:
             unsigned nb_units;
-            gf::Color4f color;
             std::vector<CardId> hand;
         public:
+            enum class Color {
+                RED,
+                BLUE,
+                GREEN,
+                YELLOW,
+            } color;
+
             Player();
-            Player(int nb_units, gf::Color4f color, std::vector<CardId> hand);
-            Player(int nb_units, gf::Color4f color, CardId card...);
+            Player(int nb_units, Player::Color color, std::vector<CardId> hand);
+            Player(int nb_units, Player::Color color, CardId card...);
             int getId_client();
             int getNb_units();
-            const gf::Color4f getColor() const;
+            const Player::Color getColor() const;
             void setNb_units(int nb_units);
             void drawCard();
             void playCard();
 
             template<typename S>
             void serialisation(S& sa) {
-                sa | nb_units | color[0] | color[1] | color[2] | color[3] | hand;
+                sa | nb_units | color | hand;
             }
     };
 

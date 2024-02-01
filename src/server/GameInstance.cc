@@ -23,16 +23,10 @@ namespace fisk {
         gf::Log::info("GameInstance started");
 
         const int nb_land_by_player = 4;
-        const auto player_colors = gf::vec(
-            PlayerColor().Yellow,
-            PlayerColor().Orange,
-            PlayerColor().Blue,
-            PlayerColor().Green
-        );
-         std::vector<PlayerId> player_ids ;
+        std::vector<PlayerId> player_ids ;
         //Initialize players
         for(unsigned i=0; i < this->getPlayers().size(); ++i) {
-            Player player(0, player_colors[i], {});
+            Player player(0, static_cast<Player::Color>(i), {});
             player_ids.push_back(model.add_player(player));
         }
         //Initialize lands

@@ -3,12 +3,12 @@
 
 namespace fisk {
     Player::Player() {}
-    Player::Player(int nb_units, gf::Color4f color, std::vector<CardId> hand){
+    Player::Player(int nb_units, Player::Color color, std::vector<CardId> hand){
         this->nb_units = nb_units;
         this->color = color;
         this->hand = hand;
     }
-    Player::Player(int nb_units, gf::Color4f color, CardId card...){
+    Player::Player(int nb_units, Player::Color color, CardId card...){
 
     }
 
@@ -16,7 +16,7 @@ namespace fisk {
         return this->nb_units;
     }
 
-    const gf::Color4f Player::getColor() const{
+    const Player::Color Player::getColor() const{
         return this->color;
     }
 
