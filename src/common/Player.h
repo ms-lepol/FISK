@@ -2,6 +2,7 @@
 #define FISK_PLAYER_H
 #include "Constants.h"
 #include <gf/Color.h>
+#include <sys/types.h>
 #include <vector>
 namespace fisk {
     class Player {
@@ -9,11 +10,11 @@ namespace fisk {
             unsigned nb_units;
             std::vector<CardId> hand;
         public:
-            enum class Color {
-                RED,
-                BLUE,
-                GREEN,
-                YELLOW,
+            enum class Color : uint8_t{
+                RED = 0,
+                BLUE = 1,
+                GREEN = 2,
+                YELLOW = 3,
             } color;
 
             Player();
@@ -21,7 +22,8 @@ namespace fisk {
             Player(int nb_units, Player::Color color, CardId card...);
             int getId_client();
             int getNb_units();
-            const Player::Color getColor() const;
+            const uint8_t getColor() const;
+            const gf::Color4f getColor4f() const;
             void setNb_units(int nb_units);
             void drawCard();
             void playCard();

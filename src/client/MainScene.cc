@@ -151,7 +151,7 @@ namespace fisk {
       for (std::size_t i = 1;i<l_model.get_nb_lands()+1;i++){
         //Get the color & change it
         auto player_id = l_model.get_land(i).getOwner();
-        gf::Color4f newcolor =  (player_id!=gf::InvalidId) ?  l_model.get_player(l_model.get_land(i).getOwner()).getColor() : LandColor().Neutral;
+        gf::Color4f newcolor =  (player_id!=gf::InvalidId) ?  l_model.get_player(l_model.get_land(i).getOwner()).getColor4f() : LandColor().Neutral;
         m_map.changeLandColor(l_model.get_land(i).getName(),  newcolor);
         m_map.changeLandNbUnit(l_model.get_land(i).getName(), l_model.get_land(i).getNb_units());
       }
@@ -160,7 +160,7 @@ namespace fisk {
     //Update the turn interface
     if (m_game.clientNetwork.hasGameModel()){
       auto& l_model = m_game.clientNetwork.getGameModel();
-      m_turnInterface.setTurnOrder(l_model.get_player(l_model.get_current_player()).getColor());
+      //m_turnInterface.setTurnOrder(l_model.get_player(l_model.get_current_player()).getColor4f());
     }
     if (m_game.clientNetwork.hasPlayerList()){
       auto& l_playerList = m_game.clientNetwork.getPlayerList();

@@ -20,13 +20,15 @@ namespace fisk {
     }
 
     void GameInstance::start() {
-        gf::Log::info("GameInstance started");
+        gf::Log::info("GameInstance started\n");
 
         const int nb_land_by_player = 4;
         std::vector<PlayerId> player_ids ;
         //Initialize players
         for(unsigned i=0; i < this->getPlayers().size(); ++i) {
             Player player(0, static_cast<Player::Color>(i), {});
+            gf::Log::info("Player %d - color : %hhu \n", i, static_cast<Player::Color>(i));
+            gf::Log::info("Player %d - color : %hhu \n", i, player.getColor());
             player_ids.push_back(model.add_player(player));
         }
         //Initialize lands
