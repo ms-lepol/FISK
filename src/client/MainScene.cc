@@ -153,6 +153,7 @@ namespace fisk {
         auto player_id = l_model.get_land(i).getOwner();
         gf::Color4f newcolor =  (player_id!=gf::InvalidId) ?  l_model.get_player(l_model.get_land(i).getOwner()).getColor() : LandColor().Neutral;
         m_map.changeLandColor(l_model.get_land(i).getName(),  newcolor);
+       
       }
     }
 

@@ -29,29 +29,32 @@ namespace fisk {
             PlayerColor().Blue,
             PlayerColor().Green
         );
+         std::vector<PlayerId> player_ids ;
         //Initialize players
         for(unsigned i=0; i < this->getPlayers().size(); ++i) {
             Player player(0, player_colors[i], {});
-            model.add_player(player);
+            player_ids.push_back(model.add_player(player));
         }
         //Initialize lands
         unsigned nb_lands = model.get_nb_lands()  ;
-        unsigned nb_players = this->getPlayers().size();
+        unsigned nb_players = this->getPlayersCount();
 
-        for (unsigned i = 0; i <nb_players; ++i) {
-            for (unsigned j = 0; j < nb_land_by_player; ++j) {
+        gf::Log::info("Nb Players: %d\n", nb_players);
+        for (unsigned i = 0; i < nb_players; i++) {
+            for (unsigned j = 0; j < nb_land_by_player; j++) {
                 bool placed = false;
                 while (!placed) {
                     unsigned rand_land = rand() % nb_lands;
                     if (model.get_land(rand_land).getOwner() == gf::InvalidId) {
-                        model.get_land(rand_land).setOwner_id(PlayerId(i));
+                        model.get_land(rand_land).setOwner_id(player_ids[i]);
+                        
                         placed = true;
                     }
                 }
                 ;
             }
         }
-        model.set_current_player(PlayerId(1));
+        model.set_current_player(PlayerId(0));
 
         broadcast(model);
     }
