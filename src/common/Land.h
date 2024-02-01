@@ -25,8 +25,8 @@ namespace fisk {
             void removeNeighbor(LandId neighbor);
             //Actions of the player
             void reinforce(unsigned nb_units);
-            void attack(LandId land_id);
-            void fortify(LandId land_id);
+            bool attack(Land other);
+            bool fortify(Land other);
 
             template<typename S>
             void serialisation(S& sa) {

@@ -1,3 +1,4 @@
+#include <gf/Log.h>
 #include <string>
 #include <vector>
 #include "Constants.h"
@@ -42,11 +43,24 @@ namespace fisk {
         this->nb_units += nb_units;
     }
 
-    void Land::attack(LandId land_id){
+    bool Land::attack(Land other){
+        if(other.owner_id == owner_id) {
+            gf::Log::error("(GAME) Cannot attack already conquered land\n");
+            return false;
+        }
 
-    }
+        //
 
-    void Land::fortify(LandId land_id){
+        return true;
+    }   
 
+    bool Land::fortify(Land other){
+        if(other.owner_id != owner_id) {
+            gf::Log::error("(GAME) Cannot fortify other player's land\n");
+            return false;
+        }
+        //
+
+        return true;
     }
 }
