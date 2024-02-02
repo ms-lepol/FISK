@@ -53,7 +53,7 @@ namespace fisk {
         
         target.draw(spr_widg, states);
         gf::Font& font = game_hub.resources.getFont("font/PixelSplitter-Bold.ttf");
-        unsigned nb_units = game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units();
+        unsigned nb_units = game_hub.clientNetwork.hasGameModel() ? game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units() : 0;
         std::string text = std::to_string(nb_units);
         if (nb_units < 10) text = "0" + text;
         gf::Text txt(text, font, 10);
@@ -90,7 +90,7 @@ namespace fisk {
         }
         target.draw(spr_widg, states);
         gf::Font& font = game_hub.resources.getFont("font/PixelSplitter-Bold.ttf");
-        unsigned nb_units = game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units();
+        unsigned nb_units = game_hub.clientNetwork.hasGameModel() ? game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units() : 0;
         std::string text = std::to_string(nb_units);
         if (nb_units < 10) text = "0" + text;
         gf::Text txt(text, font, 10);
