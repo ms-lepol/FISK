@@ -20,7 +20,9 @@ namespace fisk {
             Land();
             Land(unsigned nb_units, std::string name, std::vector<LandId> neighbors, PlayerId player_id);
             unsigned getNb_units() const;
-            void setNb_units(unsigned nb_units);
+            void setNb_units(unsigned nb);
+            void rmUnits(unsigned nb);
+            void addUnits(unsigned nb);
             std::string getName() const;
             std::vector<LandId> getNeighbors() const;
             const PlayerId getOwner() const;
@@ -29,8 +31,8 @@ namespace fisk {
             void addNeighbor(LandId neighbor);
             void removeNeighbor(LandId neighbor);
             //Actions of the player
-            void reinforce(unsigned nb_units);
-            bool attack(Land other);
+            void reinforce(unsigned nb);
+            bool attack(Land other, std::vector<int> this_dices, std::vector<int> other_dices);
             bool fortify(Land other);
 
             template<typename S>

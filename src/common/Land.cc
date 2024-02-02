@@ -42,25 +42,50 @@ namespace fisk {
         neighbors.push_back(id);
     }
 
-    void Land::setNb_units(unsigned nb_units) {
-        this->nb_units = nb_units;
+    void Land::setNb_units(unsigned nb) {
+        nb_units = nb;
     }
 
-    void Land::reinforce(unsigned nb_units){
-        this->nb_units += nb_units;
+    void Land::rmUnits(unsigned nb){
+        nb_units -= nb;
     }
 
-    bool Land::attack(Land other, std::vector<int> attack_dices, std::vector<int> defence_dices){
+    void Land::addUnits(unsigned nb){
+        nb_units += nb;
+    }
+
+    void Land::reinforce(unsigned nb){
+        addUnits(nb);
+    }
+
+    bool Land::attack(Land other, std::vector<int> this_dices, std::vector<int> other_dices){
         // Verification and dice roll has been made before the call of this function
         assert(other.owner_id != owner_id);
         // Calculating dice results
-        auto a_dice = attack_dices.begin();
-        auto d_dice = defence_dices.begin();
-
-        while(d_dice != defence_dices.end() && a_dice != attack_dices.end()){
-            
+        // asserting vectors contain dices in decreasing order
+        auto t_dice = this_dices.begin();
+        auto o_dice = other_dices.begin();
+        int remaining_troops = this_dices.size();
+        while(t_dice != this_dices.end() && o_dice != other_dices.end()){
+            if(*t_dice > *o_dice){
+                //Win
+                other.rmUnits(1);
+                if(other.nb_units == 0){
+                    //Conquered
+                    other.setOwner_id(owner_id);
+                    other.setNb_units(remaining_troops);
+                    rmUnits(remaining_troops);
+                    break;
+                }
+            }
+            else{
+                //Lose
+                rmUnits(1);
+            }
+            t_dice++;
+            o_dice++;
+            remaining_troops--;
         }
-
         return true;
     }   
 

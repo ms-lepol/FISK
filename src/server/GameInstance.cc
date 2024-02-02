@@ -63,8 +63,19 @@ namespace fisk {
         switch (packet.getType()) {
             case ClientGameClickLand::type: {
                 //
-            }
+                switch (model.get_current_phase()) {
 
+                    case TurnPhase::Fortify:
+
+                        break;
+                    case TurnPhase::Attack:
+                        break;
+                    case TurnPhase::Reinforce:
+                        break;
+                    case TurnPhase::End:
+                        break;
+                }
+            }
             case ClientGameCardButton::type: {
                 //
             }
