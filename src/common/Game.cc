@@ -2,11 +2,14 @@
 #include "Constants.h"
 #include "Continent.h"
 #include "Enums.h"
+#include "Land.h"
 #include "Player.h"
+#include <algorithm>
 #include <cstddef>
 #include <gf/Random.h>
 #include <iostream>
 #include <stdio.h>
+#include <string>
 
 namespace fisk {
     Game::Game()
@@ -84,6 +87,12 @@ namespace fisk {
 
     TurnPhase Game::get_current_phase() const {
         return current_phase;
+    }
+
+    const Land& Game::get_land_by_name(const std::string& name) const {
+        return *std::find_if(lands.cbegin(), lands.cend(), [&name](const Land& land) {
+                return land.getName() == name;
+            }).base();
     }
 
     bool Game::is_neighbours_correct() const  {

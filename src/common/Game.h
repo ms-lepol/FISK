@@ -76,6 +76,7 @@ namespace fisk {
 
             const Player& get_player(PlayerId player) const;
             const Land& get_land(LandId land) const;
+            const Land& get_land_by_name(const std::string& name) const;
             const Card& get_card(CardId card) const;
             const Continent& get_continent(ContinentId continent) const;
 
