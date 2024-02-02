@@ -38,7 +38,7 @@ namespace fisk {
   , m_game(game)
   
   , m_interact("Interact")
-  , m_map(MapEntity(game.resources,1))
+  , m_map(MapEntity(game,1))
   
   , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
   , m_turnInterface(TurnInterface(0,game.resources,m_hudAtlas))
