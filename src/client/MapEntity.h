@@ -1,3 +1,4 @@
+#include "CardScene.h"
 #ifndef FISK_MAP_ENTITY_H
 #define FISK_MAP_ENTITY_H value
 #include "LandEntity.h"
@@ -17,7 +18,7 @@ namespace fisk  {
 
     class MapEntity : public gf::Entity {
         private:
-            gf::ResourceManager& ressources;
+            GameHub& game_hub;
 
             std::map<std::string, std::unique_ptr<LandEntity>> lands;
             void configureMap1();
@@ -26,9 +27,7 @@ namespace fisk  {
 
             gf::WidgetContainer widg_container;
             
-            MapEntity(gf::ResourceManager& rm , unsigned level_id);
-            void changeLandColor(std::string land_name, gf::Color4f color);
-            void changeLandNbUnit(std::string land_name, unsigned nb_unit);
+            MapEntity(GameHub& gm , unsigned level_id);
             void render(gf::RenderTarget& target, const gf::RenderStates& states);
 
     };

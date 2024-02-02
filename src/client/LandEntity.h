@@ -34,6 +34,7 @@
 
 
 #include "../common/FiskColors.h"
+#include "CardScene.h"
 
 
 
@@ -45,24 +46,21 @@ namespace fisk {
             
         private:
             
-            Land land;
+            std::string name;
             gf::Vector2i position;
             gf::Vector2i positionText;
 
-            gf::ResourceManager& ressources;
+            GameHub& game_hub;
 
 
-            gf::Color4f color;
-            
             gf::Texture& m_texture;
             bool selected;
         public:
 
             gf::SpriteWidget spr_widg;
 
-            LandEntity(std::string name, PlayerId player_id, std::string sprite_path, gf::Vector2i position,gf::Vector2i positionText, gf::ResourceManager &rm);
+            LandEntity(std::string name, std::string sprite_path, gf::Vector2i position,gf::Vector2i positionText, GameHub& gm);
             LandEntity();
-            void setColor(gf::Color4f color);
             void setNbUnit(unsigned nb_unit);
             bool isSelected();
             gf::Color4f getColor();
