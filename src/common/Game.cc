@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Constants.h"
 #include "Continent.h"
+#include "Enums.h"
 #include "Player.h"
 #include <cstddef>
 #include <gf/Random.h>
@@ -79,6 +80,10 @@ namespace fisk {
     
     PlayerId Game::get_current_player() const {
         return current_player;
+    }
+
+    TurnPhase Game::get_current_phase() const {
+        return current_phase;
     }
 
     bool Game::is_neighbours_correct() const  {
