@@ -20,7 +20,7 @@ namespace fisk {
     }
 
     void GameInstance::start() {
-        gf::Log::info("GameInstance started\n");
+        gf::Log::info("(GAME) GameInstance started\n");
 
         const int nb_land_by_player = 4;
         std::vector<PlayerId> player_ids ;
@@ -59,8 +59,19 @@ namespace fisk {
         switch (packet.getType()) {
             case ClientGameClickLand::type: {
                 //
-            }
+                switch (model.get_current_phase()) {
 
+                    case TurnPhase::Fortify:
+
+                        break;
+                    case TurnPhase::Attack:
+                        break;
+                    case TurnPhase::Reinforce:
+                        break;
+                    case TurnPhase::End:
+                        break;
+                }
+            }
             case ClientGameCardButton::type: {
                 //
             }

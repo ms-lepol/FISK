@@ -1,13 +1,20 @@
 #include "Game.h"
 #include "Constants.h"
 #include "Continent.h"
+#include "Enums.h"
+#include "Land.h"
 #include "Player.h"
+#include <algorithm>
 #include <cstddef>
+#include <gf/Random.h>
 #include <iostream>
 #include <stdio.h>
+#include <string>
 
 namespace fisk {
-    Game::Game() {
+    Game::Game()
+    {
+        m_random = gf::Random();
     }
 
     PlayerId Game::add_player(Player player) {
@@ -50,6 +57,10 @@ namespace fisk {
         return lands[id-1];
     }
 
+    Land& Game::get_selection(){
+        return selection;
+    }
+
     const Land& Game::get_land(LandId id ) const {
         return lands[id-1];
     }
@@ -72,6 +83,16 @@ namespace fisk {
     
     PlayerId Game::get_current_player() const {
         return current_player;
+    }
+
+    TurnPhase Game::get_current_phase() const {
+        return current_phase;
+    }
+
+    const Land& Game::get_land_by_name(const std::string& name) const {
+        return *std::find_if(lands.cbegin(), lands.cend(), [&name](const Land& land) {
+                return land.getName() == name;
+            }).base();
     }
 
     bool Game::is_neighbours_correct() const  {

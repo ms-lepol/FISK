@@ -30,6 +30,7 @@ namespace fisk {
    , Blue({(float)99/255,(float)155/255,(float)255/255,1})
    , Green({(float)134/255,(float)192/255,(float)108/255,1})
    , Yellow({(float)251/255,(float)239/255,(float)8/255,1})
+   , Neutral({(float)48/255,(float)104/255,(float)80/255,1})
    {
 
    }

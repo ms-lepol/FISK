@@ -1,7 +1,10 @@
 #ifndef FISK_LAND_H
 #define FISK_LAND_H
 #include "Constants.h"
+#include <gf/Dice.h>
 #include <gf/Keyboard.h>
+#include <gf/Random.h>
+#include <gf/Ref.h>
 #include <string>
 #include <vector>
 
@@ -17,7 +20,9 @@ namespace fisk {
             Land();
             Land(unsigned nb_units, std::string name, std::vector<LandId> neighbors, PlayerId player_id);
             unsigned getNb_units() const;
-            void setNb_units(unsigned nb_units);
+            void setNb_units(unsigned nb);
+            void rmUnits(unsigned nb);
+            void addUnits(unsigned nb);
             std::string getName() const;
             std::vector<LandId> getNeighbors() const;
             const PlayerId getOwner() const;
@@ -26,9 +31,9 @@ namespace fisk {
             void addNeighbor(LandId neighbor);
             void removeNeighbor(LandId neighbor);
             //Actions of the player
-            void reinforce(unsigned nb_units);
-            void attack(LandId land_id);
-            void fortify(LandId land_id);
+            void reinforce(unsigned nb);
+            bool attack(Land other, std::vector<int> this_dices, std::vector<int> other_dices);
+            bool fortify(Land other);
 
             template<typename S>
             void serialisation(S& sa) {

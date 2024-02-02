@@ -1,4 +1,4 @@
-#include "MainScene.h"
+#include "MainScene.h" 
 
 #include "GameHub.h"
 #include "LandEntity.h"
@@ -17,21 +17,21 @@
 
 namespace fisk {
 
-  namespace {
-    constexpr gf::Vector2f ViewSize = {1280.0f, 720.0f};
-    constexpr int ViewRadius = 7;
+    namespace {
+        constexpr gf::Vector2f ViewSize = {1280.0f, 720.0f};
+        constexpr int ViewRadius = 7;
 
-    static constexpr float ZoomInFactor = 0.9f;
-    static constexpr float ZoomOutFactor = 1.1f;
+        static constexpr float ZoomInFactor = 0.9f;
+        static constexpr float ZoomOutFactor = 1.1f;
 
-  }
+    }
 
-   CameraActions::CameraActions()
-  : close("Close")
-  , zoomIn("ZoomIn")
-  , zoomOut("ZoomOut")
-  {
-  }
+    CameraActions::CameraActions()
+        : close("Close")
+          , zoomIn("ZoomIn")
+          , zoomOut("ZoomOut")
+    {
+    }
 
   MainScene::MainScene(GameHub& game)
   : gf::Scene(game.getRenderer().getSize())
@@ -52,19 +52,15 @@ namespace fisk {
    
     m_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
 
-    setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
+              setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
 
-    m_phaseIndicator.setColor(m_playerColor.Orange);
+              m_phaseIndicator.setColor(m_playerColor.Orange);
 
-   
-    //World entities
-    m_WorldEntities.addEntity(m_map);
-    m_map.changeLandColor("Alaska", LandColor().Blue);
-    m_map.changeLandColor("Atlanta", LandColor().Orange);
-    m_map.changeLandColor("Ontario", LandColor().Green);
-    m_map.changeLandColor("Quebec", LandColor().Yellow);
 
-    //HUD entities
+              //World entities
+              m_WorldEntities.addEntity(m_map);
+
+              //HUD entities
 
     m_HudEntities.addEntity(m_turnInterface);
     m_HudEntities.addEntity(m_phaseIndicator);
@@ -75,25 +71,25 @@ namespace fisk {
     m_hudButtons.placeCardButton({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(ViewSize.y)-m_hudButtons.size});
 
 
-    // Camera Actions 
-    m_cameraActions.close.addCloseControl();
-    m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
-    m_cameraActions.close.isActive();
+              // Camera Actions 
+              m_cameraActions.close.addCloseControl();
+              m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
+              m_cameraActions.close.isActive();
 
-    m_cameraActions.zoomIn.addScancodeKeyControl(gf::Scancode::Up);
-    m_cameraActions.zoomIn.setContinuous();
-    m_cameraActions.zoomOut.addScancodeKeyControl(gf::Scancode::Down);
-    m_cameraActions.zoomOut.setContinuous();
+              m_cameraActions.zoomIn.addScancodeKeyControl(gf::Scancode::Up);
+              m_cameraActions.zoomIn.setContinuous();
+              m_cameraActions.zoomOut.addScancodeKeyControl(gf::Scancode::Down);
+              m_cameraActions.zoomOut.setContinuous();
 
-    addAction(m_cameraActions.close);
-    addAction(m_cameraActions.zoomIn);
-    addAction(m_cameraActions.zoomOut);
+              addAction(m_cameraActions.close);
+              addAction(m_cameraActions.zoomIn);
+              addAction(m_cameraActions.zoomOut);
 
 
-    // Interact Action
-    m_interact.addMouseButtonControl(gf::MouseButton::Left);
+              // Interact Action
+              m_interact.addMouseButtonControl(gf::MouseButton::Left);
 
-    addAction(m_interact);
+              addAction(m_interact);
 
 
   }
@@ -102,25 +98,24 @@ namespace fisk {
     if (!isActive()) {
       return;
     }
-    // Handle interact
     
     // Handle camera
     if (m_cameraActions.close.isActive()) {
       m_game.getWindow().close();
     }
 
-    // Handle interact
-    if (m_interact.isActive()) {
-      
-      m_hudButtons.widg_container.pointTo(mousePos);
-      m_hudButtons.widg_container.triggerAction();
-      
-      m_map.widg_container.pointTo(mousePos);
-      m_map.widg_container.triggerAction();
+        // Handle interact
+        if (m_interact.isActive()) {
 
-      m_interact.reset();
+            m_hudButtons.widg_container.pointTo(mousePos);
+            m_hudButtons.widg_container.triggerAction();
+
+            m_map.widg_container.pointTo(mousePos);
+            m_map.widg_container.triggerAction();
+
+            m_interact.reset();
+        }
     }
-  }
 
   void MainScene::doUpdate(gf::Time time) {
     gf::Event event;
@@ -131,42 +126,31 @@ namespace fisk {
     }
     m_game.clientNetwork.update(); 
 
-    //Update the map
-    if (m_game.clientNetwork.hasGameModel()){
-      auto& l_model = m_game.clientNetwork.getGameModel();
-      for (std::size_t i = 1;i<l_model.get_nb_lands()+1;i++){
-        //Get the color & change it
-        auto player_id = l_model.get_land(i).getOwner();
-        gf::Color4f newcolor =  (player_id!=gf::InvalidId) ?  l_model.get_player(l_model.get_land(i).getOwner()).getColor4f() : LandColor().Neutral;
-        m_map.changeLandColor(l_model.get_land(i).getName(),  newcolor);
-        m_map.changeLandNbUnit(l_model.get_land(i).getName(), l_model.get_land(i).getNb_units());
-      }
-    }
-
-    //Update the turn interface
-    if (m_game.clientNetwork.hasGameModel()){
-      auto& l_model = m_game.clientNetwork.getGameModel();
-      m_turnInterface.setTurnOrder(l_model.get_player(l_model.get_current_player()).getColor4f());
-    }
-    if (m_game.clientNetwork.hasPlayerList()){
-      auto& l_playerList = m_game.clientNetwork.getPlayerList();
-      m_turnInterface.setNbPlayer(l_playerList.players.size());
-    }
-    
-    m_WorldEntities.update(time);
-    m_HudEntities.update(time);
 
 
-  }
+        //Update the turn interface
+        if (m_game.clientNetwork.hasGameModel()){
+            auto& l_model = m_game.clientNetwork.getGameModel();
+            m_turnInterface.setTurnOrder(l_model.get_player(l_model.get_current_player()).getColor4f());
+            if (m_game.clientNetwork.hasPlayerList()){
+                auto& l_playerList = m_game.clientNetwork.getPlayerList();
+                m_turnInterface.setNbPlayer(l_playerList.players.size());
+            }
 
-  void MainScene::doProcessEvent(gf::Event& event) {
-    if (!isActive()) {
-      return;
+            m_WorldEntities.update(time);
+            m_HudEntities.update(time);
+        }
     }
-    if (event.type == gf::EventType::MouseMoved) {
-      mousePos = event.mouseCursor.coords;
+
+
+    void MainScene::doProcessEvent(gf::Event& event) {
+        if (!isActive()) {
+            return;
+        }
+        if (event.type == gf::EventType::MouseMoved) {
+            mousePos = event.mouseCursor.coords;
+        }
     }
-  }
 
   void MainScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
    

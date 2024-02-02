@@ -20,7 +20,7 @@ namespace fisk {
         LandId Alaska = model->add_land(Land(0, "Alaska", {}, gf::InvalidId));
         //gf::Log::info("here\n");
         model->get_continent(NorthAmerica).add_land(Alaska);
-        gf::Log::info("here\n");
+        gf::Log::debug("here\n");
         LandId NorthwestTerritory = model->add_land(Land(0, "NorthwestTerritory", {}, gf::InvalidId));
         model->get_continent(NorthAmerica).add_land(NorthwestTerritory);
         LandId Greenland = model->add_land(Land(0, "Greenland", {}, gf::InvalidId));
@@ -276,9 +276,9 @@ namespace fisk {
         
         //Checks if the neighbors are correct
         if (!model->is_neighbours_correct()) {
-            gf::Log::warning("The neighbors are not correct\n");
+            gf::Log::warning("(GAME) The neighbors are not correct\n");
         } else {
-            gf::Log::info("The neighbors are correct\n");
+            gf::Log::info("(GAME) The neighbors are correct\n");
         }
 
         //Initialize cards
