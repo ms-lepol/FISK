@@ -2,27 +2,34 @@
 #define FISK_PLAYER_H
 #include "Constants.h"
 #include <gf/Color.h>
+#include <sys/types.h>
 #include <vector>
 namespace fisk {
     class Player {
         private:
             unsigned nb_units;
-            gf::Color4f color;
             std::vector<CardId> hand;
         public:
+            enum class Color : uint8_t{
+                RED = 0,
+                BLUE = 1,
+                GREEN = 2,
+                YELLOW = 3,
+            } color;
+
             Player();
-            Player(int nb_units, gf::Color4f color, std::vector<CardId> hand);
-            Player(int nb_units, gf::Color4f color, CardId card...);
+            Player(int nb_units, Player::Color color, std::vector<CardId> hand);
             int getId_client();
             int getNb_units();
-            const gf::Color4f getColor() const;
+            Player::Color getColor() const;
+            const gf::Color4f getColor4f() const;
             void setNb_units(int nb_units);
             void drawCard();
             void playCard();
 
             template<typename S>
             void serialisation(S& sa) {
-                sa | nb_units | color[0] | color[1] | color[2] | color[3] | hand;
+                sa | nb_units | color | hand;
             }
     };
 
