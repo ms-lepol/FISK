@@ -22,16 +22,16 @@ namespace fisk {
     const gf::Color4f Player::getColor4f() const{
         switch (this->color) {
             case Color::RED:
-                gf::Log::info("red\n");
+                
                 return PlayerColor().Orange;
             case Color::BLUE:
-                gf::Log::info("Blue\n");
+              
                 return PlayerColor().Blue;
             case Color::GREEN:
-                gf::Log::info("green\n");
+                
                 return PlayerColor().Green;
             case Color::YELLOW:
-                gf::Log::info("Yellow\n");
+               
                 return PlayerColor().Yellow;
         }
         return PlayerColor().Neutral;

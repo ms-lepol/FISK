@@ -281,6 +281,27 @@ namespace fisk {
             gf::Log::info("The neighbors are correct\n");
         }
 
+        //Initialize cards
+        for (int i = 1;i<model->get_nb_lands()+1;i++){
+            fisk::Type type;
+            if (i%3 == 0){
+                type = fisk::Type::Infantery;
+            }
+            else if (i%3 == 1){
+                type = fisk::Type::Cavalry;
+            }
+            else {
+                type = fisk::Type::Gunner;
+            }
+            Card card(type,i);
+            model->add_card(card);
+        }
+        
+        Card joker1(fisk::Type::Joker, 0);
+        model->add_card(joker1);
+        Card joker2(fisk::Type::Joker, 0);
+        model->add_card(joker2);
+
         return model;
     }
 

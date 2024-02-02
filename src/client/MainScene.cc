@@ -36,8 +36,7 @@ namespace fisk {
   MainScene::MainScene(GameHub& game)
   : gf::Scene(game.getRenderer().getSize())
   , m_game(game)
-  , m_WorldView({ViewSize.x/2,ViewSize.y/2 }, ViewSize)
-  , adaptor(game.getRenderer(), m_WorldView)
+  
   , m_interact("Interact")
   , m_map(MapEntity(game.resources,1))
   
@@ -48,11 +47,9 @@ namespace fisk {
   {
    
     // Views
-    addView(m_WorldView);
-    addView(m_HudView);
     
     //Rendering configuration
-    m_HudView.setSize(m_game.getWindow().getSize()); 
+   
     m_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
 
     setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
@@ -73,8 +70,6 @@ namespace fisk {
     m_HudEntities.addEntity(m_phaseIndicator);
     m_HudEntities.addEntity(m_hudButtons);
 
-    std::cout << "hud size: " << m_HudView.getSize().x << " "<< m_HudView.getSize().y<<std::endl;
-    
     m_turnInterface.setPosition({static_cast<int>(ViewSize.x)-m_turnInterface.width,static_cast<int>(ViewSize.y)/2});
     m_phaseIndicator.setPosition({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width/2,static_cast<int>(ViewSize.y) - m_turnInterface.height});
     m_hudButtons.placeCardButton({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(ViewSize.y)-m_hudButtons.size});
@@ -101,9 +96,6 @@ namespace fisk {
     addAction(m_interact);
 
 
-    m_WorldView.setInitialFramebufferSize(m_game.getRenderer().getSize());
-    //m_HudView.setSize(ViewSize);
-    m_HudView.setInitialFramebufferSize(m_game.getRenderer().getSize());
   }
 
   void MainScene::doHandleActions([[maybe_unused]] gf::Window& window) {
@@ -115,12 +107,6 @@ namespace fisk {
     // Handle camera
     if (m_cameraActions.close.isActive()) {
       m_game.getWindow().close();
-    }
-    if (m_cameraActions.zoomIn.isActive()) {
-      m_WorldView.zoom(ZoomInFactor);
-    }
-    if (m_cameraActions.zoomOut.isActive()) {
-      m_WorldView.zoom(ZoomOutFactor);
     }
 
     // Handle interact
@@ -160,7 +146,7 @@ namespace fisk {
     //Update the turn interface
     if (m_game.clientNetwork.hasGameModel()){
       auto& l_model = m_game.clientNetwork.getGameModel();
-      //m_turnInterface.setTurnOrder(l_model.get_player(l_model.get_current_player()).getColor4f());
+      m_turnInterface.setTurnOrder(l_model.get_player(l_model.get_current_player()).getColor4f());
     }
     if (m_game.clientNetwork.hasPlayerList()){
       auto& l_playerList = m_game.clientNetwork.getPlayerList();
@@ -183,13 +169,12 @@ namespace fisk {
   }
 
   void MainScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
-    target.setView(m_WorldView);
-    target.setView(m_HudView);
+   
 
     m_WorldEntities.render(target, states);
     m_HudEntities.render(target, states);
     
-    renderHudEntities(target, states);
+    //renderHudEntities(target, states);
   }
 
 }

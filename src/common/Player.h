@@ -11,10 +11,10 @@ namespace fisk {
             std::vector<CardId> hand;
         public:
             enum class Color : uint8_t{
-                RED = 0,
-                BLUE = 1,
-                GREEN = 2,
-                YELLOW = 3,
+                YELLOW = 0,
+                RED = 1,
+                BLUE = 2,
+                GREEN = 3,
             } color;
 
             Player();
