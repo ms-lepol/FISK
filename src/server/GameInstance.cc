@@ -20,11 +20,7 @@ namespace fisk {
     }
 
     void GameInstance::start() {
-<<<<<<< HEAD
         gf::Log::info("(GAME) GameInstance started\n");
-=======
-        gf::Log::info("GameInstance started\n");
->>>>>>> e256102984a38092d2b1c157a82b0a90970a3440
 
         const int nb_land_by_player = 4;
         std::vector<PlayerId> player_ids ;
