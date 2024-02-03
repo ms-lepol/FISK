@@ -36,6 +36,9 @@
 #include "../common/FiskColors.h"
 
 
+#define CARD_WIDTH 158
+#define CARD_HEIGHT 223
+
 
 namespace fisk {
     
@@ -48,8 +51,6 @@ namespace fisk {
             Card card;
             std::string land_name;
             gf::Vector2i position;
-            gf::Vector2i positionText;
-
             gf::ResourceManager& ressources;
 
 
@@ -57,12 +58,23 @@ namespace fisk {
             gf::Sprite spr_type;
             
             bool selected;
+            bool is_joker = false;
         public:
 
             gf::SpriteWidget spr_widg;
 
-            CardEntity(CardId card_id, PlayerId player_id, gf::ResourceManager &rm);
-            CardEntity();
+            CardEntity(Card card, gf::ResourceManager &rm);
+            
+            
+            void setSelected(bool selected);
+            void setPosition(gf::Vector2i position);
+            void setPositionText(gf::Vector2i positionText);
+            void setCard(Card card);
+
+            Card getCard();
+            std::string getLandName();
+            gf::Vector2i getPosition();
+
             bool isSelected();
 
             void render(gf::RenderTarget& target, gf::RenderStates states);

@@ -4,7 +4,11 @@
 #include <gf/Log.h>
 
 namespace fisk {
-    Player::Player() {}
+    Player::Player() {
+        this->nb_units = 0;
+        this->color = Color::NEUTRAL;
+        this->hand = {};
+    }
     Player::Player(int nb_units, Player::Color color, std::vector<CardId> hand):
         nb_units(nb_units),
         color(color),
@@ -17,6 +21,10 @@ namespace fisk {
 
     Player::Color Player::getColor() const{
         return color;
+    }
+
+    std::vector<CardId> Player::getHand() const{
+        return hand;
     }
 
     const gf::Color4f Player::getColor4f() const{

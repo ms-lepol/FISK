@@ -5,6 +5,7 @@
 #include <gf/Scene.h>
 #include <gf/Action.h>
 
+#include "HandEntity.h"
 #include <gf/RenderWindow.h>
 #include <gf/Shapes.h>
 #include <gf/Views.h>
@@ -42,6 +43,8 @@ namespace fisk {
 
             gf::RoundedRectangleShape background;
             // entities
+
+            HandEntity c_handEntity;
 
             // widgets
             gf::SpriteWidget c_closeButton;

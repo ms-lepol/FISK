@@ -1,7 +1,9 @@
 #include "CardScene.h"
+#include "CardEntity.h"
 #include "CardScene.h"
 
 #include "GameHub.h"
+#include "HandEntity.h"
 #include "LandEntity.h"
 #include <gf/Anchor.h>
 #include <gf/Color.h>
@@ -35,6 +37,7 @@ namespace fisk {
   , c_interact("Interact")
   , c_close("Close")
   , c_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
+  , c_handEntity(HandEntity(game))
   , c_playCard("Play", game.resources.getFont("font/PixelSplitter-Bold.ttf"),30)
   , c_closeButton(game.resources.getTexture("sprites/fisk_ui.png"), c_hudAtlas.getTextureRect("redCross"),c_hudAtlas.getTextureRect("redCross"),c_hudAtlas.getTextureRect("redCross"))
   {
@@ -53,6 +56,9 @@ namespace fisk {
    
     //World entities
    
+    c_hand.addEntity(c_handEntity);
+
+    c_handEntity.setPosition(screenCenter + gf::Vector2f({-c_handEntity.getDimensions().x/2.0f, CARD_HEIGHT/2.0f}));
     //HUD entities
 
 

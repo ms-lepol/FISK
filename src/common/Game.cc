@@ -41,6 +41,14 @@ namespace fisk {
         return players[id-1];
     }
 
+    Card& Game::get_card(CardId id) {
+        return cards[id-1];
+    }
+
+    const Card& Game::get_card(CardId id) const {
+        return cards[id-1];
+    }
+
     const Player& Game::get_player(PlayerId id) const{
         return players[id-1];
     }
@@ -71,6 +79,10 @@ namespace fisk {
 
     const std::size_t Game::get_nb_players() const {
         return players.size();
+    }
+
+    const std::size_t Game::get_nb_cards() const {
+        return cards.size();
     }
 
     size_t Game::nb_lands() const {

@@ -8,7 +8,12 @@
 namespace fisk {
 
     Land::Land()
-    {}
+    {
+        nb_units = 0;
+        name = "";
+        neighbors = {};
+        owner_id = gf::InvalidId;
+    }
 
     Land::Land(unsigned nb_units, std::string name, std::vector<LandId> neighbors, PlayerId player_id)
     {
