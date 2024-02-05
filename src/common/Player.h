@@ -11,10 +11,11 @@ namespace fisk {
             std::vector<CardId> hand;
         public:
             enum class Color : uint8_t{
-                RED = 0,
-                BLUE = 1,
-                GREEN = 2,
-                YELLOW = 3,
+                YELLOW = 0,
+                RED = 1,
+                BLUE = 2,
+                GREEN = 3,
+                NEUTRAL = 4
             } color;
 
             Player();
@@ -24,6 +25,8 @@ namespace fisk {
             Player::Color getColor() const;
             const gf::Color4f getColor4f() const;
             void setNb_units(int nb_units);
+            std::vector<CardId> getHand() const;
+
             void drawCard();
             void playCard();
 

@@ -85,6 +85,7 @@ namespace fisk {
           auto data = packeta.as<ServerStartGame>();
           m_game.popScene();
           m_game.pushScene(m_game.mainScene);
+          
           break;
         }
         case ServerListLobbyPlayers::type: {

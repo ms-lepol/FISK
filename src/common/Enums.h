@@ -6,7 +6,8 @@ namespace fisk {
     enum class Type : uint8_t{
         Infantery, // 0
         Cavalry, // 1
-        Gunner // 2
+        Gunner, // 2
+        Joker // 3
     };
 
     enum class TurnPhase : uint8_t{

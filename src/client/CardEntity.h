@@ -1,8 +1,8 @@
-#ifndef FISK_LAND_ENTITY_H
-#define FISK_LAND_ENTITY_H
+#ifndef FISK_CARD_ENTITY_H
+#define FISK_CARD_ENTITY_H
 
 
-#include "../common/Land.h"
+#include "../common/Card.h"
 #include <gf/Color.h>
 #include <gf/Sprite.h>
 #include <gf/Vector.h>
@@ -34,39 +34,50 @@
 
 
 #include "../common/FiskColors.h"
-#include "CardScene.h"
 
+
+#define CARD_WIDTH 158
+#define CARD_HEIGHT 223
 
 
 namespace fisk {
     
 
 
-    class LandEntity : public gf::Entity {
+    class CardEntity : public gf::Entity {
             
         private:
             
-            std::string name;
+            Card card;
+            std::string land_name;
             gf::Vector2i position;
-            gf::Vector2i positionText;
-
-            GameHub& game_hub;
+            gf::ResourceManager& ressources;
 
 
-            gf::Texture& m_texture;
+            gf::Color4f color;
+            gf::Sprite spr_type;
+            
             bool selected;
+            bool is_joker = false;
         public:
 
             gf::SpriteWidget spr_widg;
 
-            LandEntity(std::string name, std::string sprite_path, gf::Vector2i position,gf::Vector2i positionText, GameHub& gm);
-            LandEntity();
-            void setNbUnit(unsigned nb_unit);
+            CardEntity(Card card, gf::ResourceManager &rm);
+            
+            
+            void setSelected(bool selected);
+            void setPosition(gf::Vector2i position);
+            void setPositionText(gf::Vector2i positionText);
+            void setCard(Card card);
+
+            Card getCard();
+            std::string getLandName();
+            gf::Vector2i getPosition();
+
             bool isSelected();
-            gf::Color4f getColor();
 
             void render(gf::RenderTarget& target, gf::RenderStates states);
-            void renderSelected(gf::RenderTarget& target, gf::RenderStates states);
 
         };
 }

@@ -5,10 +5,13 @@
 #include <gf/Scene.h>
 #include <gf/Action.h>
 
+#include "HandEntity.h"
 #include <gf/RenderWindow.h>
+#include <gf/Shapes.h>
 #include <gf/Views.h>
 #include <gf/TextureAtlas.h>
 #include <gf/WidgetContainer.h>
+#include <gf/Widgets.h>
 
 
 namespace fisk {
@@ -30,8 +33,6 @@ namespace fisk {
         private:
             GameHub& m_game;
 
-            //rendering
-            
             
             gf::TextureAtlas c_hudAtlas;
 
@@ -40,10 +41,14 @@ namespace fisk {
             gf::WidgetContainer c_hudButtons;
             gf::EntityContainer c_hand;
 
+            gf::RoundedRectangleShape background;
             // entities
 
-            // widgets
+            HandEntity c_handEntity;
 
+            // widgets
+            gf::SpriteWidget c_closeButton;
+            gf::TextButtonWidget c_playCard;
 
             // actions
 

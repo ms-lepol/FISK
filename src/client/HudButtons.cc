@@ -8,7 +8,7 @@
 
 namespace fisk {
 
-     HudButtons::HudButtons(gf::ResourceManager& rm, gf::TextureAtlas& atlas, GameHub& game) : 
+    HudButtons::HudButtons(gf::ResourceManager& rm, gf::TextureAtlas& atlas, GameHub& game) : 
         m_game(game),
         ressources(rm), 
         atlas(atlas),
@@ -16,9 +16,9 @@ namespace fisk {
         widg_help(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("buttonHelp"),atlas.getTextureRect("buttonHelp"),atlas.getTextureRect("buttonHelp"))),
         widg_settings(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("ButtonSetting"),atlas.getTextureRect("ButtonSetting"),atlas.getTextureRect("ButtonSetting"))),
         widg_quit(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("buttonQuit"),atlas.getTextureRect("buttonQuit"),atlas.getTextureRect("buttonQuit")))
-        {
+    {
         //Logic
-      
+
         //Rendering
 
 
@@ -30,22 +30,21 @@ namespace fisk {
 
         //Logic
         widg_card.setCallback([this] {
-            
-            callbackCardButton();
-        });
+                callbackCardButton();
+                });
 
         widg_container.addWidget(widg_card);
         widg_container.addWidget(widg_help);
         widg_container.addWidget(widg_settings);
         widg_container.addWidget(widg_quit);
 
-        }
+    }
 
     void HudButtons::callbackCardButton() {
         //Logic
         gf::Log::info("CardButton clicked\n");
         m_game.pushScene(m_game.cardScene);
-        
+
     }
 
     void HudButtons::placeCardButton(gf::Vector2i position) {
@@ -61,7 +60,7 @@ namespace fisk {
     }
 
     void HudButtons::render(gf::RenderTarget& target, const gf::RenderStates& states) {
-        
+
 
         //rendering block by block
         widg_container.render(target,states);

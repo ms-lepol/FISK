@@ -42,11 +42,7 @@ private:
 
     // views
 
-  gf::ExtendView m_WorldView;
-  gf::ScreenView m_HudView;
 
-  gf::ZoomingViewAdaptor adaptor;
-  
   //rendering
 
   PlayerColor m_playerColor;

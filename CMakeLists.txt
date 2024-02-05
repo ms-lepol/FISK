@@ -33,6 +33,8 @@ add_executable(client
   src/client/CardScene.cc
   src/common/Game.cc
   src/common/Player.cc
+  src/client/CardEntity.cc
+  src/client/HandEntity.cc
   # and the rest of your sources
 )
 
