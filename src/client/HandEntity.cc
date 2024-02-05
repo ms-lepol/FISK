@@ -28,7 +28,7 @@ namespace fisk {
         if (game_hub.clientNetwork.hasGameModel()) {
             auto& gm = game_hub.clientNetwork.getGameModel();
             std::vector<CardId> hand = gm.get_player(game_hub.clientNetwork.getClientId()).getHand();
-            gf::Log::debug("here");
+            cards.clear();
             for (auto card : hand) {
                 cards.push_back(CardEntity(gm.get_card(card), ressources));
             }
