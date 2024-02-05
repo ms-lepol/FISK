@@ -1,8 +1,10 @@
 #ifndef FISK_GAME_INSTANCE_H
 #define FISK_GAME_INSTANCE_H
 
+#include <gf/Id.h>
 #include <gf/Packet.h>
 #include <gf/Ref.h>
+#include <map>
 #include <memory>
 #include <vector>
 #include "../common/NetworkProtocol.h"
@@ -17,8 +19,7 @@ namespace fisk {
 
         Game model;
 
-        Land old;
-        Land curr;
+        std::map<gf::Id, PlayerId> srv_to_model_id;
 
         public:
 

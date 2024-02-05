@@ -5,6 +5,7 @@
 #   make
 #
 cmake_minimum_required(VERSION 3.18...3.21)
+set(CMAKE_BUILD_TYPE Debug)
 
 project(FISK
   VERSION 0.1.0

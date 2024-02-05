@@ -1,9 +1,14 @@
 #include "ClientNetwork.h"
 
+#include <fstream>
 #include <gf/Log.h>
+#include <queue>
 #include <thread>
 #include <csignal>
 #include <cinttypes>
+#include <tuple>
+#include <variant>
+#include <vector>
 
 #include "../common/NetworkProtocol.h"
 #include "../common/NetworkConstants.h"
@@ -119,7 +124,11 @@ namespace fisk {
         case Game::type: {
             gf::Log::info("(CLIENT) Game Model.\n");
             if(hasGameModel()) {
-                *m_model = packeta.as<Game>();
+                Game* new_game = new Game(packeta.as<Game>());
+                Game* old_game = m_model;
+                m_model = new_game;
+                new_game = nullptr;
+                delete old_game;
             } else {
                 m_model = new Game(packeta.as<Game>());
             }
