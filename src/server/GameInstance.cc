@@ -19,8 +19,6 @@ namespace fisk {
     GameInstance::GameInstance(std::unique_ptr<Game> model):
     model(std::move(*model)) 
     {
-        old = Land();
-        curr = Land();
     }
 
     void GameInstance::start() {
@@ -60,31 +58,24 @@ namespace fisk {
     }
 
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {
+        TurnPhase curr_phase = model.get_current_phase();
         switch (packet.getType()) {
-            case ClientGameClickLand::type: {
-                old = curr;
-                curr = packet.as<ClientGameClickLand>().land;
+            case ClientGameSendFortify::type: {
                 //
-                switch (model.get_current_phase()) {
-
-                    case TurnPhase::Fortify:
-                        if(curr.getOwner() == model.get_current_player()){
-                            gf::Log::info("Asking how many troops are needed");
-                            break;
-                        }
-                        break;
-                    case TurnPhase::Attack:
-                        break;
-                    case TurnPhase::Reinforce:
-                        break;
-                    case TurnPhase::End:
-                        break;
-                }
+                if(curr_phase != TurnPhase::Fortify) break;
+                //
+                auto data = packet.as<ClientGameSendFortify>();
+                //
+                model.get_land(data.land_id).fortify(data.nb);
+                //
+                break;
             }
-            case ClientGameCardButton::type: {
+            case ClientGameSendAttack::type: {
                 //
+                break;
             }
         }
+        broadcast(model); // update every clients ! MAY NOT WORK SINCE SERVER_CLIENT NOT INITIALIZED IN GAMEINSTANCE !
     }
 
     bool GameInstance::isFinished() {

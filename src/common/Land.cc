@@ -64,7 +64,7 @@ namespace fisk {
         return name.compare(other.name) == 0;
     }
 
-    void Land::reinforce(unsigned nb){
+    void Land::fortify(unsigned nb){
         addUnits(nb);
     }
 
@@ -99,7 +99,7 @@ namespace fisk {
         return true;
     }   
 
-    bool Land::fortify(Land other){
+    bool Land::reinforce(Land other){
         assert(other.owner_id == owner_id);
         //
 

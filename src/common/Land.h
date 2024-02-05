@@ -31,9 +31,9 @@ namespace fisk {
             void addNeighbor(LandId neighbor);
             void removeNeighbor(LandId neighbor);
             //Actions of the player
-            void reinforce(unsigned nb);
+            void fortify(unsigned nb);
             bool attack(Land other, std::vector<int> this_dices, std::vector<int> other_dices);
-            bool fortify(Land other);
+            bool reinforce(Land other);
 
             bool sameAs(Land& other);
 

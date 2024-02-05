@@ -196,25 +196,41 @@ namespace fisk {
             return ar | data.ready;
         }
 
-    // Client game
 
-    struct ClientGameClickLand {
-        static constexpr gf::Id type = "ClientGameClickLand"_id;
-        Land land;
+    /* Server Game */
+
+    struct ServerGameAskTroops {
+        static constexpr gf::Id type = "ServerGameAskTroops"_id;
     };
 
     template<typename Archive>
-        Archive& operator|(Archive& ar, ClientGameClickLand& data) {
-            return ar | data.land;
+        Archive& operator|(Archive& ar, ServerGameAskTroops& data) {
+            return ar;
         } 
 
-    struct ClientGameCardButton { // Player click on cards button
-        static constexpr gf::Id type = "ClientGameCardButton"_id;
+    // Client game
+
+    struct ClientGameSendFortify {
+        static constexpr gf::Id type = "ClientGameSendFortify"_id;
+        LandId land_id;
+        unsigned nb;
     };
 
     template<typename Archive>
-        Archive& operator|(Archive& ar, ClientGameCardButton& data) {
-            return ar ;
+        Archive& operator|(Archive& ar, ClientGameSendFortify& data) {
+            return ar | data.land_id | data.nb;
+        } 
+
+    struct ClientGameSendAttack {
+        static constexpr gf::Id type = "ClientGameSendAttack"_id;
+        LandId attacking_land_id;
+        LandId defending_land_id;
+        unsigned attacking_nb_dice;
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ClientGameSendAttack& data) {
+            return ar | data.attacking_land_id | data.defending_land_id | data.attacking_nb_dice;
         } 
 
 }

@@ -28,6 +28,29 @@ namespace fisk {
         spr_widg.setCallback([this] {
             gf::Log::info("LandEntity %s : clicked\n", this->name.c_str());
             selected = !selected;
+            switch(game_hub.clientNetwork.getGameModel().get_current_phase()){
+                case TurnPhase::Fortify:
+                    // Ask client the number of troops they want to add
+                    ClientGameSendFortify fortify;
+                    //fortify.land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(name); // cannot work because get_land_by_name returns Land&
+                    fortify.nb = 1;
+                    game_hub.clientNetwork.send(fortify);
+                    break;
+                case TurnPhase::Attack:
+                    ClientGameSendAttack attack;
+                    //attack.attacking_land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(/* Old selected land */);
+                    //attack.defending_land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(/* Currently selected land */);
+                    //unsigned nb_units = game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units();
+                    //unsigned n = 3;
+                    //if(nb_units <= 4) n = nb_units;
+                    //if(n <= 1) n = 1;
+                    //attack.attacking_nb_dice = n;
+                    break;
+                case TurnPhase::Reinforce:
+                    break;
+                case TurnPhase::End:
+                    break;
+            }
         });
     }
 

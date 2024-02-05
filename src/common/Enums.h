@@ -14,7 +14,7 @@ namespace fisk {
         Fortify, // 0
         Attack, // 1
         Reinforce, // 2
-        End
+        End // 3
     };
 
     enum class GameState : uint8_t{
