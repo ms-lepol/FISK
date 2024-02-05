@@ -1,4 +1,5 @@
 #include "GameInstance.h"
+#include <map>
 #include "ServerPlayer.h"
 #include <algorithm>
 #include <cstddef>
@@ -28,6 +29,7 @@ namespace fisk {
         std::vector<PlayerId> player_ids ;
         //Initialize players
         for(unsigned i=0; i < this->getPlayers().size(); ++i) {
+            srv_to_model_id[getPlayers()[i].id] = i + 1;
             Player player(0, static_cast<Player::Color>(i), {});
             gf::Log::info("Player %d - color : %hhu \n", i, static_cast<Player::Color>(i));
             gf::Log::info("Player %d - color : %hhu \n", i, player.getColor());
@@ -53,6 +55,13 @@ namespace fisk {
             }
         }
         model.set_current_player(PlayerId(1));
+
+        
+        for(auto& player: getPlayers()) {
+            ServerHello hello;
+            hello.playerId = srv_to_model_id.at(player.id);
+            send(player.id, hello);
+        }
 
         broadcast(model);
     }
