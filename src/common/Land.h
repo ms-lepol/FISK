@@ -35,6 +35,8 @@ namespace fisk {
             bool attack(Land other, std::vector<int> this_dices, std::vector<int> other_dices);
             bool fortify(Land other);
 
+            bool sameAs(Land& other);
+
             template<typename S>
             void serialisation(S& sa) {
                 sa | nb_units | name | owner_id | neighbors;

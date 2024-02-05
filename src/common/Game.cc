@@ -6,12 +6,12 @@
 #include <cstddef>
 #include <gf/Random.h>
 #include <iostream>
+#include <memory>
 #include <stdio.h>
 
 namespace fisk {
     Game::Game()
     {
-        m_random = gf::Random();
     }
 
     PlayerId Game::add_player(Player player) {
@@ -52,10 +52,6 @@ namespace fisk {
 
     Land& Game::get_land(LandId id) {
         return lands[id-1];
-    }
-
-    Land& Game::get_selection(){
-        return selection;
     }
 
     const Land& Game::get_land(LandId id ) const {

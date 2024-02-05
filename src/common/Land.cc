@@ -1,3 +1,4 @@
+#include <gf/Id.h>
 #include <gf/Log.h>
 #include <gf/Dice.h>
 #include <string>
@@ -8,7 +9,9 @@
 namespace fisk {
 
     Land::Land()
-    {}
+    {
+        owner_id = gf::InvalidId;
+    }
 
     Land::Land(unsigned nb_units, std::string name, std::vector<LandId> neighbors, PlayerId player_id)
     {
@@ -52,6 +55,10 @@ namespace fisk {
 
     void Land::addUnits(unsigned nb){
         nb_units += nb;
+    }
+
+    bool Land::sameAs(Land& other){
+        return name.compare(other.name) == 0;
     }
 
     void Land::reinforce(unsigned nb){

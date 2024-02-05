@@ -1,6 +1,7 @@
 #include "GameInstance.h"
 #include "ServerPlayer.h"
 #include <algorithm>
+#include <cstddef>
 #include <cstdlib>
 #include <ctime>
 #include <gf/Color.h>
@@ -16,7 +17,10 @@
 namespace fisk {
 
     GameInstance::GameInstance(std::unique_ptr<Game> model):
-        model(std::move(*model)) {
+    model(std::move(*model)) 
+    {
+        old = Land();
+        curr = Land();
     }
 
     void GameInstance::start() {
@@ -58,11 +62,16 @@ namespace fisk {
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {
         switch (packet.getType()) {
             case ClientGameClickLand::type: {
+                old = curr;
+                curr = packet.as<ClientGameClickLand>().land;
                 //
                 switch (model.get_current_phase()) {
 
                     case TurnPhase::Fortify:
-
+                        if(curr.getOwner() == model.get_current_player()){
+                            gf::Log::info("Asking how many troops are needed");
+                            break;
+                        }
                         break;
                     case TurnPhase::Attack:
                         break;

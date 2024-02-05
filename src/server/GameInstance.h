@@ -17,6 +17,9 @@ namespace fisk {
 
         Game model;
 
+        Land old;
+        Land curr;
+
         public:
 
             GameInstance(std::unique_ptr<Game> model);

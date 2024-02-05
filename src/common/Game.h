@@ -27,9 +27,6 @@ namespace fisk {
             GameState game_state;
             PlayerId current_player;
             TurnPhase current_phase;
-            Land selection;
-
-            gf::Random m_random;
 
         public:
 
@@ -59,7 +56,6 @@ namespace fisk {
 
             Player& get_player(PlayerId player);
             Land& get_land(LandId land);
-            Land& get_selection();
             Card& get_card(CardId card);
             Continent& get_continent(ContinentId continent);
             PlayerId get_current_player() const;
@@ -83,7 +79,7 @@ namespace fisk {
     
             template<typename S>
             void serialisation(S& sa) {
-                sa | cards | players | lands | continents | current_player | current_phase | selection;
+                sa | cards | players | lands | continents | current_player | current_phase;
             }
     };
 
