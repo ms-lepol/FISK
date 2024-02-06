@@ -12,6 +12,7 @@
 #include "TurnInterface.h"
 #include "PhaseIndicator.h"
 #include "HudButtons.h"
+#include "UnitSelector.h"
 
 namespace fisk {
 
@@ -59,6 +60,7 @@ private:
   fisk::MapEntity m_map;
   fisk::TurnInterface m_turnInterface;
   fisk::PhaseIndicator m_phaseIndicator;
+  
 
   // widgets
 
@@ -71,6 +73,8 @@ private:
 
    gf::Vector2f mousePos;
 
+   public:
+    fisk::UnitSelector m_unitSelector;
 };
 
 }

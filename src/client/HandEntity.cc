@@ -27,7 +27,8 @@ namespace fisk {
     void HandEntity::update(gf::Time time) {
         if (game_hub.clientNetwork.hasGameModel()) {
             auto& gm = game_hub.clientNetwork.getGameModel();
-            std::vector<CardId> hand = gm.get_player(game_hub.clientNetwork.getClientId()).getHand();
+            PlayerId player = game_hub.clientNetwork.getClientId();
+            std::vector<CardId> hand = (player > 0 && player <= gm.get_nb_players()) ? gm.get_player(player).getHand(): std::vector<CardId>();
             cards.clear();
             for (auto card : hand) {
                 cards.push_back(CardEntity(gm.get_card(card), ressources));

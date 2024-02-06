@@ -37,6 +37,7 @@ add_executable(client
   src/common/Player.cc
   src/client/CardEntity.cc
   src/client/HandEntity.cc
+  src/client/UnitSelector.cc
   # and the rest of your sources
 )
 

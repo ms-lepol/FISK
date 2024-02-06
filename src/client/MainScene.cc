@@ -2,6 +2,7 @@
 
 #include "GameHub.h"
 #include "LandEntity.h"
+#include "UnitSelector.h"
 #include <cstddef>
 #include <gf/Color.h>
 #include <gf/Event.h>
@@ -44,6 +45,7 @@ namespace fisk {
   , m_turnInterface(TurnInterface(0,game.resources,m_hudAtlas))
   , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game.resources,m_hudAtlas))
   , m_hudButtons(HudButtons(game.resources,m_hudAtlas,game))
+  , m_unitSelector(game)
   {
    
     // Views
@@ -52,15 +54,15 @@ namespace fisk {
    
     m_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
 
-              setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
+    setClearColor(gf::Color::fromRgb((float)7/255, (float)24/255, (float)33/255));
 
-              m_phaseIndicator.setColor(m_playerColor.Orange);
+    m_phaseIndicator.setColor(m_playerColor.Orange);
 
 
-              //World entities
-              m_WorldEntities.addEntity(m_map);
+    //World entities
+    m_WorldEntities.addEntity(m_map);
 
-              //HUD entities
+    //HUD entities
 
     m_HudEntities.addEntity(m_turnInterface);
     m_HudEntities.addEntity(m_phaseIndicator);
@@ -71,27 +73,29 @@ namespace fisk {
     m_hudButtons.placeCardButton({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(ViewSize.y)-m_hudButtons.size});
 
 
-              // Camera Actions 
-              m_cameraActions.close.addCloseControl();
-              m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
-              m_cameraActions.close.isActive();
+    // Camera Actions 
+    m_cameraActions.close.addCloseControl();
+    m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
+    m_cameraActions.close.isActive();
 
-              m_cameraActions.zoomIn.addScancodeKeyControl(gf::Scancode::Up);
-              m_cameraActions.zoomIn.setContinuous();
-              m_cameraActions.zoomOut.addScancodeKeyControl(gf::Scancode::Down);
-              m_cameraActions.zoomOut.setContinuous();
+    m_cameraActions.zoomIn.addScancodeKeyControl(gf::Scancode::Up);
+    m_cameraActions.zoomIn.setContinuous();
+    m_cameraActions.zoomOut.addScancodeKeyControl(gf::Scancode::Down);
+    m_cameraActions.zoomOut.setContinuous();
 
-              addAction(m_cameraActions.close);
-              addAction(m_cameraActions.zoomIn);
-              addAction(m_cameraActions.zoomOut);
-
-
-              // Interact Action
-              m_interact.addMouseButtonControl(gf::MouseButton::Left);
-
-              addAction(m_interact);
+    addAction(m_cameraActions.close);
+    addAction(m_cameraActions.zoomIn);
+    addAction(m_cameraActions.zoomOut);
 
 
+    // Interact Action
+    m_interact.addMouseButtonControl(gf::MouseButton::Left);
+
+    addAction(m_interact);
+
+    m_HudEntities.addEntity(m_unitSelector);
+    m_unitSelector.setPosition({static_cast<int>(ViewSize.x-m_unitSelector.getDimensions().x),static_cast<int>(ViewSize.y-m_unitSelector.getDimensions().y)});
+    m_unitSelector.setAlive();
   }
 
   void MainScene::doHandleActions([[maybe_unused]] gf::Window& window) {
@@ -112,6 +116,9 @@ namespace fisk {
 
             m_map.widg_container.pointTo(mousePos);
             m_map.widg_container.triggerAction();
+
+            m_unitSelector.s_container.pointTo(mousePos);
+            m_unitSelector.s_container.triggerAction();
 
             m_interact.reset();
         }
@@ -154,7 +161,6 @@ namespace fisk {
 
   void MainScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
    
-
     m_WorldEntities.render(target, states);
     m_HudEntities.render(target, states);
     
