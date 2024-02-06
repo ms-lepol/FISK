@@ -18,30 +18,14 @@ namespace fisk {
                                                ,s_cancel("Cancel",ressources.getFont(font),20){
         position = {0, 0};
         dimensions = {250, 100};
-        selected_unit = 0;
+        selected_unit = 1;
         max_unit = 10;
-       
+        min_unit = 0;
         
         s_container.addWidget(s_left);
         s_container.addWidget(s_right);
         s_container.addWidget(s_validate);
         s_container.addWidget(s_cancel);
-
-        s_left.setCallback([this](){
-            selected_unit = (selected_unit-1+max_unit)%max_unit;
-            
-        });
-        s_right.setCallback([this](){
-            selected_unit = (selected_unit+1)%max_unit;
-        });
-        s_validate.setCallback([this](){
-            gf::Log::debug("Validate the unit selection\n");
-            kill();
-        });
-        s_cancel.setCallback([this](){
-            gf::Log::debug("Cancel the unit selection\n");
-            kill();
-        });
 
         s_left.setPosition(position + gf::Vector2i({dimensions.x/4, dimensions.y/2}));
         s_right.setPosition(position + gf::Vector2i({3*dimensions.x/4, dimensions.y/2}));
@@ -53,15 +37,17 @@ namespace fisk {
         s_validate.setPadding(5);
         s_cancel.setPadding(5);
 
+        s_left.setDefaultBackgroundColor(HUDColor().buttonColor);
+        s_right.setDefaultBackgroundColor(HUDColor().buttonColor);
+        s_validate.setDefaultBackgroundColor(HUDColor().buttonColor);
+        s_cancel.setDefaultBackgroundColor(HUDColor().buttonColor);
+
         s_left.setDefaultTextColor(HUDColor().backgroundColor);
         s_right.setDefaultTextColor(HUDColor().backgroundColor);
         s_validate.setDefaultTextColor(HUDColor().backgroundColor);
         s_cancel.setDefaultTextColor(HUDColor().backgroundColor);
 
-        s_left.setDefaultBackgroundColor(HUDColor().buttonColor);
-        s_right.setDefaultBackgroundColor(HUDColor().buttonColor);
-        s_validate.setDefaultBackgroundColor(HUDColor().buttonColor);
-        s_cancel.setDefaultBackgroundColor(HUDColor().buttonColor);
+        
 
         s_validate.setAnchor(gf::Anchor::Center);
         s_cancel.setAnchor(gf::Anchor::Center);
@@ -87,12 +73,47 @@ namespace fisk {
 
     }
 
+    void UnitSelector::setCallbacks(){
+        s_left.setCallback([this](){
+            selected_unit = min_unit+(selected_unit-1+max_unit)%max_unit;
+        });
+        s_right.setCallback([this](){
+            selected_unit = (selected_unit+1)%max_unit;
+        });
+        s_validate.setCallback([this](){
+            gf::Log::debug("Validate the unit selection\n");
+            hide();
+        });
+        s_cancel.setCallback([this](){
+            gf::Log::debug("Cancel the unit selection\n");
+            hide();
+        });
+    }
+
+    void UnitSelector::rmCallbacks(){
+        s_left.setCallback([](){});
+        s_right.setCallback([](){});
+        s_validate.setCallback([](){});
+        s_cancel.setCallback([](){});
+    }
+
+    void UnitSelector::hide() {
+        hidden = true;
+        rmCallbacks();
+    }
+
+    void UnitSelector::show() {
+        hidden = false;
+        setCallbacks();
+    }
+
     void UnitSelector::setMaxUnit(Land& land_clicked) {
         max_unit = land_clicked.getNb_units();
         selected_unit = 0;
     }
     
     void UnitSelector::render(gf::RenderTarget& target, const gf::RenderStates& states) {
+        if (hidden) return;
         gf::RoundedRectangleShape background({static_cast<float>(dimensions.x), static_cast<float>(dimensions.y)});
         background.setRadius(10);
         background.setPosition(position);

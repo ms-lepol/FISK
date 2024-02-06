@@ -26,6 +26,11 @@ namespace fisk {
         void setPosition(gf::Vector2i pos);
         gf::Vector2i getDimensions();
         void setMaxUnit(Land& land_clicked);
+        void hide();
+        void show();
+
+        void setCallbacks();
+        void rmCallbacks();
 
         gf::WidgetContainer s_container;
     private:
@@ -35,6 +40,7 @@ namespace fisk {
         //Rendering
         gf::Vector2i position;
         gf::Vector2i dimensions;
+        bool hidden = true;
 
         //Widgets
        
@@ -46,6 +52,7 @@ namespace fisk {
         //Logic
         int selected_unit;
         int max_unit;
+        int min_unit;
 
 
     };

@@ -27,7 +27,8 @@ namespace fisk {
         spr_widg.setPosition(position);
         spr_widg.setCallback([this] {
             gf::Log::info("LandEntity %s : clicked\n", this->name.c_str());
-            game_hub.mainScene.m_unitSelector.setAlive();
+            gf::Log::info("%i\n",this->game_hub.mainScene.m_unitSelector.getDimensions().x);
+            this->game_hub.mainScene.m_unitSelector.show();
             selected = !selected;
             switch(game_hub.clientNetwork.getGameModel().get_current_phase()){
                 case TurnPhase::Fortify:

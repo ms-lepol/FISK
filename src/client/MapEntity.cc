@@ -25,7 +25,7 @@ namespace fisk {
     }
 
 
-
+    
     void  MapEntity::configureMap1(){
 
         lands["Alaska"] = std::make_unique<LandEntity>("Alaska", pathAlaska, gf::Vector2i(xAlaska,yAlaska),gf::Vector2i(xTextAlaska,yTextAlaska),game_hub);
