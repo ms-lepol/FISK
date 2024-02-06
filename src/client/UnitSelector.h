@@ -26,6 +26,8 @@ namespace fisk {
         void setPosition(gf::Vector2i pos);
         gf::Vector2i getDimensions();
         void setMaxUnit(Land& land_clicked);
+
+        gf::WidgetContainer s_container;
     private:
         GameHub& game_hub;
         gf::ResourceManager& ressources;
@@ -35,7 +37,7 @@ namespace fisk {
         gf::Vector2i dimensions;
 
         //Widgets
-        gf::WidgetContainer s_container;
+       
         gf::TextButtonWidget s_left;
         gf::TextButtonWidget s_right;
         gf::TextButtonWidget s_validate;

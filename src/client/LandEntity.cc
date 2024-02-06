@@ -35,7 +35,7 @@ namespace fisk {
                     ClientGameSendFortify fortify;
                     //fortify.land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(name); // cannot work because get_land_by_name returns Land&
                     fortify.nb = 1;
-                    game_hub.clientNetwork.send(fortify);
+                    //game_hub.clientNetwork.send(fortify); // cannot work - make the server segfault
                     break;
                 case TurnPhase::Attack:
                     ClientGameSendAttack attack;

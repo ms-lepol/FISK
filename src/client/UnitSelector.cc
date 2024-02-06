@@ -19,7 +19,7 @@ namespace fisk {
         position = {0, 0};
         dimensions = {250, 100};
         selected_unit = 0;
-        max_unit = 0;
+        max_unit = 10;
        
         
         s_container.addWidget(s_left);
@@ -65,6 +65,8 @@ namespace fisk {
 
         s_validate.setAnchor(gf::Anchor::Center);
         s_cancel.setAnchor(gf::Anchor::Center);
+        s_left.setAnchor(gf::Anchor::Center);
+        s_right.setAnchor(gf::Anchor::Center);
 
     }
 
@@ -100,7 +102,7 @@ namespace fisk {
         gf::Text text(std::to_string(selected_unit),ressources.getFont(font),20);
         text.setPosition(position + gf::Vector2i({dimensions.x/2, dimensions.y/2}));
         text.setAnchor(gf::Anchor::Center);
-        text.setAlignment(gf::Alignment::Center);
+        
         target.draw(text, states);
 
 

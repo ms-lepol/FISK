@@ -94,8 +94,8 @@ namespace fisk {
     addAction(m_interact);
 
     m_HudEntities.addEntity(m_unitSelector);
-    
-    m_unitSelector.setPosition(ViewSize/2);
+    m_unitSelector.setPosition({static_cast<int>(ViewSize.x-m_unitSelector.getDimensions().x),static_cast<int>(ViewSize.y-m_unitSelector.getDimensions().y)});
+    m_unitSelector.setAlive();
   }
 
   void MainScene::doHandleActions([[maybe_unused]] gf::Window& window) {
@@ -116,6 +116,9 @@ namespace fisk {
 
             m_map.widg_container.pointTo(mousePos);
             m_map.widg_container.triggerAction();
+
+            m_unitSelector.s_container.pointTo(mousePos);
+            m_unitSelector.s_container.triggerAction();
 
             m_interact.reset();
         }
