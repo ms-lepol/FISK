@@ -18,10 +18,10 @@ namespace fisk {
                                                ,s_cancel("Cancel",ressources.getFont(font),20){
         position = {0, 0};
         dimensions = {250, 100};
-        selected_unit = 1;
-        max_unit = 10;
-        min_unit = 0;
         
+        max_unit = 10;
+        min_unit = 1;
+        selected_unit = min_unit;
         s_container.addWidget(s_left);
         s_container.addWidget(s_right);
         s_container.addWidget(s_validate);
@@ -75,10 +75,10 @@ namespace fisk {
 
     void UnitSelector::setCallbacks(){
         s_left.setCallback([this](){
-            selected_unit = min_unit+(selected_unit-1+max_unit)%max_unit;
+            selected_unit = (selected_unit-1 < min_unit) ? max_unit-1 : selected_unit-1;
         });
         s_right.setCallback([this](){
-            selected_unit = (selected_unit+1)%max_unit;
+            selected_unit = min_unit+((selected_unit+1-min_unit)%(max_unit-min_unit));
         });
         s_validate.setCallback([this](){
             gf::Log::debug("Validate the unit selection\n");
