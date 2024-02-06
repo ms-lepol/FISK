@@ -31,13 +31,15 @@ namespace fisk {
             std::vector<CardId> hand = (player > 0 && player <= gm.get_nb_players()) ? gm.get_player(player).getHand(): std::vector<CardId>();
             cards.clear();
             for (auto card : hand) {
-                cards.push_back(CardEntity(gm.get_card(card), ressources));
+                cards.push_back(CardEntity(gm.get_card(card), ressources,gm.get_land(gm.get_card(card).getLand()).getName()));
+
             }
+            dimensions = {CARD_WIDTH * (int)cards.size(), CARD_HEIGHT};
         }
-        dimensions = {CARD_WIDTH * (int)cards.size(), CARD_HEIGHT};
+      
     }
     
-    void HandEntity::render(gf::RenderTarget& target, gf::RenderStates states) {
+    void HandEntity::render(gf::RenderTarget& target,const gf::RenderStates& states) {
         
         int offset=0;
         for (auto card : cards) {

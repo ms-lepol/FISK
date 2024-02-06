@@ -1,11 +1,12 @@
 #include "CardEntity.h"
 
+#include <gf/Anchor.h>
 #include <gf/RenderTarget.h>
 
 namespace fisk {
     
-        CardEntity::CardEntity(Card card, gf::ResourceManager& rm)
-        : land_name("land_name")
+        CardEntity::CardEntity(Card card, gf::ResourceManager& rm,std::string land_name)
+        : land_name(land_name)
         , selected(false)
         , ressources(rm)
         , card(card)
@@ -16,6 +17,7 @@ namespace fisk {
                 gf::Log::info("CardEntity %s : clicked\n", this->land_name.c_str());
                 selected = !selected;
             });
+
 
             switch(card.getType()) {
                 case Type::Gunner:
@@ -34,25 +36,26 @@ namespace fisk {
             
         }
     
-        void CardEntity::render(gf::RenderTarget& target, gf::RenderStates states) {
+        void CardEntity::render(gf::RenderTarget& target,const gf::RenderStates& states) {
             target.draw(spr_widg, states);
             gf::Font& font = ressources.getFont("font/PixelSplitter-Bold.ttf");
             if(!is_joker) {
-                spr_type.setPosition(position + gf::Vector2f({CARD_WIDTH/2 - 20, CARD_HEIGHT/2 - 20}));
+                spr_type.setAnchor(gf::Anchor::Center);
+                spr_type.setPosition(position + gf::Vector2f({CARD_WIDTH/2, CARD_HEIGHT/4}));
                 target.draw(spr_type, states);
             } else {
                 
                 gf::Text txt("?", font, 40);
                 txt.setAnchor(gf::Anchor::Center);
                 txt.setPosition(position + gf::Vector2f({CARD_WIDTH/2, CARD_HEIGHT/2}));
-                txt.setColor(HUDColor().backgroundColor);
+                txt.setColor(HUDColor().buttonColor);
                 target.draw(txt, states);
             }
 
             gf::Text land_txt(land_name, font, 10);
             land_txt.setAnchor(gf::Anchor::Center);
             land_txt.setPosition(position + gf::Vector2f({CARD_WIDTH/2, CARD_HEIGHT/2 + 20}));
-            land_txt.setColor(HUDColor().backgroundColor);
+            land_txt.setColor(HUDColor().buttonColor);
             target.draw(land_txt, states);
 
 
@@ -71,6 +74,10 @@ namespace fisk {
             return land_name;
         }
     
+        void CardEntity::setLandName(std::string land_name) {
+            this->land_name = land_name;
+        }
+
         gf::Vector2i CardEntity::getPosition() {
             return position;
         }

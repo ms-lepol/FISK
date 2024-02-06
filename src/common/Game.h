@@ -77,6 +77,8 @@ namespace fisk {
             const Card& get_card(CardId card) const;
             const Continent& get_continent(ContinentId continent) const;
 
+            void shuffle_cards();
+
             size_t nb_lands() const;
     
             template<typename S>

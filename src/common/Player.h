@@ -27,7 +27,7 @@ namespace fisk {
             void setNb_units(int nb_units);
             std::vector<CardId> getHand() const;
 
-            void drawCard();
+            void drawCard(CardId card_id);
             void playCard();
 
             template<typename S>

@@ -27,7 +27,7 @@ namespace fisk {
 
             gf::Vector2i getDimensions();
 
-            void render(gf::RenderTarget& target, gf::RenderStates states);
+            void render(gf::RenderTarget& target,const gf::RenderStates& states);
             void update(gf::Time time);
     }
 ;   
