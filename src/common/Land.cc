@@ -71,8 +71,10 @@ namespace fisk {
     bool Land::attack(Land other, std::vector<int> this_dices, std::vector<int> other_dices){
         // Verification and dice roll has been made before the call of this function
         assert(other.owner_id != owner_id);
+        //
+        sort(this_dices.begin(), this_dices.end(), std::greater<int>());
+        sort(other_dices.begin(), other_dices.end(), std::greater<int>());
         // Calculating dice results
-        // asserting vectors contain dices in decreasing order
         auto t_dice = this_dices.begin();
         auto o_dice = other_dices.begin();
         int remaining_troops = this_dices.size();

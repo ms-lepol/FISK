@@ -21,9 +21,11 @@ namespace fisk {
 
         std::map<gf::Id, PlayerId> srv_to_model_id;
 
+        gf::Ref<gf::Random> m_random;
+
         public:
 
-            GameInstance(std::unique_ptr<Game> model);
+            GameInstance(std::unique_ptr<Game> model, gf::Random& random);
 
             void start();
             void update(ServerPlayer& player, gf::Packet& packet);

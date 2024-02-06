@@ -1,6 +1,7 @@
 #include "LandEntity.h" 
 #include "GameHub.h"
 #include <gf/Id.h>
+#include <sys/socket.h>
 
 
 #define textOffset 1
@@ -27,29 +28,69 @@ namespace fisk {
         spr_widg.setPosition(position);
         spr_widg.setCallback([this] {
             gf::Log::info("LandEntity %s : clicked\n", this->name.c_str());
+            //
+            auto map = game_hub.mainScene.m_map;
+            auto model = game_hub.clientNetwork.getGameModel();
+            //
+            map.select(this);
+            auto curr_land = model.get_land_by_name(map.curr_selection->name);
+            auto old_land = model.get_land_by_name(map.old_selection->name);
+            //
             game_hub.mainScene.m_unitSelector.setAlive();
             selected = !selected;
-            switch(game_hub.clientNetwork.getGameModel().get_current_phase()){
+            //
+            switch(model.get_current_phase()){
                 case TurnPhase::Fortify:
-                    // Ask client the number of troops they want to add
-                    //ClientGameSendFortify fortify;
-                    //fortify.land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(name); // cannot work because get_land_by_name returns Land&
-                    //fortify.nb = 1;
-                    //game_hub.clientNetwork.send(fortify);
+                    if(curr_land.getOwner() != game_hub.clientNetwork.getClientId()){
+                        gf::Log::warning("(CLIENT GAME) Current selection is not owned by player");
+                    }
+                    else {
+                        ClientGameSendFortify fortify;
+                        fortify.land_id = model.get_land_id_by_name(map.curr_selection->name);
+                        fortify.nb = 1; // Need to change for the selector
+                        //
+                        game_hub.clientNetwork.send(fortify);
+                    }
+                    selected = false;
+                    map.reset_selections();
                     break;
                 case TurnPhase::Attack:
-                    //ClientGameSendAttack attack;
-                    //attack.attacking_land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(/* Old selected land */);
-                    //attack.defending_land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(/* Currently selected land */);
-                    //unsigned nb_units = game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units();
-                    //unsigned n = 3;
-                    //if(nb_units <= 4) n = nb_units;
-                    //if(n <= 1) n = 1;
-                    //attack.attacking_nb_dice = n;
+                    if(map.old_selection == nullptr){
+                        gf::Log::warning("(GAME CIENT) Waiting for a second land to be chosen");
+                        break;
+                    }
+                    if(old_land.getOwner() != game_hub.clientNetwork.getClientId()){
+                        gf::Log::warning("(CLIENT GAME) First selection is not owned by player");
+                    }
+                    else if (old_land.getNb_units() <= 1){
+                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !");
+                    }
+                    else if(curr_land.getOwner() == game_hub.clientNetwork.getClientId()){
+                        gf::Log::warning("(CLIENT GAME) Second selection is owned by player");
+                    }
+                    else{
+                        ClientGameSendAttack attack;
+                        attack.attacking_land_id = model.get_land_id_by_name(map.old_selection->name);
+                        attack.defending_land_id = model.get_land_id_by_name(map.curr_selection->name);
+                        unsigned nb_units = old_land.getNb_units();
+                        // Automatic choice of dice (can be replaced with selector)
+                        unsigned n = 3;
+                        if(nb_units <= 4) n = nb_units-1;
+                        if(n <= 1) n = 1;
+                        attack.attacking_nb_dice = n;
+                        //
+                        game_hub.clientNetwork.send(attack);
+                    }
+                    selected = false;
+                    map.reset_selections();
                     break;
                 case TurnPhase::Reinforce:
+                    selected = false;
+                    map.reset_selections();
                     break;
                 case TurnPhase::End:
+                    selected = false;
+                    map.reset_selections();
                     break;
             }
         });

@@ -104,9 +104,11 @@ namespace fisk {
     }
 
     const LandId Game::get_land_id_by_name(const std::string& name) const {
-        return *std::find_if(lands.cbegin(), lands.cend(), [&name](const Land& land) {
-                return land.getName() == name;
-            }).base();
+        for(auto i = 0; i<lands.size(); ++i){
+            if(lands[i].getName() == name){
+                return i+1;
+            }
+        }
     }
 
     bool Game::is_neighbours_correct() const  {

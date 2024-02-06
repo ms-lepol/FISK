@@ -12,7 +12,7 @@ namespace fisk {
 
     class ServerLobby : public ServerGroup{
         public:
-        ServerLobby(GameFactory& factory);
+        ServerLobby(GameFactory& factory, gf::Random& random);
 
         void addPlayer(ServerPlayer& player) override;
         void removePlayer(ServerPlayer& player) override;
@@ -31,6 +31,7 @@ namespace fisk {
         std::string name;
 
     private:
+        gf::Ref<gf::Random> m_random;
         gf::Ref<GameFactory> m_factory;
         std::unique_ptr<GameInstance> m_instance;
     };
