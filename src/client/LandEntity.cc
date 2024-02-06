@@ -31,13 +31,13 @@ namespace fisk {
             switch(game_hub.clientNetwork.getGameModel().get_current_phase()){
                 case TurnPhase::Fortify:
                     // Ask client the number of troops they want to add
-                    ClientGameSendFortify fortify;
+                    //ClientGameSendFortify fortify;
                     //fortify.land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(name); // cannot work because get_land_by_name returns Land&
-                    fortify.nb = 1;
-                    game_hub.clientNetwork.send(fortify);
+                    //fortify.nb = 1;
+                    //game_hub.clientNetwork.send(fortify);
                     break;
                 case TurnPhase::Attack:
-                    ClientGameSendAttack attack;
+                    //ClientGameSendAttack attack;
                     //attack.attacking_land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(/* Old selected land */);
                     //attack.defending_land_id = game_hub.clientNetwork.getGameModel().get_land_by_name(/* Currently selected land */);
                     //unsigned nb_units = game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units();

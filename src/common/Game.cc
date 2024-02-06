@@ -103,6 +103,12 @@ namespace fisk {
             }).base();
     }
 
+    const LandId Game::get_land_id_by_name(const std::string& name) const {
+        return *std::find_if(lands.cbegin(), lands.cend(), [&name](const Land& land) {
+                return land.getName() == name;
+            }).base();
+    }
+
     bool Game::is_neighbours_correct() const  {
        bool is_correct = true;
        for (auto continent :continents){
