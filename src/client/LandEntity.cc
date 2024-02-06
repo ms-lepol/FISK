@@ -36,7 +36,8 @@ namespace fisk {
             auto curr_land = model.get_land_by_name(map.curr_selection->name);
             auto old_land = model.get_land_by_name(map.old_selection->name);
             //
-            game_hub.mainScene.m_unitSelector.setAlive();
+            gf::Log::info("%i\n",this->game_hub.mainScene.m_unitSelector.getDimensions().x);
+            this->game_hub.mainScene.m_unitSelector.show();
             selected = !selected;
             //
             switch(model.get_current_phase()){

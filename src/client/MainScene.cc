@@ -43,7 +43,7 @@ namespace fisk {
   
   , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
   , m_turnInterface(TurnInterface(0,game.resources,m_hudAtlas))
-  , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game.resources,m_hudAtlas))
+  , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game,m_hudAtlas))
   , m_hudButtons(HudButtons(game.resources,m_hudAtlas,game))
   , m_unitSelector(game)
   {
@@ -95,6 +95,7 @@ namespace fisk {
 
     m_HudEntities.addEntity(m_unitSelector);
     m_unitSelector.setPosition({static_cast<int>(ViewSize.x-m_unitSelector.getDimensions().x),static_cast<int>(ViewSize.y-m_unitSelector.getDimensions().y)});
+    m_unitSelector.kill();
     m_unitSelector.setAlive();
   }
 

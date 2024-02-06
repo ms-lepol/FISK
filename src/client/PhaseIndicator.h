@@ -17,20 +17,24 @@
 #define texture_path "/sprites/fisk_ui.png"
 
 namespace fisk {
+    struct GameHub;
+
     class PhaseIndicator : public gf::Entity {
         private:
             TurnPhase phase = TurnPhase::End;
             gf::Sprite m_spr;
             gf::Vector2i position;
+            GameHub& game_hub;
             gf::ResourceManager& ressources;
             gf::TextureAtlas& atlas;
             gf::Color4f color;
         public:
             int width = 304;
             int height = 80;
-            PhaseIndicator(gf::Color4f color, gf::ResourceManager& rm, gf::TextureAtlas& atlas);
+            PhaseIndicator(gf::Color4f color, GameHub& gm, gf::TextureAtlas& atlas);
             void changePhase();
             void render(gf::RenderTarget& target,const gf::RenderStates& states);
+            void update(gf::Time time);
             void setPosition(gf::Vector2i position);
             void setColor(gf::Color4f color);
         };

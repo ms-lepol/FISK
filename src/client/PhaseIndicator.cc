@@ -1,16 +1,18 @@
 #include "PhaseIndicator.h"
+#include "GameHub.h"
 #include <gf/Color.h>
 #include <gf/Font.h>
 #include <gf/Shapes.h>
 #include <gf/Text.h>
 #include <string>
 
-
+#include "GameHub.h"
 namespace fisk {
 
 
-    PhaseIndicator::PhaseIndicator(gf::Color4f color, gf::ResourceManager& rm, gf::TextureAtlas& atlas) : 
-        ressources(rm), 
+    PhaseIndicator::PhaseIndicator(gf::Color4f color,GameHub& gm ,gf::TextureAtlas& atlas) : 
+        game_hub(gm),
+        ressources(gm.resources), 
         atlas(atlas) {
         //Logic
         this->position = {501,636};
@@ -30,6 +32,14 @@ namespace fisk {
     void PhaseIndicator::setPosition(gf::Vector2i position) {
         this->position = position;
     }
+
+    void PhaseIndicator::update(gf::Time time) {
+        if (game_hub.clientNetwork.hasGameModel() && game_hub.clientNetwork.getGameModel().get_current_phase() != phase) {
+            setColor(game_hub.clientNetwork.getGameModel().get_player(game_hub.clientNetwork.getClientId()).getColor4f());
+            phase = game_hub.clientNetwork.getGameModel().get_current_phase();
+        }
+    }
+
     void PhaseIndicator::render(gf::RenderTarget& target,const gf::RenderStates& states){
         
         //rendering block by block
