@@ -78,7 +78,7 @@ namespace fisk {
             const Card& get_card(CardId card) const;
             const Continent& get_continent(ContinentId continent) const;
 
-            bool are_lands_on_same_territory(PlayerId player, LandId a, LandId b);
+            bool are_lands_on_same_territory(LandId a, LandId b);
 
             void shuffle_cards();
 

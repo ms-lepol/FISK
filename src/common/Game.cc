@@ -143,7 +143,13 @@ namespace fisk {
         std::shuffle(cards.begin(), cards.end(),generator);
     }
 
-    bool Game::are_lands_on_same_territory(PlayerId player, LandId a, LandId b) {
+    bool Game::are_lands_on_same_territory(LandId a, LandId b) {
+        PlayerId player = get_land(a).getOwner();
+
+        if(player != get_land(b).getOwner()) {
+            return false;
+        }
+
         std::unordered_set<LandId> visited;
         std::vector<LandId> to_visit = {a};
         do {
