@@ -106,6 +106,8 @@ namespace fisk {
     if (c_interact.isActive()) {
       c_hudButtons.pointTo(mousePos);
       c_hudButtons.triggerAction();
+
+      //TODO: Add card play action
       
       c_interact.reset();
     }

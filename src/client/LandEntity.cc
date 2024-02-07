@@ -29,7 +29,6 @@ namespace fisk {
         spr_widg.setCallback([this] {
             std::lock_guard guard(game_hub.clientNetwork.m_mutex);
             gf::Log::info("LandEntity %s : clicked\n", this->name.c_str());
-            gf::Log::info("%i\n",this->game_hub.mainScene.m_unitSelector.getDimensions().x);
             this->game_hub.mainScene.m_unitSelector.show();
             selected = !selected;
             switch(game_hub.clientNetwork.getGameModel().get_current_phase()){

@@ -10,7 +10,7 @@ namespace fisk {
 
     Land::Land()
     {
-        nb_units = 0;
+        nb_units = 1;
         name = "";
         neighbors = {};
         owner_id = gf::InvalidId;
