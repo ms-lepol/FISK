@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Constants.h"
 #include "FiskColors.h"
+#include "Game.h"
 #include <gf/Log.h>
 
 namespace fisk {
@@ -47,8 +48,10 @@ namespace fisk {
     void Player::setNb_units(int nb_units){
         this->nb_units = nb_units;
     }
-    void Player::drawCard(CardId card_id){
-        hand.push_back(card_id);
+    void Player::drawCard(CardId id){
+        
+        gf::Log::debug("drew card %lu\n", id);
+        hand.push_back(id);
     }
     void playCard(){
         // TODO

@@ -1,10 +1,14 @@
 #ifndef FISK_PLAYER_H
 #define FISK_PLAYER_H
 #include "Constants.h"
+
 #include <gf/Color.h>
 #include <sys/types.h>
 #include <vector>
 namespace fisk {
+
+    class Game;
+
     class Player {
         private:
             unsigned nb_units;
@@ -27,7 +31,7 @@ namespace fisk {
             void setNb_units(int nb_units);
             std::vector<CardId> getHand() const;
 
-            void drawCard(CardId card_id);
+            void drawCard(CardId id);
             void playCard();
 
             template<typename S>

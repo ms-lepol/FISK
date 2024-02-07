@@ -24,6 +24,8 @@ namespace fisk {
             std::vector<Card> cards;
             std::vector<Continent> continents;
 
+            CardId top_card = 0;
+
             GameState game_state;
             PlayerId current_player;
             TurnPhase current_phase;
@@ -61,6 +63,7 @@ namespace fisk {
             PlayerId get_current_player() const;
             TurnPhase get_current_phase() const;
 
+            CardId get_top_card();
 
             void set_current_player(PlayerId player);
 

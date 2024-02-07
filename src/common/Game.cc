@@ -43,35 +43,35 @@ namespace fisk {
     }
 
     Player& Game::get_player(PlayerId id) {
-        return players[id-1];
+        return players.at(id-1);
     }
 
     Card& Game::get_card(CardId id) {
-        return cards[id-1];
+        return cards.at(id-1);
     }
 
     const Card& Game::get_card(CardId id) const {
-        return cards[id-1];
+        return cards.at(id-1);
     }
 
     const Player& Game::get_player(PlayerId id) const{
-        return players[id-1];
+        return players.at(id-1);
     }
 
     Continent& Game::get_continent(ContinentId id) {
-        return continents[id-1];
+        return continents.at(id-1);
     }
 
     const Continent& Game::get_continent(ContinentId id) const {
-        return continents[id-1];
+        return continents.at(id-1);
     }
 
     Land& Game::get_land(LandId id) {
-        return lands[id-1];
+        return lands.at(id-1);
     }
 
     const Land& Game::get_land(LandId id ) const {
-        return lands[id-1];
+        return lands.at(id-1);
     }
 
     const std::size_t Game::get_nb_lands() const {
@@ -92,6 +92,11 @@ namespace fisk {
 
     void Game::set_current_player(PlayerId id) {
         current_player = id;
+    }
+
+    CardId Game::get_top_card(){
+        top_card++;
+        return top_card;
     }
     
     PlayerId Game::get_current_player() const {
