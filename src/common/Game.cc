@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <csignal>
 #include <cstddef>
+#include <gf/Id.h>
 #include <gf/Log.h>
 #include <gf/Random.h>
 #include <iostream>
@@ -116,6 +117,7 @@ namespace fisk {
                 return i+1;
             }
         }
+        return gf::InvalidId;
     }
 
     bool Game::is_neighbours_correct() const  {

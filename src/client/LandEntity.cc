@@ -31,21 +31,26 @@ namespace fisk {
             std::lock_guard guard(game_hub.clientNetwork.m_mutex);
             gf::Log::info("LandEntity %s : clicked\n", this->name.c_str());
             //
-            auto map = game_hub.mainScene.m_map;
-            auto model = game_hub.clientNetwork.getGameModel();
+            auto& map = game_hub.mainScene.m_map;
+            auto& model = game_hub.clientNetwork.getGameModel();
             //
             map.select(this);
-            auto curr_land = model.get_land_by_name(map.curr_selection->name);
-            auto old_land = model.get_land_by_name(map.old_selection->name);
+            gf::Log::debug("Selecting...\n");
+            auto& curr_land = model.get_land_by_name(map.curr_selection->name);
+            auto& old_land = model.get_land_by_name(map.old_selection->name);
             //
             gf::Log::info("%i\n",this->game_hub.mainScene.m_unitSelector.getDimensions().x);
+            gf::Log::debug("Get dimensions of unitSelector...\n");
             this->game_hub.mainScene.m_unitSelector.show();
+            gf::Log::debug("Showing unitSelector...\n");
             selected = !selected;
             //
+            gf::Log::debug("Before switch...\n");
             switch(model.get_current_phase()){
                 case TurnPhase::Fortify:
+                    gf::Log::debug("Fortify...");
                     if(curr_land.getOwner() != game_hub.clientNetwork.getClientId()){
-                        gf::Log::warning("(CLIENT GAME) Current selection is not owned by player");
+                        gf::Log::warning("(CLIENT GAME) Current selection is not owned by player\n");
                     }
                     else {
                         ClientGameSendFortify fortify;
@@ -58,18 +63,19 @@ namespace fisk {
                     map.reset_selections();
                     break;
                 case TurnPhase::Attack:
+                    gf::Log::debug("Attack...\n");
                     if(map.old_selection == nullptr){
-                        gf::Log::warning("(GAME CIENT) Waiting for a second land to be chosen");
+                        gf::Log::warning("(GAME CIENT) Waiting for a second land to be chosen\n");
                         break;
                     }
                     if(old_land.getOwner() != game_hub.clientNetwork.getClientId()){
-                        gf::Log::warning("(CLIENT GAME) First selection is not owned by player");
+                        gf::Log::warning("(CLIENT GAME) First selection is not owned by player\n");
                     }
                     else if (old_land.getNb_units() <= 1){
-                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !");
+                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !\n");
                     }
                     else if(curr_land.getOwner() == game_hub.clientNetwork.getClientId()){
-                        gf::Log::warning("(CLIENT GAME) Second selection is owned by player");
+                        gf::Log::warning("(CLIENT GAME) Second selection is owned by player\n");
                     }
                     else{
                         ClientGameSendAttack attack;
@@ -88,10 +94,12 @@ namespace fisk {
                     map.reset_selections();
                     break;
                 case TurnPhase::Reinforce:
+                    gf::Log::debug("Reinforce...\n");
                     selected = false;
                     map.reset_selections();
                     break;
                 case TurnPhase::End:
+                    gf::Log::debug("End...\n");
                     selected = false;
                     map.reset_selections();
                     break;
