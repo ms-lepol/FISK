@@ -18,7 +18,8 @@
 namespace fisk {
 
     GameInstance::GameInstance(std::unique_ptr<Game> model):
-    model(std::move(*model)) 
+    model(std::move(*model)),
+    ready(false)
     {
     }
 
@@ -65,10 +66,12 @@ namespace fisk {
             send(player.id, hello);
         }
 
+        ready = true;
         broadcast(model);
     }
 
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {
+        if(!ready) return;
         TurnPhase curr_phase = model.get_current_phase();
         switch (packet.getType()) {
             case ClientGameSendFortify::type: {

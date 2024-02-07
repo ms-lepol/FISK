@@ -18,6 +18,7 @@ namespace fisk {
     class GameInstance : public ServerGroup{
 
         Game model;
+        bool ready;
 
         std::map<gf::Id, PlayerId> srv_to_model_id;
 
