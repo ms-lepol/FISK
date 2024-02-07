@@ -14,6 +14,8 @@
 #include <memory>
 #include <stdio.h>
 #include <string>
+#include <unordered_set>
+#include <vector>
 
 namespace fisk {
     Game::Game()
@@ -139,5 +141,30 @@ namespace fisk {
         std::random_device random_dev;
         std::mt19937 generator(random_dev());
         std::shuffle(cards.begin(), cards.end(),generator);
+    }
+
+    bool Game::are_lands_on_same_territory(LandId a, LandId b) {
+        PlayerId player = get_land(a).getOwner();
+
+        if(player != get_land(b).getOwner()) {
+            return false;
+        }
+
+        std::unordered_set<LandId> visited;
+        std::vector<LandId> to_visit = {a};
+        do {
+            LandId curr = *to_visit.end().base();
+            to_visit.pop_back();
+            visited.insert(curr);
+            for(LandId neighbor: get_land(curr).getNeighbors()) {
+                if(get_land(neighbor).getOwner() == player && visited.find(neighbor) == visited.end()) {
+                    if(neighbor == b) {
+                        return true;
+                    }
+                    to_visit.push_back(neighbor);
+                }
+            }
+        } while(!to_visit.empty());
+        return false;
     }
 }
