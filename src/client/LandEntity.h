@@ -68,6 +68,7 @@ namespace fisk {
 
             void render(gf::RenderTarget& target, gf::RenderStates states);
             void renderSelected(gf::RenderTarget& target, gf::RenderStates states);
+            void renderHinted(gf::RenderTarget& target, gf::RenderStates states);
 
         };
 }

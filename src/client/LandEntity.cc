@@ -90,7 +90,7 @@ namespace fisk {
     }
 
 
-    //Draw an outline if selected
+    //Change the color to a dark version if selected
     void LandEntity::renderSelected(gf::RenderTarget& target, gf::RenderStates states){
        
         gf::Color4f color;
@@ -115,6 +115,43 @@ namespace fisk {
         }
         spr_widg.setColor(color);
     
+        target.draw(spr_widg, states);
+        gf::Font& font = game_hub.resources.getFont("font/PixelSplitter-Bold.ttf");
+        unsigned nb_units;
+        {
+            std::lock_guard guard(game_hub.clientNetwork.m_mutex);
+            nb_units = game_hub.clientNetwork.hasGameModel() ? game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units() : 0;
+        }
+        std::string text = std::to_string(nb_units);
+        if (nb_units < 10) text = "0" + text;
+        gf::Text txt(text, font, 10);
+        txt.setAnchor(gf::Anchor::Center);
+        txt.setPosition(position+positionText+gf::Vector2i({0,1}));
+        target.draw(txt,states);
+    }
+
+    void LandEntity::renderHinted(gf::RenderTarget& target, gf::RenderStates states){
+         gf::Color4f color;
+
+        if (getColor()==LandColor().Neutral){
+            color = LandColor().LightNeutral;
+        }
+        if (getColor()==LandColor().Orange){
+            color = LandColor().LightOrange;
+            
+        }
+        if (getColor()==LandColor().Blue){
+            color = LandColor().LightBlue;
+        }
+        if (getColor()==LandColor().Green){
+            color = LandColor().LightGreen;
+            
+        }
+        if (getColor()==LandColor().Yellow){
+            color = LandColor().LightYellow;
+            
+        }
+        spr_widg.setColor(color);
         target.draw(spr_widg, states);
         gf::Font& font = game_hub.resources.getFont("font/PixelSplitter-Bold.ttf");
         unsigned nb_units;
