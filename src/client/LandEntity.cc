@@ -1,6 +1,7 @@
 #include "LandEntity.h" 
 #include "GameHub.h"
 #include <gf/Id.h>
+#include <gf/Log.h>
 #include <sys/socket.h>
 #include <mutex>
 
@@ -37,7 +38,7 @@ namespace fisk {
             map.select(this);
             gf::Log::debug("Selecting...\n");
             auto& curr_land = model.get_land_by_name(map.curr_selection->name);
-            auto& old_land = model.get_land_by_name(map.old_selection->name);
+            gf::Log::debug("ct ici la segfault :3...\n");
             //
             gf::Log::info("%i\n",this->game_hub.mainScene.m_unitSelector.getDimensions().x);
             gf::Log::debug("Get dimensions of unitSelector...\n");
@@ -68,10 +69,10 @@ namespace fisk {
                         gf::Log::warning("(GAME CIENT) Waiting for a second land to be chosen\n");
                         break;
                     }
-                    if(old_land.getOwner() != game_hub.clientNetwork.getClientId()){
+                    if(model.get_land_by_name(map.old_selection->name).getOwner() != game_hub.clientNetwork.getClientId()){
                         gf::Log::warning("(CLIENT GAME) First selection is not owned by player\n");
                     }
-                    else if (old_land.getNb_units() <= 1){
+                    else if (model.get_land_by_name(map.old_selection->name).getNb_units() <= 1){
                         gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !\n");
                     }
                     else if(curr_land.getOwner() == game_hub.clientNetwork.getClientId()){
@@ -81,7 +82,7 @@ namespace fisk {
                         ClientGameSendAttack attack;
                         attack.attacking_land_id = model.get_land_id_by_name(map.old_selection->name);
                         attack.defending_land_id = model.get_land_id_by_name(map.curr_selection->name);
-                        unsigned nb_units = old_land.getNb_units();
+                        unsigned nb_units = model.get_land_by_name(map.old_selection->name).getNb_units();
                         // Automatic choice of dice (can be replaced with selector)
                         unsigned n = 3;
                         if(nb_units <= 4) n = nb_units-1;
