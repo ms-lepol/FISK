@@ -82,6 +82,11 @@ namespace fisk {
 
             void shuffle_cards();
 
+            /**
+             * @brief Change the current game phase to the next one
+             */
+            void next_phase();
+
             size_t nb_lands() const;
     
             template<typename S>

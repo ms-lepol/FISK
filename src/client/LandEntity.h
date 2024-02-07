@@ -64,6 +64,7 @@ namespace fisk {
             void setNbUnit(unsigned nb_unit);
             bool isSelected();
             gf::Color4f getColor();
+            std::string getName();
 
             void render(gf::RenderTarget& target, gf::RenderStates states);
             void renderSelected(gf::RenderTarget& target, gf::RenderStates states);

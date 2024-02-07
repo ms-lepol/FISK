@@ -13,6 +13,8 @@
 #include <gf/Vector.h>
 #include <memory>
 #include <vector>
+#include <cinttypes>
+
 #include "../common/FiskColors.h"
 
 
@@ -76,6 +78,7 @@ namespace fisk {
         TurnPhase curr_phase = model.get_current_phase();
         switch (packet.getType()) {
             case ClientGameSendFortify::type: {
+                gf::Log::debug("(SERVER GAME) Received Fortify from player {%" PRIX64 "}...\n", player.id);
                 //
                 if(curr_phase != TurnPhase::Fortify) break;
                 //
@@ -86,6 +89,7 @@ namespace fisk {
                 break;
             }
             case ClientGameSendAttack::type: {
+                gf::Log::debug("(SERVER GAME) Received Attack from player {%" PRIX64 "}...\n", player.id);
                 //
                 auto data = packet.as<ClientGameSendAttack>();
                 //
