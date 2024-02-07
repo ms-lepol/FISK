@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <gf/Log.h>
+#include <mutex>
 #include <queue>
 #include <thread>
 #include <csignal>
@@ -133,7 +134,7 @@ namespace fisk {
             }
             break;
         }
-                    
+
         default:
           gf::Log::error("(CLIENT) Unknown packet type: %lu\n", packeta.getType());
           break;

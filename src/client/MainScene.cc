@@ -14,6 +14,7 @@
 #include <gf/Vector.h>
 #include <gf/MouseValues.h>
 #include <iostream>
+#include <mutex>
 #include "../common/FiskColors.h"
 
 namespace fisk {
@@ -134,6 +135,7 @@ namespace fisk {
     }
     m_game.clientNetwork.update(); 
 
+    std::lock_guard guard(m_game.clientNetwork.m_mutex);
 
 
         //Update the turn interface

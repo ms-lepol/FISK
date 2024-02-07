@@ -5,6 +5,7 @@
 #include <gf/Entity.h>
 #include <gf/Log.h>
 #include <gf/ResourceManager.h>
+#include <mutex>
 #include <vector>
 
 namespace fisk {
@@ -25,6 +26,7 @@ namespace fisk {
     }
 
     void HandEntity::update(gf::Time time) {
+        std::lock_guard<std::mutex> guard(game_hub.clientNetwork.m_mutex);
         if (game_hub.clientNetwork.hasGameModel()) {
             auto& gm = game_hub.clientNetwork.getGameModel();
             PlayerId player = game_hub.clientNetwork.getClientId();
