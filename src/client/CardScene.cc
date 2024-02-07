@@ -58,7 +58,7 @@ namespace fisk {
    
     c_hand.addEntity(c_handEntity);
 
-    c_handEntity.setPosition(screenCenter + gf::Vector2f({-c_handEntity.getDimensions().x/2.0f, CARD_HEIGHT/2.0f}));
+    c_handEntity.setPosition(screenCenter + gf::Vector2f({-c_handEntity.getDimensions().x/2.0f, -CARD_HEIGHT/2.0f}));
     //HUD entities
 
 
@@ -90,7 +90,6 @@ namespace fisk {
     c_playCard.setCallback([this](){
       gf::Log::info("PlayCard clicked\n");
     });
-
   }
 
 

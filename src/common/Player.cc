@@ -47,8 +47,8 @@ namespace fisk {
     void Player::setNb_units(int nb_units){
         this->nb_units = nb_units;
     }
-    void drawCard(){
-        // TODO
+    void Player::drawCard(CardId card_id){
+        hand.push_back(card_id);
     }
     void playCard(){
         // TODO

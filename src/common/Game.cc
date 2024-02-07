@@ -125,4 +125,10 @@ namespace fisk {
        }
         return is_correct;
     }
+
+    void Game::shuffle_cards() {
+        std::random_device random_dev;
+        std::mt19937 generator(random_dev());
+        std::shuffle(cards.begin(), cards.end(),generator);
+    }
 }

@@ -302,6 +302,8 @@ namespace fisk {
         Card joker2(fisk::Type::Joker, 0);
         model->add_card(joker2);
 
+        model->shuffle_cards();
+        
         return model;
     }
 

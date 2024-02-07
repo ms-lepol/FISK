@@ -63,7 +63,7 @@ namespace fisk {
 
             gf::SpriteWidget spr_widg;
 
-            CardEntity(Card card, gf::ResourceManager &rm);
+            CardEntity(Card card, gf::ResourceManager &rm,std::string land_name = "LandName");
             
             
             void setSelected(bool selected);
@@ -73,11 +73,12 @@ namespace fisk {
 
             Card getCard();
             std::string getLandName();
+            void setLandName(std::string land_name);
             gf::Vector2i getPosition();
 
             bool isSelected();
 
-            void render(gf::RenderTarget& target, gf::RenderStates states);
+            void render(gf::RenderTarget& target,const gf::RenderStates& states);
 
         };
 }

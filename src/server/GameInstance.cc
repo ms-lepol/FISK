@@ -57,6 +57,8 @@ namespace fisk {
             }
         }
         model.set_current_player(PlayerId(1));
+        model.get_player(1).drawCard(1);
+
 
         
         for(auto& player: getPlayers()) {
