@@ -2,7 +2,7 @@
 
 #define pathLands "sprites/lands/"
 
-#define MAP1_NB_LANDS 42
+#define MAP1_NB_LANDS 38
 
 #define pathAfhganistan "sprites/lands/fisk_afhganistan_777_122.png"
 #define xAfhganistan 777

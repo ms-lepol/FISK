@@ -18,7 +18,7 @@ namespace fisk {
 
     Land::Land(unsigned nb_units, std::string name, std::vector<LandId> neighbors, PlayerId player_id)
     {
-        this->nb_units = nb_units;
+        this->nb_units = 1;
         this->name = name;
         this->neighbors = neighbors;
         this->owner_id = player_id;
