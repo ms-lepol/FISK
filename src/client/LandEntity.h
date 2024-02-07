@@ -54,7 +54,7 @@ namespace fisk {
 
 
             gf::Texture& m_texture;
-            bool selected;
+            
         public:
 
             gf::SpriteWidget spr_widg;
@@ -62,7 +62,7 @@ namespace fisk {
             LandEntity(std::string name, std::string sprite_path, gf::Vector2i position,gf::Vector2i positionText, GameHub& gm);
             LandEntity();
             void setNbUnit(unsigned nb_unit);
-            bool isSelected();
+            
             gf::Color4f getColor();
 
             void render(gf::RenderTarget& target, gf::RenderStates states);

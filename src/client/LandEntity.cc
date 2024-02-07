@@ -24,7 +24,7 @@ namespace fisk {
 
         
         //Logic
-        selected = false;
+        
         //Rendering
         spr_widg.setDefaultSprite(m_texture, gf::RectF::fromMinMax({0,0}, {1,1}));
         spr_widg.setPosition(position);
@@ -43,7 +43,7 @@ namespace fisk {
 
             this->game_hub.mainScene.m_unitSelector.show();
             gf::Log::debug("Showing unitSelector...\n");
-            selected = !selected;
+            
             //
             gf::Log::debug("Before switch...\n");
             switch(model.get_current_phase()){
@@ -59,7 +59,7 @@ namespace fisk {
                         //
                         game_hub.clientNetwork.send(fortify);
                     }
-                    selected = false;
+                    
                     map.reset_selections();
                     break;
                 case TurnPhase::Attack:
@@ -90,17 +90,16 @@ namespace fisk {
                         //
                         game_hub.clientNetwork.send(attack);
                     }
-                    selected = false;
+                    
                     map.reset_selections();
                     break;
                 case TurnPhase::Reinforce:
                     gf::Log::debug("Reinforce...\n");
-                    selected = false;
+                    
                     map.reset_selections();
                     break;
                 case TurnPhase::End:
                     gf::Log::debug("End...\n");
-                    selected = false;
                     map.reset_selections();
                     break;
             }
@@ -116,10 +115,6 @@ namespace fisk {
             }
         }
         return PlayerColor().Neutral;
-    }
-
-    bool LandEntity::isSelected(){
-        return selected;
     }
 
     void LandEntity::render(gf::RenderTarget& target,gf::RenderStates states) {
@@ -146,29 +141,29 @@ namespace fisk {
 
     //Draw an outline if selected
     void LandEntity::renderSelected(gf::RenderTarget& target, gf::RenderStates states){
-        if (selected){
-            gf::Color4f color;
+       
+        gf::Color4f color;
 
-            if (getColor()==LandColor().Neutral){
-                color = LandColor().DarkNeutral;
-            }
-            if (getColor()==LandColor().Orange){
-                color = LandColor().DarkOrange;
-                
-            }
-            if (getColor()==LandColor().Blue){
-                color = LandColor().DarkBlue;
-            }
-            if (getColor()==LandColor().Green){
-                color = LandColor().DarkGreen;
-                
-            }
-            if (getColor()==LandColor().Yellow){
-                color = LandColor().DarkYellow;
-                
-            }
-            spr_widg.setColor(color);
+        if (getColor()==LandColor().Neutral){
+            color = LandColor().DarkNeutral;
         }
+        if (getColor()==LandColor().Orange){
+            color = LandColor().DarkOrange;
+            
+        }
+        if (getColor()==LandColor().Blue){
+            color = LandColor().DarkBlue;
+        }
+        if (getColor()==LandColor().Green){
+            color = LandColor().DarkGreen;
+            
+        }
+        if (getColor()==LandColor().Yellow){
+            color = LandColor().DarkYellow;
+            
+        }
+        spr_widg.setColor(color);
+        
         target.draw(spr_widg, states);
         gf::Font& font = game_hub.resources.getFont("font/PixelSplitter-Bold.ttf");
         unsigned nb_units;
