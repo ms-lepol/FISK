@@ -67,7 +67,6 @@ namespace fisk {
         }
 
         ready = true;
-        broadcast(model);
     }
 
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {

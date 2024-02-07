@@ -83,7 +83,7 @@ namespace fisk {
           gf::Log::info("(CLIENT) Hello.\n");
           auto data = packeta.as<ServerHello>();
           m_game.clientNetwork.setClientId(data.playerId);
-          gf::Log::info("(CLIENT) My ID {%" PRIX64 "}", data.playerId);
+          gf::Log::info("(CLIENT) My ID {%" PRIX64 "}\n", data.playerId);
           break;
         }
         case ServerStartGame::type: {
