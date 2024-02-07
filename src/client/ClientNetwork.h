@@ -54,6 +54,7 @@ namespace fisk {
     
     public:
     gf::Queue<gf::Packet> queue;
+    std::mutex m_mutex;
     void update();
 
     private:
@@ -65,7 +66,6 @@ namespace fisk {
 
         GameHub& m_game;
         gf::TcpSocket m_socket;
-        std::mutex m_mutex;
         std::atomic_bool m_connecting;
 
         ServerListLobbys* m_lobbies;

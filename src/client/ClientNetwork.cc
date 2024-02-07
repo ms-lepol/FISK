@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <gf/Log.h>
+#include <mutex>
 #include <queue>
 #include <thread>
 #include <csignal>
@@ -82,7 +83,7 @@ namespace fisk {
           gf::Log::info("(CLIENT) Hello.\n");
           auto data = packeta.as<ServerHello>();
           m_game.clientNetwork.setClientId(data.playerId);
-          gf::Log::info("(CLIENT) My ID {%" PRIX64 "}", data.playerId);
+          gf::Log::info("(CLIENT) My ID {%" PRIX64 "}\n", data.playerId);
           break;
         }
         case ServerStartGame::type: {
@@ -133,7 +134,7 @@ namespace fisk {
             }
             break;
         }
-                    
+
         default:
           gf::Log::error("(CLIENT) Unknown packet type: %lu\n", packeta.getType());
           break;

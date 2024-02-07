@@ -5,7 +5,9 @@
 #include "Land.h"
 #include "Player.h"
 #include <algorithm>
+#include <csignal>
 #include <cstddef>
+#include <gf/Log.h>
 #include <gf/Random.h>
 #include <iostream>
 #include <memory>
@@ -98,9 +100,14 @@ namespace fisk {
     }
 
     const Land& Game::get_land_by_name(const std::string& name) const {
-        return *std::find_if(lands.cbegin(), lands.cend(), [&name](const Land& land) {
+        auto it = std::find_if(lands.cbegin(), lands.cend(), [&name](const Land& land) {
                 return land.getName() == name;
-            }).base();
+            });
+        if(it == lands.cend()) {
+            gf::Log::error("Can't find land '%s'", name.c_str());
+            throw "can't find land " + name;
+        }
+        return *it.base();
     }
 
     const LandId Game::get_land_id_by_name(const std::string& name) const {

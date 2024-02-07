@@ -20,7 +20,8 @@ namespace fisk {
 
     GameInstance::GameInstance(std::unique_ptr<Game> model, gf::Random& random):
     model(std::move(*model)),
-    m_random(random)
+    m_random(random),
+    ready(false)
     {
     }
 
@@ -67,10 +68,11 @@ namespace fisk {
             send(player.id, hello);
         }
 
-        broadcast(model);
+        ready = true;
     }
 
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {
+        if(!ready) return;
         TurnPhase curr_phase = model.get_current_phase();
         switch (packet.getType()) {
             case ClientGameSendFortify::type: {

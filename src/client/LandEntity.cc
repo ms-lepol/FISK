@@ -2,6 +2,7 @@
 #include "GameHub.h"
 #include <gf/Id.h>
 #include <sys/socket.h>
+#include <mutex>
 
 
 #define textOffset 1
@@ -27,6 +28,7 @@ namespace fisk {
         spr_widg.setDefaultSprite(m_texture, gf::RectF::fromMinMax({0,0}, {1,1}));
         spr_widg.setPosition(position);
         spr_widg.setCallback([this] {
+            std::lock_guard guard(game_hub.clientNetwork.m_mutex);
             gf::Log::info("LandEntity %s : clicked\n", this->name.c_str());
             //
             auto map = game_hub.mainScene.m_map;
@@ -98,6 +100,7 @@ namespace fisk {
     }
 
     gf::Color4f LandEntity::getColor() {
+        std::lock_guard guard(game_hub.clientNetwork.m_mutex);
         if(game_hub.clientNetwork.hasGameModel()) {
             PlayerId owner = game_hub.clientNetwork.getGameModel().get_land_by_name(name).getOwner();
             if(owner != gf::InvalidId) {
@@ -119,7 +122,11 @@ namespace fisk {
         
         target.draw(spr_widg, states);
         gf::Font& font = game_hub.resources.getFont("font/PixelSplitter-Bold.ttf");
-        unsigned nb_units = game_hub.clientNetwork.hasGameModel() ? game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units() : 0;
+        unsigned nb_units;
+        {
+            std::lock_guard guard(game_hub.clientNetwork.m_mutex);
+            nb_units = game_hub.clientNetwork.hasGameModel() ? game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units() : 0;
+        }
         std::string text = std::to_string(nb_units);
         if (nb_units < 10) text = "0" + text;
         gf::Text txt(text, font, 10);
@@ -156,7 +163,11 @@ namespace fisk {
         }
         target.draw(spr_widg, states);
         gf::Font& font = game_hub.resources.getFont("font/PixelSplitter-Bold.ttf");
-        unsigned nb_units = game_hub.clientNetwork.hasGameModel() ? game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units() : 0;
+        unsigned nb_units;
+        {
+            std::lock_guard guard(game_hub.clientNetwork.m_mutex);
+            nb_units = game_hub.clientNetwork.hasGameModel() ? game_hub.clientNetwork.getGameModel().get_land_by_name(name).getNb_units() : 0;
+        }
         std::string text = std::to_string(nb_units);
         if (nb_units < 10) text = "0" + text;
         gf::Text txt(text, font, 10);
