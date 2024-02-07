@@ -34,13 +34,13 @@
 
 
 #include "../common/FiskColors.h"
-#include "CardScene.h"
+
 
 
 
 namespace fisk {
     
-
+    struct GameHub;
 
     class LandEntity : public gf::Entity {
             
