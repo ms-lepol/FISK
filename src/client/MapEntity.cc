@@ -2,10 +2,12 @@
 #include "CardScene.h"
 #include "LandEntity.h"
 #include <cstdlib>
+#include <gf/Log.h>
 #include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
+#include "GameHub.h"
 
 namespace fisk {
     MapEntity::MapEntity(GameHub& gm , unsigned level_id) : 
@@ -23,8 +25,20 @@ namespace fisk {
     }
 
     void MapEntity::select(LandEntity* e){
-        old_selection = curr_selection;
-        curr_selection = e;
+        switch (game_hub.clientNetwork.getGameModel().get_current_phase()) {
+            case TurnPhase::Fortify:
+                old_selection = nullptr; 
+                curr_selection = e;
+                break;
+            case TurnPhase::Attack:
+            case TurnPhase::Reinforce:
+                old_selection = curr_selection;
+                curr_selection = e;
+            case TurnPhase::End:
+            default:
+                gf::Log::warning("MapEntity Select switch default, should not be here");
+                break;
+        }
     }
 
     void MapEntity::reset_selections(){
