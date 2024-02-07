@@ -10,9 +10,10 @@
 
 namespace fisk {
 
-    ServerLobby::ServerLobby(GameFactory& factory)
+    ServerLobby::ServerLobby(GameFactory& factory, gf::Random& random)
     : m_factory(factory),
-    m_instance(nullptr)
+    m_instance(nullptr),
+    m_random(random)
     {
         gf::Log::info("(LOBBY) Lobby Created.\n");
     }

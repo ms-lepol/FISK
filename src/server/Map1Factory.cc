@@ -1,6 +1,7 @@
 #include "Map1Factory.h"
 #include "GameInstance.h"
 #include <gf/Log.h>
+#include <gf/Random.h>
 #include <memory>
 
 namespace fisk {
@@ -310,9 +311,10 @@ namespace fisk {
     Map1Factory::Map1Factory() {
     }
 
-  std::unique_ptr<GameInstance> Map1Factory::createInstance() {
-      std::unique_ptr<GameInstance> new_instance(new GameInstance(createModelForMap1()));
-      return new_instance;
-  }
+    std::unique_ptr<GameInstance> Map1Factory::createInstance() {
+        gf::Random random;
+        std::unique_ptr<GameInstance> new_instance(new GameInstance(createModelForMap1(), random));
+        return new_instance;
+    }
 
 }

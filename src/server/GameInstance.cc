@@ -1,4 +1,5 @@
 #include "GameInstance.h"
+#include <gf/Dice.h>
 #include <map>
 #include "ServerPlayer.h"
 #include <algorithm>
@@ -17,8 +18,9 @@
 
 namespace fisk {
 
-    GameInstance::GameInstance(std::unique_ptr<Game> model):
+    GameInstance::GameInstance(std::unique_ptr<Game> model, gf::Random& random):
     model(std::move(*model)),
+    m_random(random),
     ready(false)
     {
     }
@@ -85,6 +87,24 @@ namespace fisk {
                 break;
             }
             case ClientGameSendAttack::type: {
+                //
+                auto data = packet.as<ClientGameSendAttack>();
+                //
+                auto attacker = model.get_land(data.attacking_land_id);
+                auto defender = model.get_land(data.defending_land_id);
+                //
+                std::vector<int> attacker_dices;
+                std::vector<int> defender_dices;
+                gf::Dice d6(6);
+                //
+                for(auto i = 0; i<data.attacking_nb_dice; ++i){
+                    attacker_dices.push_back(d6.roll(m_random));
+                    if(defender.getNb_units() > i){ // Maximum amount of dices for the defender
+                        defender_dices.push_back(d6.roll(m_random));
+                    }
+                }
+                //
+                attacker.attack(defender, attacker_dices, defender_dices);
                 //
                 break;
             }

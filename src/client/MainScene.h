@@ -56,8 +56,9 @@ private:
   gf::EntityContainer m_HudEntities;
 
   // entities
-
+  public:
   fisk::MapEntity m_map;
+  private:
   fisk::TurnInterface m_turnInterface;
   fisk::PhaseIndicator m_phaseIndicator;
   

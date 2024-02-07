@@ -9,22 +9,28 @@
 
 namespace fisk {
     MapEntity::MapEntity(GameHub& gm , unsigned level_id) : 
-        game_hub(gm)
-        {
-        ;
+    game_hub(gm),
+    old_selection(nullptr),
+    curr_selection(nullptr)
+    {
         switch (level_id) {
             case 1:
                 configureMap1();
                 break;
             default:
                 break;
-        
         }
-        
-
     }
 
+    void MapEntity::select(LandEntity* e){
+        old_selection = curr_selection;
+        curr_selection = e;
+    }
 
+    void MapEntity::reset_selections(){
+        old_selection = nullptr;
+        curr_selection = nullptr;
+    }
     
     void  MapEntity::configureMap1(){
 

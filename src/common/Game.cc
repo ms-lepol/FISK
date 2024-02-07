@@ -7,12 +7,15 @@
 #include <algorithm>
 #include <csignal>
 #include <cstddef>
+#include <gf/Id.h>
 #include <gf/Log.h>
 #include <gf/Random.h>
 #include <iostream>
 #include <memory>
 #include <stdio.h>
 #include <string>
+#include <unordered_set>
+#include <vector>
 
 namespace fisk {
     Game::Game()
@@ -115,6 +118,15 @@ namespace fisk {
         return *it.base();
     }
 
+    const LandId Game::get_land_id_by_name(const std::string& name) const {
+        for(auto i = 0; i<lands.size(); ++i){
+            if(lands[i].getName() == name){
+                return i+1;
+            }
+        }
+        return gf::InvalidId;
+    }
+
     bool Game::is_neighbours_correct() const  {
        bool is_correct = true;
        for (auto continent :continents){
@@ -134,5 +146,30 @@ namespace fisk {
         std::random_device random_dev;
         std::mt19937 generator(random_dev());
         std::shuffle(cards.begin(), cards.end(),generator);
+    }
+
+    bool Game::are_lands_on_same_territory(LandId a, LandId b) {
+        PlayerId player = get_land(a).getOwner();
+
+        if(player != get_land(b).getOwner()) {
+            return false;
+        }
+
+        std::unordered_set<LandId> visited;
+        std::vector<LandId> to_visit = {a};
+        do {
+            LandId curr = *to_visit.end().base();
+            to_visit.pop_back();
+            visited.insert(curr);
+            for(LandId neighbor: get_land(curr).getNeighbors()) {
+                if(get_land(neighbor).getOwner() == player && visited.find(neighbor) == visited.end()) {
+                    if(neighbor == b) {
+                        return true;
+                    }
+                    to_visit.push_back(neighbor);
+                }
+            }
+        } while(!to_visit.empty());
+        return false;
     }
 }

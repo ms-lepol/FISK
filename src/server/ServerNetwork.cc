@@ -166,7 +166,7 @@ namespace fisk {
                     break;
                 }
                 auto data = packet.as<ClientCreateLobby>();
-                ServerLobby lobby(map_factory);
+                ServerLobby lobby(map_factory, m_random);
                 lobby.id = m_random.get().computeId();
                 lobby.name = data.name;
 

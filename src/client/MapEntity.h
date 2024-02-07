@@ -25,6 +25,12 @@ namespace fisk  {
 
        public:
 
+            LandEntity* old_selection;
+            LandEntity* curr_selection;
+
+            void select(LandEntity* e);
+            void reset_selections();
+
             gf::WidgetContainer widg_container;
             
             MapEntity(GameHub& gm , unsigned level_id);
