@@ -75,6 +75,10 @@ namespace fisk {
 
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {
         if(!ready) return;
+        if(player.id != model.get_current_player()) {
+            gf::Log::info("(SERVER GAME) This is not your turn to play\n");
+            return;
+        }
         TurnPhase curr_phase = model.get_current_phase();
         switch (packet.getType()) {
             case ClientGameSendFortify::type: {

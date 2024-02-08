@@ -206,8 +206,8 @@ namespace fisk {
     template<typename Archive>
         Archive& operator|(Archive& ar, ServerGameAskTroops& data) {
             return ar;
-        } 
-
+        }
+        
     // Client game
 
     struct ClientGameSendFortify {
