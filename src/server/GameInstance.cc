@@ -35,7 +35,7 @@ namespace fisk {
         //Initialize players
         for(unsigned i=0; i < this->getPlayers().size(); ++i) {
             srv_to_model_id[getPlayers()[i].id] = i + 1;
-            Player player(0, static_cast<Player::Color>(i), {});
+            Player player(10, static_cast<Player::Color>(i), {});
             gf::Log::info("Player %d - color : %hhu \n", i, static_cast<Player::Color>(i));
             gf::Log::info("Player %d - color : %hhu \n", i, player.getColor());
             player_ids.push_back(model.add_player(player));

@@ -20,6 +20,10 @@ namespace fisk {
         return this->nb_units;
     }
 
+    int Player::getNb_units() const{
+        return this->nb_units;
+    }
+
     void Player::setNb_units(unsigned nb){
         nb_units = nb;
     }

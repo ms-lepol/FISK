@@ -25,6 +25,7 @@ namespace fisk {
             Player();
             Player(int nb_units, Player::Color color, std::vector<CardId> hand);
             int getId_client();
+            int getNb_units() const;
             int getNb_units();
             void setNb_units(unsigned nb);
             Player::Color getColor() const;
