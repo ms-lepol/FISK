@@ -98,7 +98,7 @@ namespace fisk {
         std::vector<std::string> keysSelected;
         std::vector<std::string> keysHinted;
         
-        if (old_selection != nullptr) { //2Choices
+        if (old_selection != nullptr) { //2 Choices
             keysSelected.push_back(old_selection->getName());
             TurnPhase phase  = game_hub.clientNetwork.getGameModel().get_current_phase();
                 if (phase== TurnPhase::Attack){
@@ -114,6 +114,15 @@ namespace fisk {
 
         } else if (curr_selection != nullptr) {
             keysSelected.push_back(curr_selection->getName());
+            TurnPhase phase  = game_hub.clientNetwork.getGameModel().get_current_phase();
+                if (phase== TurnPhase::Attack){
+                    auto neighbors = game_hub.clientNetwork.getGameModel().get_land_by_name(curr_selection->getName()).getNeighbors();
+                    for (auto& neighbor : neighbors) {
+                        if (game_hub.clientNetwork.getGameModel().get_land(neighbor).getOwner() != game_hub.clientNetwork.getGameModel().get_land_by_name(curr_selection->getName()).getOwner()) {
+                            keysHinted.push_back(game_hub.clientNetwork.getGameModel().get_land(neighbor).getName());
+                        }
+                    }
+                }
         }
 
 

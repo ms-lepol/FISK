@@ -16,6 +16,10 @@ namespace fisk {
         hand(hand)
     {}
 
+    int Player::getNb_units(){
+        return this->nb_units;
+    }
+
     int Player::getNb_units() const{
         return this->nb_units;
     }
