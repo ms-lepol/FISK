@@ -25,7 +25,7 @@ namespace fisk {
         void render(gf::RenderTarget& target, const gf::RenderStates& states);
         void setPosition(gf::Vector2i pos);
         gf::Vector2i getDimensions();
-        void setMaxUnit(Land& land_clicked);
+        void setMaxUnit(int max);
         void hide();
         void show();
 

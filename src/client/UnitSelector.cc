@@ -70,15 +70,39 @@ namespace fisk {
     }
 
     void UnitSelector::update(gf::Time time) {
+        if (hidden) return;
+        auto& map = game_hub.mainScene.m_map;
+        auto& model = game_hub.clientNetwork.getGameModel();
+        switch (model.get_current_phase()) {
+            case TurnPhase::Fortify:
+            case TurnPhase::Reinforce:        
+                if (map.old_selection != nullptr) {
+                    setMaxUnit(model.get_land_by_name(map.old_selection->getName()).getNb_units());
+                } else if (map.curr_selection != nullptr) {
+                        setMaxUnit(model.get_land_by_name(map.curr_selection->getName()).getNb_units());
+                }
+            break;
+            case TurnPhase::Attack:
+                if (map.old_selection != nullptr) {
+                    setMaxUnit(model.get_land_by_name(map.old_selection->getName()).getNb_units());
+                }
+                break;
+            case TurnPhase::End:
+                break;
 
+        }
+        
+        
     }
 
     void UnitSelector::setCallbacks(){
         s_left.setCallback([this](){
+            gf::Log::debug("Max unit : %d\n", max_unit);
             selected_unit = (selected_unit-1 < min_unit) ? max_unit-1 : selected_unit-1;
         });
         s_right.setCallback([this](){
-            selected_unit = min_unit+((selected_unit+1-min_unit)%(max_unit-min_unit));
+            gf::Log::debug("Max unit : %d\n", max_unit);
+            if (max_unit > 2) selected_unit = (selected_unit+1 > max_unit-1) ? min_unit : selected_unit+1;
         });
         s_validate.setCallback([this](){
             gf::Log::debug("Validate the unit selection\n");
@@ -167,9 +191,9 @@ namespace fisk {
         setCallbacks();
     }
 
-    void UnitSelector::setMaxUnit(Land& land_clicked) {
-        max_unit = land_clicked.getNb_units();
-        selected_unit = 0;
+    void UnitSelector::setMaxUnit(int max) {
+        max_unit = max;
+        //selected_unit = min_unit;
     }
     
     void UnitSelector::render(gf::RenderTarget& target, const gf::RenderStates& states) {
