@@ -60,8 +60,7 @@ namespace fisk {
             }
         }
         model.set_current_player(PlayerId(1));
-        model.get_player(1).drawCard(model.get_top_card());
-        //model.get_player(2).drawCard(model.get_top_card());
+        model.get_player(1).drawCard(1);
 
 
         
@@ -86,7 +85,9 @@ namespace fisk {
                 auto data = packet.as<ClientGameSendFortify>();
                 //
                 model.get_land(data.land_id).fortify(data.nb);
+                model.get_player(player.id).setNb_units(model.get_player(player.id).getNb_units() - data.nb);
                 //
+                if(model.get_player(player.id).getNb_units() == 0) model.next_phase();
                 break;
             }
             case ClientGameSendAttack::type: {
@@ -110,9 +111,11 @@ namespace fisk {
                 //
                 attacker.attack(defender, attacker_dices, defender_dices);
                 //
+                model.next_phase();
                 break;
             }
         }
+        
         broadcast(model); // update every clients ! MAY NOT WORK SINCE SERVER_CLIENT NOT INITIALIZED IN GAMEINSTANCE !
     }
 

@@ -183,6 +183,7 @@ namespace fisk {
 
     void UnitSelector::hide() {
         hidden = true;
+        selected_unit = min_unit;
         rmCallbacks();
     }
 

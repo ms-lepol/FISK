@@ -142,6 +142,25 @@ namespace fisk {
         return is_correct;
     }
 
+    void Game::next_phase() {
+        switch (current_phase) {
+            case TurnPhase::Fortify:
+                current_phase = TurnPhase::Attack;
+                break;
+            case TurnPhase::Attack:
+                current_phase = TurnPhase::Reinforce;
+                break;
+            case TurnPhase::Reinforce:
+                current_phase = TurnPhase::Fortify;
+                current_player = ((current_player + 1) % (get_nb_players() + 1)) +1;
+                break;
+            case TurnPhase::End:
+            default:
+                gf::Log::error("(GAME) Error when changing turn\n");
+                break;
+        }
+    }
+
     void Game::shuffle_cards() {
         std::random_device random_dev;
         std::mt19937 generator(random_dev());

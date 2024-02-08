@@ -34,16 +34,25 @@ namespace fisk {
             //
             auto& map = game_hub.mainScene.m_map;
             auto& model = game_hub.clientNetwork.getGameModel();
-            //
             map.select(this);
+            bool is_curr_land_owned = (model.get_land_by_name(map.curr_selection->getName()).getOwner() == game_hub.clientNetwork.getClientId());
             //
             switch (model.get_current_phase()) {
                 case TurnPhase::Attack:
                 case TurnPhase::Reinforce:
-                    if(map.old_selection == nullptr) break;
+                    if(map.old_selection == nullptr) {
+                        gf::Log::debug("(CLIENT GAME) Waiting for second selection\n");
+                    }
+                    break;
                 case TurnPhase::Fortify:
-                    this->game_hub.mainScene.m_unitSelector.show();
-                    gf::Log::debug("Showing unitSelector...\n");
+                    if(!is_curr_land_owned){
+                        gf::Log::warning("(CLIENT GAME) Cannot fortify a land not owned by the player.\n");
+                        map.reset_selections();
+                    }
+                    else {
+                        this->game_hub.mainScene.m_unitSelector.show();
+                        gf::Log::debug("Showing unitSelector...\n");
+                    }
                     break;
                 case TurnPhase::End:
                 default:
