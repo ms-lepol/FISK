@@ -25,20 +25,8 @@ namespace fisk {
     }
 
     void MapEntity::select(LandEntity* e){
-        switch (game_hub.clientNetwork.getGameModel().get_current_phase()) {
-            case TurnPhase::Fortify:
-                old_selection = nullptr; 
-                curr_selection = e;
-                break;
-            case TurnPhase::Attack:
-            case TurnPhase::Reinforce:
-                old_selection = curr_selection;
-                curr_selection = e;
-            case TurnPhase::End:
-            default:
-                gf::Log::warning("MapEntity Select switch default, should not be here");
-                break;
-        }
+        old_selection = curr_selection; 
+        curr_selection = e;
     }
 
     void MapEntity::reset_selections(){

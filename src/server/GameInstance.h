@@ -20,6 +20,10 @@ namespace fisk {
         Game model;
         bool ready;
 
+        /**
+         * ServerPlayer Id is the key
+         * PlayerId is the model id 
+         */
         std::map<gf::Id, PlayerId> srv_to_model_id;
 
         gf::Ref<gf::Random> m_random;

@@ -213,7 +213,7 @@ namespace fisk {
     struct ClientGameSendFortify {
         static constexpr gf::Id type = "ClientGameSendFortify"_id;
         LandId land_id;
-        unsigned nb;
+        int nb;
     };
 
     template<typename Archive>

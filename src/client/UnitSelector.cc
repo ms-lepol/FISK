@@ -79,7 +79,11 @@ namespace fisk {
                 break;
             case TurnPhase::Reinforce:        
                 if (map.old_selection != nullptr) {
-                    setMaxUnit(model.get_land_by_name(map.old_selection->getName()).getNb_units());
+                    int units = model.get_land_by_name(map.old_selection->getName()).getNb_units();
+                    int n = 3;
+                    if(units <= 4) n = units-1;
+                    if(n <= 1) n = 1;
+                    setMaxUnit(n);
                 } else if (map.curr_selection != nullptr) {
                         setMaxUnit(model.get_land_by_name(map.curr_selection->getName()).getNb_units());
                 }
@@ -122,7 +126,7 @@ namespace fisk {
                     else {
                         ClientGameSendFortify fortify;
                         fortify.land_id = model.get_land_id_by_name(map.curr_selection->getName());
-                        fortify.nb = selected_unit; // Need to change for the selector
+                        fortify.nb = selected_unit;
                         //
                         game_hub.clientNetwork.send(fortify);
                     }
@@ -147,12 +151,7 @@ namespace fisk {
                         ClientGameSendAttack attack;
                         attack.attacking_land_id = model.get_land_id_by_name(map.old_selection->getName());
                         attack.defending_land_id = model.get_land_id_by_name(map.curr_selection->getName());
-                        unsigned nb_units = model.get_land_by_name(map.old_selection->getName()).getNb_units();
-                        // Automatic choice of dice (can be replaced with selector)
-                        unsigned n = 3;
-                        if(nb_units <= 4) n = nb_units-1;
-                        if(n <= 1) n = 1;
-                        attack.attacking_nb_dice = n;
+                        attack.attacking_nb_dice = selected_unit;                        
                         //
                         game_hub.clientNetwork.send(attack);
                     }

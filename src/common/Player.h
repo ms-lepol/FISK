@@ -27,7 +27,6 @@ namespace fisk {
             int getId_client();
             int getNb_units() const;
             int getNb_units();
-            void setNb_units(unsigned nb);
             Player::Color getColor() const;
             const gf::Color4f getColor4f() const;
             void setNb_units(int nb_units);

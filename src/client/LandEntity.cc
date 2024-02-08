@@ -34,6 +34,12 @@ namespace fisk {
             //
             auto& map = game_hub.mainScene.m_map;
             auto& model = game_hub.clientNetwork.getGameModel();
+            //
+            if(model.get_current_player() != game_hub.clientNetwork.getClientId()) {
+                gf::Log::info("(CLIENT GAME) This is not your turn to play\n");
+                return;
+            }
+            //
             map.select(this);
             bool is_curr_land_owned = (model.get_land_by_name(map.curr_selection->getName()).getOwner() == game_hub.clientNetwork.getClientId());
             //
@@ -42,7 +48,15 @@ namespace fisk {
                 case TurnPhase::Reinforce:
                     if(map.old_selection == nullptr) {
                         gf::Log::debug("(CLIENT GAME) Waiting for second selection\n");
+                        break;
                     }
+                    if(is_curr_land_owned){
+                        map.old_selection = nullptr;
+                        gf::Log::info("(CLIENT GAME) Clicking again on a owned land\n");
+                        break;
+                    }
+                    this->game_hub.mainScene.m_unitSelector.show();
+                    gf::Log::debug("Showing unitSelector...\n");
                     break;
                 case TurnPhase::Fortify:
                     if(!is_curr_land_owned){

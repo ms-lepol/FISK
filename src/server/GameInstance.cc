@@ -75,39 +75,43 @@ namespace fisk {
 
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {
         if(!ready) return;
-        if(player.id != model.get_current_player()) {
+        /*if(model.(player.id) != model.get_current_player()) {
             gf::Log::info("(SERVER GAME) This is not your turn to play\n");
             return;
-        }
+        }*/
         TurnPhase curr_phase = model.get_current_phase();
         switch (packet.getType()) {
             case ClientGameSendFortify::type: {
-                gf::Log::debug("(SERVER GAME) Received Fortify from player {%" PRIX64 "}...\n", player.id);
+                gf::Log::debug("(SERVER GAME) Received Fortify from player {%" PRIX64 "}\n", player.id);
                 //
                 if(curr_phase != TurnPhase::Fortify) break;
                 //
                 auto data = packet.as<ClientGameSendFortify>();
                 //
                 model.get_land(data.land_id).fortify(data.nb);
-                model.get_player(player.id).setNb_units(model.get_player(player.id).getNb_units() - data.nb);
+                gf::Log::debug("Game ID : %lu, Server ID : {%" PRIX64 "}\n", srv_to_model_id.at(player.id), player.id);
+                model.get_player(srv_to_model_id.at(player.id)).setNb_units(model.get_player(srv_to_model_id.at(player.id)).getNb_units() - data.nb);
                 //
-                if(model.get_player(player.id).getNb_units() == 0) model.next_phase();
+                if(model.get_player(srv_to_model_id.at(player.id)).getNb_units() == 0) model.next_phase();
                 break;
             }
             case ClientGameSendAttack::type: {
-                gf::Log::debug("(SERVER GAME) Received Attack from player {%" PRIX64 "}...\n", player.id);
+                gf::Log::debug("(SERVER GAME) Received Attack from player {%" PRIX64 "}\n", player.id);
                 //
                 auto data = packet.as<ClientGameSendAttack>();
                 //
                 auto attacker = model.get_land(data.attacking_land_id);
                 auto defender = model.get_land(data.defending_land_id);
+                gf::Log::debug("got lands\n");
                 //
                 std::vector<int> attacker_dices;
                 std::vector<int> defender_dices;
                 gf::Dice d6(6);
+                gf::Log::debug("Dices created\n");
                 //
                 for(auto i = 0; i<data.attacking_nb_dice; ++i){
                     attacker_dices.push_back(d6.roll(m_random));
+                    gf::Log::debug("rolled a dice\n");
                     if(defender.getNb_units() > i){ // Maximum amount of dices for the defender
                         defender_dices.push_back(d6.roll(m_random));
                     }
