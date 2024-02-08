@@ -16,7 +16,7 @@ namespace fisk {
         hand(hand)
     {}
 
-    int Player::getNb_units(){
+    int Player::getNb_units() const{
         return this->nb_units;
     }
 

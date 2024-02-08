@@ -28,7 +28,7 @@ namespace fisk {
 
             GameState game_state;
             PlayerId current_player;
-            TurnPhase current_phase = TurnPhase::Fortify;
+            TurnPhase current_phase = TurnPhase::Attack;
 
         public:
 
