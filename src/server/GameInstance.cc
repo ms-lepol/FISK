@@ -116,13 +116,13 @@ namespace fisk {
                 }
                 //
                 gf::Log::debug("Attacking\n");
-                attacker.attack(defender, attacker_dices, defender_dices);
+                model.attack(attacker, defender, attacker_dices, defender_dices);
                 //
                 break;
             }
         }
         
-        broadcast(model); // update every clients ! MAY NOT WORK SINCE SERVER_CLIENT NOT INITIALIZED IN GAMEINSTANCE !
+        broadcast(model); // update every clients
     }
 
     bool GameInstance::isFinished() {

@@ -167,6 +167,56 @@ namespace fisk {
         std::shuffle(cards.begin(), cards.end(),generator);
     }
 
+    bool Game::attack(Land& attack, Land& defence, std::vector<int>& attack_dices, std::vector<int>& defence_dices){
+        // Verification and dice roll has been made before the call of this function
+        gf::Log::debug("attacking\n");
+        assert(defence.getOwner() != attack.getOwner());
+        //
+        gf::Log::debug("Sorting vectors\n");
+        sort(attack_dices.begin(), attack_dices.end(), std::greater<int>());
+        sort(defence_dices.begin(), defence_dices.end(), std::greater<int>());
+        for(auto i : attack_dices){
+            gf::Log::debug("attack dice : %i\n", i);
+        }
+        for(auto i : defence_dices){
+            gf::Log::debug("defence dice : %i\n", i);
+        }
+        // Calculating dice results
+        gf::Log::debug("initializing some variables\n");
+        auto t_dice = attack_dices.begin();
+        auto o_dice = defence_dices.begin();
+        int remaining_troops = attack_dices.size();
+        gf::Log::debug("analizing dices\n");
+        while(t_dice != attack_dices.end() && o_dice != defence_dices.end()){
+            gf::Log::debug("Remaining troops : %i\n", remaining_troops);
+            gf::Log::debug("%i, %i\n", *t_dice, *o_dice);
+            if(*t_dice > *o_dice){
+                //Win
+                gf::Log::debug("Win\n");
+                defence.rmUnits(1);
+                if(defence.getNb_units() == 0){
+                    gf::Log::debug("Conquered\n");
+                    //Conquered
+                    defence.setOwner_id(attack.getOwner());
+                    defence.setNb_units(remaining_troops);
+                    attack.rmUnits(remaining_troops);
+                    gf::Log::debug("attack conquered\n");
+                    return true;
+                }
+            }
+            else{
+                //Lose
+                gf::Log::debug("Lose\n");
+                attack.rmUnits(1);
+            }
+            t_dice++;
+            o_dice++;
+            remaining_troops--;
+        }
+        gf::Log::debug("attack did not conquered\n");
+        return false;
+    }   
+
     bool Game::are_lands_on_same_territory(LandId a, LandId b) {
         PlayerId player = get_land(a).getOwner();
 

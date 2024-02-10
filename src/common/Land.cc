@@ -68,52 +68,6 @@ namespace fisk {
         addUnits(nb);
     }
 
-    bool Land::attack(Land& other, std::vector<int>& this_dices, std::vector<int>& other_dices){
-        // Verification and dice roll has been made before the call of this function
-        gf::Log::debug("attacking\n");
-        assert(other.owner_id != owner_id);
-        for(auto i : this_dices){
-            gf::Log::debug("attack dice : %i\n", i);
-        }
-        //
-        gf::Log::debug("Sorting vectors\n");
-        sort(this_dices.begin(), this_dices.end(), std::greater<int>());
-        sort(other_dices.begin(), other_dices.end(), std::greater<int>());
-        // Calculating dice results
-        gf::Log::debug("initializing some variables\n");
-        auto t_dice = this_dices.begin();
-        auto o_dice = other_dices.begin();
-        int remaining_troops = this_dices.size();
-        gf::Log::debug("analizing dices\n");
-        while(t_dice != this_dices.end() && o_dice != other_dices.end()){
-            gf::Log::debug("Remaining troops : %i\n", remaining_troops);
-            gf::Log::debug("%i, %i\n", *t_dice, *o_dice);
-            if(*t_dice > *o_dice){
-                //Win
-                gf::Log::debug("Win\n");
-                other.rmUnits(1);
-                if(other.nb_units == 0){
-                    gf::Log::debug("Conquered\n");
-                    //Conquered
-                    other.setOwner_id(owner_id);
-                    other.setNb_units(remaining_troops);
-                    rmUnits(remaining_troops);
-                    break;
-                }
-            }
-            else{
-                //Lose
-                gf::Log::debug("Lose\n");
-                rmUnits(1);
-            }
-            t_dice++;
-            o_dice++;
-            remaining_troops--;
-        }
-        gf::Log::debug("End of attack\n");
-        return true;
-    }   
-
     bool Land::reinforce(Land other){
         assert(other.owner_id == owner_id);
         //
