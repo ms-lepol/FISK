@@ -77,22 +77,22 @@ namespace fisk {
             case TurnPhase::Fortify:
                 setMaxUnit(model.get_player(game_hub.clientNetwork.getClientId()).getNb_units()+1);
                 break;
-            case TurnPhase::Reinforce:        
+            case TurnPhase::Attack:
                 if (map.old_selection != nullptr) {
                     int units = model.get_land_by_name(map.old_selection->getName()).getNb_units();
                     int n = 3;
                     if(units <= 4) n = units-1;
                     if(n <= 1) n = 1;
                     setMaxUnit(n);
+                }
+                break;
+            case TurnPhase::Reinforce:        
+                if (map.old_selection != nullptr) {
+                    setMaxUnit(model.get_land_by_name(map.old_selection->getName()).getNb_units());
                 } else if (map.curr_selection != nullptr) {
                         setMaxUnit(model.get_land_by_name(map.curr_selection->getName()).getNb_units());
                 }
             break;
-            case TurnPhase::Attack:
-                if (map.old_selection != nullptr) {
-                    setMaxUnit(model.get_land_by_name(map.old_selection->getName()).getNb_units());
-                }
-                break;
             case TurnPhase::End:
                 break;
 
@@ -185,6 +185,7 @@ namespace fisk {
     void UnitSelector::hide() {
         hidden = true;
         selected_unit = min_unit;
+        game_hub.mainScene.m_map.reset_selections();
         rmCallbacks();
     }
 
