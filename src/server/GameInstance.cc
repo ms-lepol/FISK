@@ -102,24 +102,22 @@ namespace fisk {
                 //
                 auto attacker = model.get_land(data.attacking_land_id);
                 auto defender = model.get_land(data.defending_land_id);
-                gf::Log::debug("got lands\n");
                 //
-                std::vector<int> attacker_dices;
-                std::vector<int> defender_dices;
+                std::vector<int> attacker_dices{};
+                std::vector<int> defender_dices{};
                 gf::Dice d6(6);
-                gf::Log::debug("Dices created\n");
                 //
                 for(auto i = 0; i<data.attacking_nb_dice; ++i){
+                    gf::Log::debug("i : %i, def : %i\n", i, defender.getNb_units());
                     attacker_dices.push_back(d6.roll(m_random));
-                    gf::Log::debug("rolled a dice\n");
                     if(defender.getNb_units() > i){ // Maximum amount of dices for the defender
                         defender_dices.push_back(d6.roll(m_random));
                     }
                 }
                 //
+                gf::Log::debug("Attacking\n");
                 attacker.attack(defender, attacker_dices, defender_dices);
                 //
-                model.next_phase();
                 break;
             }
         }

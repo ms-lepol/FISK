@@ -80,8 +80,8 @@ namespace fisk {
             case TurnPhase::Attack:
                 if (map.old_selection != nullptr) {
                     int units = model.get_land_by_name(map.old_selection->getName()).getNb_units();
-                    int n = 3;
-                    if(units <= 4) n = units-1;
+                    int n = 4;
+                    if(units <= 4) n = units;
                     if(n <= 1) n = 1;
                     setMaxUnit(n);
                 }

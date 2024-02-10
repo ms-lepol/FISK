@@ -64,6 +64,10 @@ namespace fisk {
                         gf::Log::info("(CLIENT GAME) Clicking again on a owned land\n");
                         break;
                     }
+                    if (model.get_land_by_name(map.old_selection->getName()).getNb_units() <= 1){
+                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !\n");
+                        break;
+                    }
                     this->game_hub.mainScene.m_unitSelector.show();
                     gf::Log::debug("(CLIENT GAME) Showing unitSelector...\n");
                     break;
