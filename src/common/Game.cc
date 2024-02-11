@@ -167,12 +167,11 @@ namespace fisk {
         std::shuffle(cards.begin(), cards.end(),generator);
     }
 
-    bool Game::attack(Land& attack, Land& defence, std::vector<int>& attack_dices, std::vector<int>& defence_dices){
+    void Game::attack(Land& attack, Land& defence, std::vector<int>& attack_dices, std::vector<int>& defence_dices){
         // Verification and dice roll has been made before the call of this function
-        gf::Log::debug("attacking\n");
+        gf::Log::debug("Start attack\n");
         assert(defence.getOwner() != attack.getOwner());
         //
-        gf::Log::debug("Sorting vectors\n");
         sort(attack_dices.begin(), attack_dices.end(), std::greater<int>());
         sort(defence_dices.begin(), defence_dices.end(), std::greater<int>());
         for(auto i : attack_dices){
@@ -182,11 +181,10 @@ namespace fisk {
             gf::Log::debug("defence dice : %i\n", i);
         }
         // Calculating dice results
-        gf::Log::debug("initializing some variables\n");
         auto t_dice = attack_dices.begin();
         auto o_dice = defence_dices.begin();
         int remaining_troops = attack_dices.size();
-        gf::Log::debug("analizing dices\n");
+        gf::Log::debug("(BEFORE) Defence : %lu %u; Attack : %lu, %u\n", defence.getOwner(), defence.getNb_units(), attack.getOwner(), attack.getNb_units());
         while(t_dice != attack_dices.end() && o_dice != defence_dices.end()){
             gf::Log::debug("Remaining troops : %i\n", remaining_troops);
             gf::Log::debug("%i, %i\n", *t_dice, *o_dice);
@@ -201,7 +199,8 @@ namespace fisk {
                     defence.setNb_units(remaining_troops);
                     attack.rmUnits(remaining_troops);
                     gf::Log::debug("attack conquered\n");
-                    return true;
+                    gf::Log::debug("(AFTER) Defence : %lu %u; Attack : %lu, %u\n", defence.getOwner(), defence.getNb_units(), attack.getOwner(), attack.getNb_units());
+                    return;
                 }
             }
             else{
@@ -214,7 +213,8 @@ namespace fisk {
             remaining_troops--;
         }
         gf::Log::debug("attack did not conquered\n");
-        return false;
+        gf::Log::debug("(AFTER) Defence : %lu %u; Attack : %lu, %u\n", defence.getOwner(), defence.getNb_units(), attack.getOwner(), attack.getNb_units());
+        return;
     }   
 
     bool Game::are_lands_on_same_territory(LandId a, LandId b) {

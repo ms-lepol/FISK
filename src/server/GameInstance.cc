@@ -110,9 +110,9 @@ namespace fisk {
                 for(auto i = 0; i<data.attacking_nb_dice; ++i){
                     gf::Log::debug("i : %i, def : %i\n", i, defender.getNb_units());
                     attacker_dices.push_back(d6.roll(m_random));
-                    if(defender.getNb_units() > i){ // Maximum amount of dices for the defender
-                        defender_dices.push_back(d6.roll(m_random));
-                    }
+                }
+                for(auto i = 0; i < defender.getNb_units() && i <= 3; ++i ){ // Maximum amount of dices for the defender
+                    defender_dices.push_back(d6.roll(m_random));
                 }
                 //
                 gf::Log::debug("Attacking\n");
@@ -120,8 +120,11 @@ namespace fisk {
                 //
                 break;
             }
+            default:
+                gf::Log::warning("Unknown Packet type : %lu", packet.getType());
+                break;
         }
-        
+        gf::Log::info("Sending model to every players\n");
         broadcast(model); // update every clients
     }
 

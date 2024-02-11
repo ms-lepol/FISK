@@ -72,7 +72,8 @@ namespace fisk {
             const std::size_t get_nb_cards() const;
 
             bool is_neighbours_correct() const;
-            bool attack(Land& attack, Land& defence, std::vector<int>& attack_dices, std::vector<int>& defence_dices);
+            void attack(Land& attack, Land& defence, std::vector<int>& attack_dices, std::vector<int>& defence_dices);
+            bool can_attack();
 
             const Player& get_player(PlayerId player) const;
             const Land& get_land(LandId land) const;
