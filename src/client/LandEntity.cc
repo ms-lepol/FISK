@@ -55,13 +55,19 @@ namespace fisk {
                     }
                     break;
                 case TurnPhase::Attack:
-                    if(map.old_selection == nullptr) {
-                        gf::Log::debug("(CLIENT GAME) Waiting for second selection\n");
+                    if(map.old_selection == nullptr) { // First selection
+                        if(!is_curr_land_owned){
+                            map.curr_selection = nullptr;
+                            gf::Log::warning("(CLIENT GAME) Cannot attack from a land not owned\n");
+                        }
+                        else{
+                            gf::Log::info("(CLIENT GAME) Waiting for second selection\n");
+                        }
                         break;
                     }
                     if(is_curr_land_owned){
                         map.old_selection = nullptr;
-                        gf::Log::info("(CLIENT GAME) Clicking again on a owned land\n");
+                        gf::Log::warning("(CLIENT GAME) Clicking again on a owned land\n");
                         break;
                     }
                     if (model.get_land_by_name(map.old_selection->getName()).getNb_units() <= 1){
