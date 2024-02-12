@@ -9,7 +9,7 @@ namespace fisk {
 
   class GameFactory {
   public:
-    virtual std::unique_ptr<GameInstance> createInstance() = 0;
+    virtual std::unique_ptr<GameInstance> createInstance(gf::Random& random) = 0;
   };
 
 }

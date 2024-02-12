@@ -100,8 +100,8 @@ namespace fisk {
                 //
                 auto data = packet.as<ClientGameSendAttack>();
                 //
-                auto attacker = model.get_land(data.attacking_land_id);
-                auto defender = model.get_land(data.defending_land_id);
+                auto& attacker = model.get_land(data.attacking_land_id);
+                auto& defender = model.get_land(data.defending_land_id);
                 //
                 std::vector<int> attacker_dices{};
                 std::vector<int> defender_dices{};
@@ -114,9 +114,10 @@ namespace fisk {
                 for(auto i = 0; i < defender.getNb_units() && i <= 3; ++i ){ // Maximum amount of dices for the defender
                     defender_dices.push_back(d6.roll(m_random));
                 }
-                //
+                // 
                 gf::Log::debug("Attacking\n");
                 model.attack(attacker, defender, attacker_dices, defender_dices);
+                gf::Log::debug("(AFTER) Defence : %lu %u; Attack : %lu, %u\n", defender.getOwner(), defender.getNb_units(), attacker.getOwner(), attacker.getNb_units());
                 //
                 break;
             }
