@@ -199,7 +199,6 @@ namespace fisk {
                     defence.setNb_units(remaining_troops);
                     attack.rmUnits(remaining_troops);
                     gf::Log::debug("attack conquered\n");
-                    gf::Log::debug("(AFTER) Defence : %lu %u; Attack : %lu, %u\n", defence.getOwner(), defence.getNb_units(), attack.getOwner(), attack.getNb_units());
                     return;
                 }
             }
@@ -213,7 +212,6 @@ namespace fisk {
             remaining_troops--;
         }
         gf::Log::debug("attack did not conquered\n");
-        gf::Log::debug("(AFTER) Defence : %lu %u; Attack : %lu, %u\n", defence.getOwner(), defence.getNb_units(), attack.getOwner(), attack.getNb_units());
         return;
     }   
 

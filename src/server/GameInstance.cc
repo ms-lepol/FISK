@@ -100,8 +100,8 @@ namespace fisk {
                 //
                 auto data = packet.as<ClientGameSendAttack>();
                 //
-                auto attacker = model.get_land(data.attacking_land_id);
-                auto defender = model.get_land(data.defending_land_id);
+                auto& attacker = model.get_land(data.attacking_land_id);
+                auto& defender = model.get_land(data.defending_land_id);
                 //
                 std::vector<int> attacker_dices{};
                 std::vector<int> defender_dices{};
@@ -117,6 +117,7 @@ namespace fisk {
                 //
                 gf::Log::debug("Attacking\n");
                 model.attack(attacker, defender, attacker_dices, defender_dices);
+                gf::Log::debug("(AFTER) Defence : %lu %u; Attack : %lu, %u\n", defender.getOwner(), defender.getNb_units(), attacker.getOwner(), attacker.getNb_units());
                 //
                 break;
             }

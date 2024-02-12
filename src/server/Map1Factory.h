@@ -1,3 +1,5 @@
+#include <gf/Random.h>
+#include <gf/Ref.h>
 #ifndef MAP1_FACTOTY_H
 #define MAP1_FACTOTY_H value
 
@@ -9,7 +11,8 @@ namespace fisk {
         public:
         
         Map1Factory();
-        std::unique_ptr<GameInstance> createInstance();
+        std::unique_ptr<GameInstance> createInstance(gf::Random& random);
+
     };
 }
 

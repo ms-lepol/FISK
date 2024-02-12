@@ -78,7 +78,7 @@ namespace fisk {
         ServerStartGame data;
         broadcast(data);
 
-        m_instance = m_factory.get().createInstance();
+        m_instance = m_factory.get().createInstance(m_random);
         cloneTo(*m_instance);
         m_instance->start();
     }

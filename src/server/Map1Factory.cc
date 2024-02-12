@@ -308,11 +308,11 @@ namespace fisk {
         return model;
     }
 
-    Map1Factory::Map1Factory() {
+    Map1Factory::Map1Factory()
+    {
     }
 
-    std::unique_ptr<GameInstance> Map1Factory::createInstance() {
-        gf::Random random;
+    std::unique_ptr<GameInstance> Map1Factory::createInstance(gf::Random& random) {
         std::unique_ptr<GameInstance> new_instance(new GameInstance(createModelForMap1(), random));
         return new_instance;
     }
