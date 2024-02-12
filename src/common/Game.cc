@@ -128,18 +128,23 @@ namespace fisk {
     }
 
     bool Game::is_neighbours_correct() const  {
-       bool is_correct = true;
-       for (auto continent :continents){
-        for (auto land : continent.get_lands()){
-            for (auto neighbor : get_land(land).getNeighbors()){
-                if (std::find(get_land(neighbor).getNeighbors().begin(), get_land(neighbor).getNeighbors().end(), land) == get_land(neighbor).getNeighbors().end()){
-                    std::cout << "Land " << get_land(land).getName() << " is not a neighbor of " << get_land(neighbor).getName() << std::endl;
-                    is_correct = false;
+        bool is_neighbours_correct = true;
+        for(int i = 1; i < lands.size()+1; i++) {
+            auto& land = get_land(i);
+            for(LandId neighbor : land.getNeighbors()) {
+                auto& LB = get_land(neighbor);
+                for (int j = 0; j < LB.getNeighbors().size()+1; j++) {
+                    if (j == LB.getNeighbors().size()) {
+                        gf::Log::error("Land %s and %s are not neighbours\n", get_land(i).getName().c_str(), get_land(neighbor).getName().c_str());
+                        is_neighbours_correct= false;
+                    }
+                    if (LB.getNeighbors()[j] == i) {
+                        break;
+                    }
                 }
             }
         }
-       }
-        return is_correct;
+        return is_neighbours_correct;
     }
 
     void Game::next_phase() {

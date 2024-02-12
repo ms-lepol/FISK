@@ -73,11 +73,11 @@ namespace fisk {
 
               //HUD entities;
 
-                l_HudEntities.addEntity(l_title);
-                l_HudEntities.addEntity(l_player1);
-                l_HudEntities.addEntity(l_player2);
-                l_HudEntities.addEntity(l_player3);
-                l_HudEntities.addEntity(l_player4);
+                addHudEntity(l_title);
+                addHudEntity(l_player1);
+                addHudEntity(l_player2);
+                addHudEntity(l_player3);
+                addHudEntity(l_player4);
 
               //HUD Buttons
                 l_lobbyButton.setPosition({ ViewSize.x/2, ViewSize.y-100 });
@@ -132,7 +132,6 @@ namespace fisk {
             }
         }
 
-        l_HudEntities.update(time);
         m_game.clientNetwork.update(); 
         resetPlayers();
 
@@ -144,6 +143,7 @@ namespace fisk {
                 setPlayerReady(player.id, player.ready);
             }
         }
+        
     }
 
     void LobbyScene::doProcessEvent(gf::Event& event) {
@@ -156,7 +156,7 @@ namespace fisk {
     }
 
     void LobbyScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
-        l_HudEntities.render(target, states);
+       
         l_hudButtons.render(target, states);
         l_title.render(target, states);
         

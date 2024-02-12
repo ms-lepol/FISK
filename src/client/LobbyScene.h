@@ -53,12 +53,13 @@ private:
   GameHub& m_game;
 
   //rendering
+  gf::ExtendView l_hudView;
  
   gf::TextureAtlas l_hudAtlas;
 
   // containers
 
-  gf::EntityContainer l_HudEntities;
+  
 
   // entities
 
