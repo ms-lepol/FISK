@@ -35,7 +35,7 @@ namespace fisk {
 
     void PhaseIndicator::update(gf::Time time) {
         if (game_hub.clientNetwork.hasGameModel() && game_hub.clientNetwork.getGameModel().get_current_phase() != phase) {
-            setColor(game_hub.clientNetwork.getGameModel().get_player(game_hub.clientNetwork.getClientId()).getColor4f());
+            setColor(game_hub.clientNetwork.getGameModel().get_player(game_hub.clientNetwork.getGameModel().get_current_player()).getColor4f());
             phase = game_hub.clientNetwork.getGameModel().get_current_phase();
         }
     }

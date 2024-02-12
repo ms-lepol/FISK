@@ -8,7 +8,6 @@ namespace fisk {
 
     std::unique_ptr<Game> createModelForMap1(){
         std::unique_ptr<Game> model(new Game());
-        //gf::Log::info("here\n");
         ContinentId Europe = model->add_continent(Continent("Europe", {}));
         ContinentId NorthAmerica = model->add_continent(Continent("North America", {}));
         ContinentId SouthAmerica = model->add_continent(Continent("South America", {}));
@@ -16,12 +15,9 @@ namespace fisk {
         ContinentId Africa = model->add_continent(Continent("Africa", {}));
         ContinentId Oceania = model->add_continent(Continent("Oceania", {}));
 
-        //gf::Log::info("here\n");
 
         LandId Alaska = model->add_land(Land(1, "Alaska", {}, gf::InvalidId));
-        //gf::Log::info("here\n");
         model->get_continent(NorthAmerica).add_land(Alaska);
-        gf::Log::debug("here\n");
         LandId NorthwestTerritory = model->add_land(Land(1, "Northwest Territory", {}, gf::InvalidId));
         model->get_continent(NorthAmerica).add_land(NorthwestTerritory);
         LandId Greenland = model->add_land(Land(1, "Greenland", {}, gf::InvalidId));
@@ -112,6 +108,8 @@ namespace fisk {
         model->get_land(Greenland).addNeighbor(NorthwestTerritory);
         model->get_land(Greenland).addNeighbor(Quebec);
         model->get_land(Greenland).addNeighbor(GreatBritain);
+        model->get_land(Greenland).addNeighbor(Ontario);
+        
 
         model->get_land(Atlanta).addNeighbor(Alaska);
         model->get_land(Atlanta).addNeighbor(NorthwestTerritory);
@@ -125,9 +123,11 @@ namespace fisk {
         model->get_land(Ontario).addNeighbor(EasternUnitedStates);
         model->get_land(Ontario).addNeighbor(Atlanta);
 
+       
+        model->get_land(Quebec).addNeighbor(EasternUnitedStates);
+        model->get_land(Quebec).addNeighbor(NorthwestTerritory);
         model->get_land(Quebec).addNeighbor(Greenland);
         model->get_land(Quebec).addNeighbor(Ontario);
-        model->get_land(Quebec).addNeighbor(EasternUnitedStates);
 
         model->get_land(WesternUnitedStates).addNeighbor(Atlanta);
         model->get_land(WesternUnitedStates).addNeighbor(Ontario);
@@ -170,12 +170,14 @@ namespace fisk {
         model->get_land(NorthernEurope).addNeighbor(GreatBritain);
         model->get_land(NorthernEurope).addNeighbor(WesternEurope);
         model->get_land(NorthernEurope).addNeighbor(SouthernEurope);
+        model->get_land(NorthernEurope).addNeighbor(EasternEurope);
         model->get_land(NorthernEurope).addNeighbor(Scandinavia);
 
         model->get_land(SouthernEurope).addNeighbor(WesternEurope);
         model->get_land(SouthernEurope).addNeighbor(NorthernEurope);
         model->get_land(SouthernEurope).addNeighbor(EasternEurope);
         model->get_land(SouthernEurope).addNeighbor(Egypt);
+        model->get_land(SouthernEurope).addNeighbor(MiddleEast);
 
         model->get_land(WesternEurope).addNeighbor(GreatBritain);
         model->get_land(WesternEurope).addNeighbor(NorthernEurope);
@@ -186,6 +188,7 @@ namespace fisk {
         model->get_land(EasternEurope).addNeighbor(NorthernEurope);
         model->get_land(EasternEurope).addNeighbor(SouthernEurope);
         model->get_land(EasternEurope).addNeighbor(Afghanistan);
+         model->get_land(EasternEurope).addNeighbor(MiddleEast);
 
         model->get_land(NorthAfrica).addNeighbor(Brazil);
         model->get_land(NorthAfrica).addNeighbor(WesternEurope);
@@ -222,26 +225,29 @@ namespace fisk {
         model->get_land(Siberia).addNeighbor(Ural);
         model->get_land(Siberia).addNeighbor(Mongolia);
         model->get_land(Siberia).addNeighbor(China);
+        model->get_land(Siberia).addNeighbor(Afghanistan);
 
         model->get_land(Mongolia).addNeighbor(Siberia);
         model->get_land(Mongolia).addNeighbor(China);
         model->get_land(Mongolia).addNeighbor(Japan);
-        model->get_land(Mongolia).addNeighbor(Afghanistan);
+        model->get_land(Mongolia).addNeighbor(Alaska);
+        
 
         model->get_land(Japan).addNeighbor(Mongolia);
         model->get_land(Japan).addNeighbor(China);
 
         model->get_land(Afghanistan).addNeighbor(Ural);
-        model->get_land(Afghanistan).addNeighbor(Mongolia);
-        model->get_land(Afghanistan).addNeighbor(China);
+        model->get_land(Afghanistan).addNeighbor(Siberia);
+        model->get_land(Afghanistan).addNeighbor(India);
         model->get_land(Afghanistan).addNeighbor(MiddleEast);
+        model->get_land(Afghanistan).addNeighbor(EasternEurope);
 
 
         model->get_land(China).addNeighbor(Siberia);
         model->get_land(China).addNeighbor(Mongolia);
-        model->get_land(China).addNeighbor(Afghanistan);
         model->get_land(China).addNeighbor(India);
         model->get_land(China).addNeighbor(Thailande);
+        model->get_land(China).addNeighbor(Japan);
 
         model->get_land(MiddleEast).addNeighbor(Egypt);
         model->get_land(MiddleEast).addNeighbor(EastAfrica);
@@ -261,6 +267,7 @@ namespace fisk {
 
         model->get_land(NewZealand).addNeighbor(Indonesia);
         model->get_land(NewZealand).addNeighbor(WesternAustralia);
+        model->get_land(NewZealand).addNeighbor(EasternAustralia);
 
         model->get_land(WesternAustralia).addNeighbor(Indonesia);
         model->get_land(WesternAustralia).addNeighbor(NewZealand);
@@ -273,13 +280,11 @@ namespace fisk {
         model->get_land(Thailande).addNeighbor(China);
         model->get_land(Thailande).addNeighbor(Indonesia);
         
-        gf::Log::info("here\n");
-        
         //Checks if the neighbors are correct
-        if (!model->is_neighbours_correct()) {
-            gf::Log::warning("(GAME) The neighbors are not correct\n");
-        } else {
+        if (model->is_neighbours_correct()) {
             gf::Log::info("(GAME) The neighbors are correct\n");
+        } else {
+            gf::Log::warning("(GAME) The neighbors are not correct\n");
         }
 
         //Initialize cards
