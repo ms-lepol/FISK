@@ -23,9 +23,9 @@ namespace fisk {
 
 
         widg_card.setPosition({0,0});
-        widg_help.setPosition({0,0});
-        widg_settings.setPosition({64,0});
-        widg_quit.setPosition({128,0});
+        widg_help.setPosition({10,10});
+        widg_settings.setPosition({74,10});
+        widg_quit.setPosition({138,10});
 
 
         //Logic

@@ -9,6 +9,7 @@
 #include <gf/Id.h>
 #include <gf/Keyboard.h>
 #include <gf/Mouse.h>
+#include <gf/Shapes.h>
 #include <gf/Texture.h>
 #include <gf/TextureAtlas.h>
 #include <gf/Vector.h>
@@ -51,7 +52,20 @@ namespace fisk {
    
     // Views
     
+
+
     //Rendering configuration
+
+     int backgroundThickness = 5;
+    
+    background.setOutlineThickness(backgroundThickness);
+    background.setSize({ViewSize.x-backgroundThickness*2,ViewSize.y-backgroundThickness*2});
+    background.setPosition({static_cast<float>(backgroundThickness), static_cast<float>(backgroundThickness)});
+    background.setColor(gf::Color::Transparent);
+   
+
+  
+    
    
     m_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
 
@@ -69,9 +83,9 @@ namespace fisk {
     m_HudEntities.addEntity(m_phaseIndicator);
     m_HudEntities.addEntity(m_hudButtons);
 
-    m_turnInterface.setPosition({static_cast<int>(ViewSize.x)-m_turnInterface.width,static_cast<int>(ViewSize.y)/2});
-    m_phaseIndicator.setPosition({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width/2,static_cast<int>(ViewSize.y) - m_turnInterface.height});
-    m_hudButtons.placeCardButton({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(ViewSize.y)-m_hudButtons.size});
+    m_turnInterface.setPosition({static_cast<int>(ViewSize.x)-m_turnInterface.width- backgroundThickness,static_cast<int>(ViewSize.y)/2});
+    m_phaseIndicator.setPosition({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width/2,static_cast<int>(ViewSize.y) - m_turnInterface.height-backgroundThickness-20});
+    m_hudButtons.placeCardButton({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(ViewSize.y)-m_hudButtons.size-backgroundThickness-10});
 
 
     // Camera Actions 
@@ -163,6 +177,14 @@ namespace fisk {
     }
 
   void MainScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
+    if (m_game.clientNetwork.hasGameModel()){
+        auto& l_model = m_game.clientNetwork.getGameModel();
+        
+        background.setOutlineColor(l_model.get_player(m_game.clientNetwork.getClientId()).getColor4f());
+        
+    }
+    
+    target.draw(background, states);
    
     m_WorldEntities.render(target, states);
     m_HudEntities.render(target, states);

@@ -47,6 +47,8 @@ private:
   //rendering
 
   PlayerColor m_playerColor;
+   gf::RectangleShape background;
+  
 
   gf::TextureAtlas m_hudAtlas;
 
