@@ -86,7 +86,7 @@ namespace fisk {
     m_turnInterface.setPosition({static_cast<int>(ViewSize.x)-m_turnInterface.width- backgroundThickness,static_cast<int>(ViewSize.y)/2});
     m_phaseIndicator.setPosition({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width/2,static_cast<int>(ViewSize.y) - m_turnInterface.height-backgroundThickness-20});
     m_hudButtons.placeCardButton({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(ViewSize.y)-m_hudButtons.size-backgroundThickness-10});
-
+    m_hudButtons.placeEndPhaseButton({static_cast<int>(ViewSize.x)/2+ m_phaseIndicator.width/2+20,static_cast<int>(ViewSize.y)-backgroundThickness-50});
 
     // Camera Actions 
     m_cameraActions.close.addCloseControl();
