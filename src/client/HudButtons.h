@@ -27,6 +27,7 @@ namespace fisk {
             gf::SpriteWidget widg_card;
             gf::SpriteWidget widg_help;
             gf::SpriteWidget widg_settings;
+            gf::TextButtonWidget widg_endPhase;
 
             gf::ResourceManager& ressources;
             gf::TextureAtlas& atlas;
@@ -39,9 +40,11 @@ namespace fisk {
             int size = 64;
             void initTextures();
             void placeCardButton(gf::Vector2i position);
+            void placeEndPhaseButton(gf::Vector2i position);
 
             HudButtons(gf::ResourceManager& rm, gf::TextureAtlas& atlas, GameHub& game);
 
+            void update(gf::Time time);
             void render(gf::RenderTarget& target, const gf::RenderStates& states);
 
     };
