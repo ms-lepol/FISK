@@ -233,6 +233,15 @@ namespace fisk {
             return ar | data.attacking_land_id | data.defending_land_id | data.attacking_nb_dice;
         } 
 
+    struct ClientGameEndAttack {
+        static constexpr gf::Id type = "ClientGameEndAttack"_id;
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ClientGameEndAttack& data) {
+            return ar;
+        } 
+
 }
 
 #endif /* FISK_NETWORK_PROTOCOL_H */
