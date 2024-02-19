@@ -85,7 +85,8 @@ namespace fisk {
                 widg_container.addWidget(widg_endPhase);
            } else {
                 widg_container.removeWidget(&widg_endPhase);
-           } 
+           }
+            
         }
     }
 

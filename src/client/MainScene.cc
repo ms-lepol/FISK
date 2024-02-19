@@ -26,6 +26,7 @@ namespace fisk {
 
         static constexpr float ZoomInFactor = 0.9f;
         static constexpr float ZoomOutFactor = 1.1f;
+        static constexpr int backgroundThickness = 5;
 
     }
 
@@ -51,15 +52,16 @@ namespace fisk {
   {
    
     // Views
+    setWorldViewCenter({ViewSize.x / 2, ViewSize.y / 2});   
+    setWorldViewSize(ViewSize); 
     
-
 
     //Rendering configuration
 
-     int backgroundThickness = 5;
+    
     
     background.setOutlineThickness(backgroundThickness);
-    background.setSize({ViewSize.x-backgroundThickness*2,ViewSize.y-backgroundThickness*2});
+    background.setSize({static_cast<float>(game.getWindow().getSize().x-backgroundThickness*2),static_cast<float>(game.getWindow().getSize().y-backgroundThickness*2)});
     background.setPosition({static_cast<float>(backgroundThickness), static_cast<float>(backgroundThickness)});
     background.setColor(gf::Color::Transparent);
    
@@ -83,11 +85,14 @@ namespace fisk {
    addHudEntity(m_turnInterface);
    addHudEntity(m_phaseIndicator);
    addHudEntity(m_hudButtons);
+   addHudEntity(m_unitSelector);
 
-    m_turnInterface.setPosition({static_cast<int>(ViewSize.x)-m_turnInterface.width- backgroundThickness,static_cast<int>(ViewSize.y)/2});
-    m_phaseIndicator.setPosition({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width/2,static_cast<int>(ViewSize.y) - m_turnInterface.height-backgroundThickness-20});
-    m_hudButtons.placeCardButton({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(ViewSize.y)-m_hudButtons.size-backgroundThickness-10});
-    m_hudButtons.placeEndPhaseButton({static_cast<int>(ViewSize.x)/2+ m_phaseIndicator.width/2+20,static_cast<int>(ViewSize.y)-backgroundThickness-50});
+    m_turnInterface.setPosition({static_cast<int>(m_game.getWindow().getSize().x)-m_turnInterface.width- backgroundThickness,static_cast<int>(m_game.getWindow().getSize().y)/2});
+    m_phaseIndicator.setPosition({static_cast<int>(m_game.getWindow().getSize().x)/2-m_phaseIndicator.width/2,static_cast<int>(m_game.getWindow().getSize().y) - m_turnInterface.height-backgroundThickness-20});
+    m_hudButtons.placeCardButton({static_cast<int>(m_game.getWindow().getSize().x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(m_game.getWindow().getSize().y)-m_hudButtons.size-backgroundThickness-10});
+    m_hudButtons.placeEndPhaseButton({static_cast<int>(m_game.getWindow().getSize().x)/2+ m_phaseIndicator.width/2+20,static_cast<int>(m_game.getWindow().getSize().y)-backgroundThickness-50});
+    m_unitSelector.setPosition({static_cast<int>(m_game.getWindow().getSize().x-m_unitSelector.getDimensions().x),static_cast<int>(m_game.getWindow().getSize().y-m_unitSelector.getDimensions().y)});
+
 
     // Camera Actions 
     m_cameraActions.close.addCloseControl();
@@ -108,11 +113,7 @@ namespace fisk {
     m_interact.addMouseButtonControl(gf::MouseButton::Left);
 
     addAction(m_interact);
-
-   addHudEntity(m_unitSelector);
-    m_unitSelector.setPosition({static_cast<int>(ViewSize.x-m_unitSelector.getDimensions().x),static_cast<int>(ViewSize.y-m_unitSelector.getDimensions().y)});
-    m_unitSelector.kill();
-    m_unitSelector.setAlive();
+    setFramebufferSize(ViewSize);
   }
 
   void MainScene::doHandleActions([[maybe_unused]] gf::Window& window) {
@@ -148,7 +149,15 @@ namespace fisk {
         mousePos = event.mouseCursor.coords;
       }
     }
+    background.setSize({static_cast<float>(m_game.getWindow().getSize().x-backgroundThickness*2),static_cast<float>(m_game.getWindow().getSize().y-backgroundThickness*2)});
     m_game.clientNetwork.update(); 
+
+    //Update the HUD to fit the window size
+    m_turnInterface.setPosition({static_cast<int>(m_game.getWindow().getSize().x)-m_turnInterface.width- backgroundThickness,static_cast<int>(m_game.getWindow().getSize().y)/2});
+    m_phaseIndicator.setPosition({static_cast<int>(m_game.getWindow().getSize().x)/2-m_phaseIndicator.width/2,static_cast<int>(m_game.getWindow().getSize().y) - m_turnInterface.height-backgroundThickness-20});
+    m_hudButtons.placeCardButton({static_cast<int>(m_game.getWindow().getSize().x)/2-m_phaseIndicator.width - m_hudButtons.size,static_cast<int>(m_game.getWindow().getSize().y)-m_hudButtons.size-backgroundThickness-10});
+    m_hudButtons.placeEndPhaseButton({static_cast<int>(m_game.getWindow().getSize().x)/2+ m_phaseIndicator.width/2+20,static_cast<int>(m_game.getWindow().getSize().y)-backgroundThickness-50});
+    m_unitSelector.setPosition({static_cast<int>(m_game.getWindow().getSize().x-m_unitSelector.getDimensions().x),static_cast<int>(m_game.getWindow().getSize().y-m_unitSelector.getDimensions().y)});
 
     std::lock_guard guard(m_game.clientNetwork.m_mutex);
 
