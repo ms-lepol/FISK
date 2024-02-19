@@ -129,13 +129,13 @@ namespace fisk {
         // Handle interact
         if (m_interact.isActive()) {
 
-            m_hudButtons.widg_container.pointTo(mousePos);
+            m_hudButtons.widg_container.pointTo(mousePosScreen);
             m_hudButtons.widg_container.triggerAction();
 
             m_map.widg_container.pointTo(mousePos);
             m_map.widg_container.triggerAction();
 
-            m_unitSelector.s_container.pointTo(mousePos);
+            m_unitSelector.s_container.pointTo(mousePosScreen);
             m_unitSelector.s_container.triggerAction();
 
             m_interact.reset();
@@ -145,9 +145,7 @@ namespace fisk {
   void MainScene::doUpdate(gf::Time time) {
     gf::Event event;
     while (m_game.getWindow().pollEvent(event)){;
-      if (event.type == gf::EventType::MouseMoved) {
-        mousePos = event.mouseCursor.coords;
-      }
+      
     }
     background.setSize({static_cast<float>(m_game.getWindow().getSize().x-backgroundThickness*2),static_cast<float>(m_game.getWindow().getSize().y-backgroundThickness*2)});
     m_game.clientNetwork.update(); 
@@ -179,11 +177,15 @@ namespace fisk {
             return;
         }
         if (event.type == gf::EventType::MouseMoved) {
-            mousePos = event.mouseCursor.coords;
+            mousePosScreen = event.mouseCursor.coords;
         }
     }
 
+  
+
   void MainScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
+
+    
     if (m_game.clientNetwork.hasGameModel()){
         auto& l_model = m_game.clientNetwork.getGameModel();
         
@@ -194,6 +196,9 @@ namespace fisk {
     target.draw(background, states);
    
     renderWorldEntities(target,states);
+    mousePos = target.mapPixelToCoords(mousePosScreen, getWorldView());
+    gf::Log::debug("Mouse Screen position: %f, %f\n", mousePosScreen.x, mousePosScreen.y);
+    gf::Log::debug("Mouse position: %f, %f\n", mousePos.x, mousePos.y);
     renderHudEntities(target, states);
   }
 

@@ -67,6 +67,7 @@ private:
   CameraActions m_cameraActions;
   gf::Action m_interact;
 
+   gf::Vector2f mousePosScreen;
    gf::Vector2f mousePos;
 
    public:
