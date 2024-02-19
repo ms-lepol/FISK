@@ -75,13 +75,14 @@ namespace fisk {
 
 
     //World entities
-    m_WorldEntities.addEntity(m_map);
+    addWorldEntity(m_map);
+    
 
     //HUD entities
 
-    m_HudEntities.addEntity(m_turnInterface);
-    m_HudEntities.addEntity(m_phaseIndicator);
-    m_HudEntities.addEntity(m_hudButtons);
+   addHudEntity(m_turnInterface);
+   addHudEntity(m_phaseIndicator);
+   addHudEntity(m_hudButtons);
 
     m_turnInterface.setPosition({static_cast<int>(ViewSize.x)-m_turnInterface.width- backgroundThickness,static_cast<int>(ViewSize.y)/2});
     m_phaseIndicator.setPosition({static_cast<int>(ViewSize.x)/2-m_phaseIndicator.width/2,static_cast<int>(ViewSize.y) - m_turnInterface.height-backgroundThickness-20});
@@ -108,7 +109,7 @@ namespace fisk {
 
     addAction(m_interact);
 
-    m_HudEntities.addEntity(m_unitSelector);
+   addHudEntity(m_unitSelector);
     m_unitSelector.setPosition({static_cast<int>(ViewSize.x-m_unitSelector.getDimensions().x),static_cast<int>(ViewSize.y-m_unitSelector.getDimensions().y)});
     m_unitSelector.kill();
     m_unitSelector.setAlive();
@@ -160,9 +161,6 @@ namespace fisk {
                 auto& l_playerList = m_game.clientNetwork.getPlayerList();
                 m_turnInterface.setNbPlayer(l_playerList.players.size());
             }
-
-            m_WorldEntities.update(time);
-            m_HudEntities.update(time);
         }
     }
 
@@ -186,10 +184,8 @@ namespace fisk {
     
     target.draw(background, states);
    
-    m_WorldEntities.render(target, states);
-    m_HudEntities.render(target, states);
-    
-    //renderHudEntities(target, states);
+    renderWorldEntities(target,states);
+    renderHudEntities(target, states);
   }
 
 }

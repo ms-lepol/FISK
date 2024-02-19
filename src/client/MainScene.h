@@ -48,14 +48,7 @@ private:
 
   PlayerColor m_playerColor;
    gf::RectangleShape background;
-  
-
   gf::TextureAtlas m_hudAtlas;
-
-  // containers
-
-  gf::EntityContainer m_WorldEntities;
-  gf::EntityContainer m_HudEntities;
 
   // entities
   public:
