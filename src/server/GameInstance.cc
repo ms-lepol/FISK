@@ -116,9 +116,13 @@ namespace fisk {
                 }
                 // 
                 gf::Log::debug("Attacking\n");
-                model.attack(attacker, defender, attacker_dices, defender_dices);
+                model.attack(data.attacking_land_id, data.defending_land_id, attacker_dices, defender_dices);
                 gf::Log::debug("(AFTER) Defence : %lu %u; Attack : %lu, %u\n", defender.getOwner(), defender.getNb_units(), attacker.getOwner(), attacker.getNb_units());
                 //
+                break;
+            }
+            case ClientGameEndAttack::type: {
+                model.next_phase();
                 break;
             }
             default:

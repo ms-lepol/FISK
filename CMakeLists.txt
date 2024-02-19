@@ -15,7 +15,7 @@ project(FISK
 find_package(gf REQUIRED COMPONENTS graphics net core)
  
 
-add_executable(client
+add_executable(fisk_client
   src/client.cc
   src/client/GameHub.cc
   src/client/MainScene.cc
@@ -41,15 +41,31 @@ add_executable(client
   # and the rest of your sources
 )
 
-target_link_libraries(client
+target_link_libraries(fisk_client
   PRIVATE
     gf::graphics
     gf::net
     gf::core
 )
 
+target_compile_options(fisk_client
+  PRIVATE
+  "-g" "-fsanitize=address,undefined"
+)
 
-add_executable(server
+target_compile_features(fisk_client
+  PUBLIC
+    cxx_std_17
+)
+
+set_target_properties(fisk_client
+  PROPERTIES
+    CXX_EXTENSIONS OFF
+    LINK_FLAGS "-fsanitize=address,undefined"
+)
+
+
+add_executable(fisk_server
   src/server.cc
   src/server/ServerNetwork.cc
   src/server/ServerLobby.cc
@@ -65,8 +81,24 @@ add_executable(server
   src/common/FiskColors.cc
 )
 
-target_link_libraries(server
+target_link_libraries(fisk_server
   PRIVATE
     gf::net
     gf::core
+)
+
+target_compile_options(fisk_server
+  PRIVATE
+  "-g" "-fsanitize=address,undefined"
+)
+
+target_compile_features(fisk_server
+  PUBLIC
+    cxx_std_17
+)
+
+set_target_properties(fisk_server
+  PROPERTIES
+    CXX_EXTENSIONS OFF
+    LINK_FLAGS "-fsanitize=address,undefined"
 )

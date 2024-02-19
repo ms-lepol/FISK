@@ -1,5 +1,6 @@
 #include "LandEntity.h" 
 #include "GameHub.h"
+#include <algorithm>
 #include <gf/Id.h>
 #include <gf/Log.h>
 #include <sys/socket.h>
@@ -42,12 +43,14 @@ namespace fisk {
             //
             map.select(this);
             bool is_curr_land_owned = (model.get_land_by_name(map.curr_selection->getName()).getOwner() == game_hub.clientNetwork.getClientId());
+            gf::Log::debug("Current land owned ? %i\n", is_curr_land_owned);
             //
             switch (model.get_current_phase()) {
                 case TurnPhase::Fortify:
                     if(!is_curr_land_owned){
                         gf::Log::warning("(CLIENT GAME) Cannot fortify a land not owned by the player.\n");
                         map.reset_selections();
+                        this->game_hub.mainScene.m_unitSelector.hide();
                     }
                     else {
                         this->game_hub.mainScene.m_unitSelector.show();
@@ -57,23 +60,44 @@ namespace fisk {
                 case TurnPhase::Attack:
                     if(map.old_selection == nullptr) { // First selection
                         if(!is_curr_land_owned){
-                            map.curr_selection = nullptr;
+                            map.reset_selections();
                             gf::Log::warning("(CLIENT GAME) Cannot attack from a land not owned\n");
+                            this->game_hub.mainScene.m_unitSelector.hide();
                         }
                         else{
+                            // First selection is an owned land
                             gf::Log::info("(CLIENT GAME) Waiting for second selection\n");
                         }
                         break;
                     }
+                    if(model.get_land_by_name(map.old_selection->getName()).getOwner() != game_hub.clientNetwork.getClientId()) {
+                        // First selection is not owned
+                        map.reset_selections();
+                        gf::Log::warning("(CLIENT GAME) Cannot attack from a land not owned\n");
+                        this->game_hub.mainScene.m_unitSelector.hide();
+                        break;
+                    }
                     if(is_curr_land_owned){
-                        map.old_selection = nullptr;
+                        // Re-clicking on a owned land should just switch selections
+                        map.old_selection = map.curr_selection;
                         gf::Log::warning("(CLIENT GAME) Clicking again on a owned land\n");
+                        this->game_hub.mainScene.m_unitSelector.hide();
+                        break;
+                    }
+                    // Check neighbours
+                    if(!model.is_neighbour(model.get_land_id_by_name(map.old_selection->getName()), model.get_land_id_by_name(map.curr_selection->getName()))) {
+                        gf::Log::warning("(CLIENT GAME) The selected land to attack is not a neighbour of the attacking land.\n");
+                        map.curr_selection = map.old_selection;
+                        this->game_hub.mainScene.m_unitSelector.hide();
                         break;
                     }
                     if (model.get_land_by_name(map.old_selection->getName()).getNb_units() <= 1){
                         gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !\n");
+                        map.curr_selection = map.old_selection;
+                        this->game_hub.mainScene.m_unitSelector.hide();
                         break;
                     }
+                    // Selections are OK for an attack
                     this->game_hub.mainScene.m_unitSelector.show();
                     gf::Log::debug("(CLIENT GAME) Showing unitSelector...\n");
                     break;

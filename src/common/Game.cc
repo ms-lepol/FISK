@@ -147,6 +147,12 @@ namespace fisk {
         return is_neighbours_correct;
     }
 
+    bool Game::is_neighbour(LandId a, LandId b) const{
+        auto n = get_land(a).getNeighbors();
+        auto find = std::find(n.begin(), n.end(), b);
+        return (find != n.end());
+    }
+
     void Game::next_phase() {
         switch (current_phase) {
             case TurnPhase::Fortify:
@@ -172,8 +178,10 @@ namespace fisk {
         std::shuffle(cards.begin(), cards.end(),generator);
     }
 
-    void Game::attack(Land& attack, Land& defence, std::vector<int>& attack_dices, std::vector<int>& defence_dices){
+    void Game::attack(LandId atk, LandId def, std::vector<int>& attack_dices, std::vector<int>& defence_dices){
         // Verification and dice roll has been made before the call of this function
+        auto& attack = get_land(atk);
+        auto& defence = get_land(def);
         gf::Log::debug("Start attack\n");
         assert(defence.getOwner() != attack.getOwner());
         //

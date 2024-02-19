@@ -171,6 +171,7 @@ namespace fisk {
         });
         s_cancel.setCallback([this](){
             gf::Log::debug("Cancel the unit selection\n");
+            game_hub.mainScene.m_map.reset_selections();
             hide();
         });
     }
@@ -185,7 +186,7 @@ namespace fisk {
     void UnitSelector::hide() {
         hidden = true;
         selected_unit = min_unit;
-        game_hub.mainScene.m_map.reset_selections();
+        //game_hub.mainScene.m_map.reset_selections();
         rmCallbacks();
     }
 
