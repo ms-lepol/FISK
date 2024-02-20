@@ -95,8 +95,8 @@ private:
   gf::Action l_interact;
   gf::Action l_close;
 
-   gf::Vector2f mousePos;
-    gf::Vector2i mousePosScreen;
+  gf::Vector2f mousePos;
+  gf::Vector2i mousePosScreen;
 };
 
 }

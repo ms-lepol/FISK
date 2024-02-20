@@ -1,6 +1,7 @@
 #ifndef  FISK_CARD_SCENE_H
 #define FISK_CARD_SCENE_H
 
+#include <gf/Entity.h>
 #include <gf/EntityContainer.h>
 #include <gf/Scene.h>
 #include <gf/Action.h>
@@ -18,7 +19,16 @@ namespace fisk {
 
     struct GameHub;
 
+    struct hudEntity : gf::Entity {
+        gf::WidgetContainer c_hudButtons;
 
+        hudEntity() {
+        
+        }
+        void render(gf::RenderTarget& target, const gf::RenderStates& states) override {
+            c_hudButtons.render(target, states);
+        }
+    };
 
     class CardScene : public gf::Scene {
         public:
@@ -39,7 +49,6 @@ namespace fisk {
             // containers
 
             gf::WidgetContainer c_hudButtons;
-            gf::EntityContainer c_hand;
 
             gf::RoundedRectangleShape background;
             // entities
@@ -56,7 +65,7 @@ namespace fisk {
             gf::Action c_close;
 
             gf::Vector2f mousePos;
-
+            hudEntity c_hudEntity;
     };
 
 }
