@@ -252,4 +252,11 @@ namespace fisk {
         } while(!to_visit.empty());
         return false;
     }
+
+    bool Game::can_attack() const {
+        for(auto land : lands) {
+            if(land.getOwner() == current_player && land.getNb_units() > 1) return true;
+        }
+        return false;
+    }
 }
