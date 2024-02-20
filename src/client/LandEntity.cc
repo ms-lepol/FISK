@@ -57,7 +57,7 @@ namespace fisk {
                         gf::Log::debug("Showing unitSelector...\n");
                     }
                     break;
-                case TurnPhase::Attack:
+                case TurnPhase::Attack: {
                     if(map.old_selection == nullptr) { // First selection
                         if(!is_curr_land_owned){
                             map.reset_selections();
@@ -71,7 +71,7 @@ namespace fisk {
                         break;
                     }
                     if(model.get_land_by_name(map.old_selection->getName()).getOwner() != game_hub.clientNetwork.getClientId()) {
-                        // First selection is not owned
+                        // First selection is not owned, have to reset because we dont keep 3 selection in memory
                         map.reset_selections();
                         gf::Log::warning("(CLIENT GAME) Cannot attack from a land not owned\n");
                         this->game_hub.mainScene.m_unitSelector.hide();
@@ -101,15 +101,44 @@ namespace fisk {
                     this->game_hub.mainScene.m_unitSelector.show();
                     gf::Log::debug("(CLIENT GAME) Showing unitSelector...\n");
                     break;
+                }
                 case TurnPhase::Reinforce:
-                    //
+                    if(map.old_selection == nullptr) { // First selection
+                        if(!is_curr_land_owned){
+                            map.reset_selections();
+                            gf::Log::warning("(CLIENT GAME) Cannot reinforce a land not owned\n");
+                            this->game_hub.mainScene.m_unitSelector.hide();
+                        }
+                        else{
+                            // First selection is an owned land
+                            gf::Log::info("(CLIENT GAME) Waiting for second selection\n");
+                        }
+                        break;
+                    }
+                    if(model.get_land_by_name(map.old_selection->getName()).getOwner() != game_hub.clientNetwork.getClientId()) {
+                        // First selection is not owned, have to reset because we dont keep 3 selection in memory
+                        map.reset_selections();
+                        gf::Log::warning("(CLIENT GAME) Cannot reinforce a land not owned\n");
+                        this->game_hub.mainScene.m_unitSelector.hide();
+                        break;
+                    }
+                    if(!is_curr_land_owned){
+                        // Re-clicking on a non owned land
+                        map.old_selection = map.curr_selection;
+                        gf::Log::warning("(CLIENT GAME) Clicking on a non owned land\n");
+                        this->game_hub.mainScene.m_unitSelector.hide();
+                        break;
+                    }
+                    // Selections are OK for a reinforce
+                    this->game_hub.mainScene.m_unitSelector.show();
+                    gf::Log::debug("(CLIENT GAME) Showing unitSelector...\n");
                     break;
                 case TurnPhase::End:
                 default:
                     gf::Log::warning("LandEntity SetCallback Switch, should not be here\n");
                     break;
             }
-        });
+        }); 
     }
 
     gf::Color4f LandEntity::getColor() {

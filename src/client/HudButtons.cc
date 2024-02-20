@@ -30,8 +30,7 @@ namespace fisk {
     
 
         widg_endPhase.setCallback([this] {
-                
-                });
+        });
         widg_endPhase.setDefaultBackgroundColor(HUDColor().buttonColor);
         widg_endPhase.setDefaultTextColor(HUDColor().backgroundColor);
         widg_endPhase.setPadding(20.0f);
@@ -80,8 +79,10 @@ namespace fisk {
             auto& l_model = m_game.clientNetwork.getGameModel();
             if (l_model.get_current_phase() == TurnPhase::Attack){
                 widg_endPhase.setCallback([this] {
-                    
-                        });
+                    gf::Log::debug("Ending attack phase...\n");
+                    ClientGameEndAttack end;
+                    m_game.clientNetwork.send(end);
+                });
                 widg_container.addWidget(widg_endPhase);
            } else {
                 widg_container.removeWidget(&widg_endPhase);

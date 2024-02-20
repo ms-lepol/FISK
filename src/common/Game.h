@@ -74,7 +74,7 @@ namespace fisk {
             bool is_neighbours_correct() const;
             bool is_neighbour(LandId a, LandId b) const;
             void attack(LandId atk, LandId def, std::vector<int>& attack_dices, std::vector<int>& defence_dices);
-            bool can_attack();
+            bool can_attack() const;
 
             const Player& get_player(PlayerId player) const;
             const Land& get_land(LandId land) const;

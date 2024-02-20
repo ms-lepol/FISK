@@ -242,6 +242,17 @@ namespace fisk {
             return ar;
         } 
 
+    struct ClientGameSendReinforce {
+        static constexpr gf::Id type = "ClientGameSendReinforce"_id;
+        LandId target;
+        int nb_troops;
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ClientGameSendReinforce& data) {
+            return ar | data.target | data.nb_troops;
+        } 
+
 }
 
 #endif /* FISK_NETWORK_PROTOCOL_H */

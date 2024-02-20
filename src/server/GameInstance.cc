@@ -125,6 +125,15 @@ namespace fisk {
                 model.next_phase();
                 break;
             }
+            case ClientGameSendReinforce::type: {
+                gf::Log::debug("(SERVER GAME) Received Reinforce from player {%" PRIX64 "}\n", player.id);
+                //
+                auto data = packet.as<ClientGameSendReinforce>();
+                //
+                model.get_land(data.target).addUnits(data.nb_troops);
+                //
+                break;
+            }
             default:
                 gf::Log::warning("Unknown Packet type : %lu", packet.getType());
                 break;
