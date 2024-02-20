@@ -150,7 +150,7 @@ namespace fisk {
     background.setAnchor(gf::Anchor::Center);
     background.setPosition(screenCenter);
     
-    target.draw(background, states);
+    //target.draw(background, states);
 
 
     renderWorldEntities(target, states);
