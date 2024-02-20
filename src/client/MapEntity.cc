@@ -5,6 +5,7 @@
 #include <gf/Log.h>
 #include <iostream>
 #include <memory>
+#include <mutex>
 #include <string>
 #include <vector>
 #include "GameHub.h"
@@ -85,6 +86,9 @@ namespace fisk {
     void MapEntity::render(gf::RenderTarget& target, const gf::RenderStates& states) {
         std::vector<std::string> keysSelected;
         std::vector<std::string> keysHinted;
+
+        {
+            std::lock_guard<std::mutex> guard(game_hub.clientNetwork.m_mutex);
         
         if (old_selection != nullptr) { //2 Choices
             keysSelected.push_back(old_selection->getName());
@@ -111,6 +115,8 @@ namespace fisk {
                         }
                     }
                 }
+        }
+
         }
 
 
