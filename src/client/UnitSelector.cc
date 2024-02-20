@@ -88,7 +88,7 @@ namespace fisk {
                 break;
             case TurnPhase::Reinforce:        
                 if (map.old_selection != nullptr && map.curr_selection != nullptr) {
-                    setMaxUnit(model.get_land_by_name(map.old_selection->getName()).getNb_units() - 1);
+                    setMaxUnit(model.get_land_by_name(map.old_selection->getName()).getNb_units());
                 }
             break;
             case TurnPhase::End:

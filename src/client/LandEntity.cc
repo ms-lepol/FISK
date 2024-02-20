@@ -63,10 +63,11 @@ namespace fisk {
                             map.reset_selections();
                             gf::Log::warning("(CLIENT GAME) Cannot attack from a land not owned\n");
                             this->game_hub.mainScene.m_unitSelector.hide();
-                            break;
                         }
-                        // First selection is an owned land
-                        gf::Log::info("(CLIENT GAME) Waiting for second selection\n");
+                        else{
+                            // First selection is an owned land
+                            gf::Log::info("(CLIENT GAME) Waiting for second selection\n");
+                        }
                         break;
                     }
                     if(model.get_land_by_name(map.old_selection->getName()).getOwner() != game_hub.clientNetwork.getClientId()) {
@@ -83,15 +84,15 @@ namespace fisk {
                         this->game_hub.mainScene.m_unitSelector.hide();
                         break;
                     }
-                    if (model.get_land_by_name(map.old_selection->getName()).getNb_units() <= 1){
-                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !\n");
-                        map.old_selection = map.curr_selection;
-                        this->game_hub.mainScene.m_unitSelector.hide();
-                        break;
-                    }
                     // Check neighbours
                     if(!model.is_neighbour(model.get_land_id_by_name(map.old_selection->getName()), model.get_land_id_by_name(map.curr_selection->getName()))) {
                         gf::Log::warning("(CLIENT GAME) The selected land to attack is not a neighbour of the attacking land.\n");
+                        map.curr_selection = map.old_selection;
+                        this->game_hub.mainScene.m_unitSelector.hide();
+                        break;
+                    }
+                    if(model.get_land_by_name(map.old_selection->getName()).getNb_units() <= 1){
+                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !\n");
                         map.curr_selection = map.old_selection;
                         this->game_hub.mainScene.m_unitSelector.hide();
                         break;
@@ -130,8 +131,8 @@ namespace fisk {
                         break;
                     }
                     if (model.get_land_by_name(map.old_selection->getName()).getNb_units() <= 1){
-                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to reinforce !\n");
-                        map.old_selection = map.curr_selection;
+                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !\n");
+                        map.curr_selection = map.old_selection;
                         this->game_hub.mainScene.m_unitSelector.hide();
                         break;
                     }

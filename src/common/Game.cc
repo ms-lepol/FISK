@@ -229,6 +229,7 @@ namespace fisk {
     }   
 
     bool Game::are_lands_on_same_territory(LandId a, LandId b) const {
+        gf::Log::debug("(GAME) DFS from %s to %s.\n", get_land(a).getName().c_str(), get_land(b).getName().c_str());
         PlayerId player = get_land(a).getOwner();
 
         if(player != get_land(b).getOwner()) {
@@ -237,19 +238,22 @@ namespace fisk {
 
         std::unordered_set<LandId> visited;
         std::vector<LandId> to_visit = {a};
-        do {
-            LandId curr = *to_visit.end().base();
+        while(!to_visit.empty()) {
+            LandId curr = to_visit[to_visit.size()-1];
             to_visit.pop_back();
             visited.insert(curr);
-            for(LandId neighbor: get_land(curr).getNeighbors()) {
+            for(LandId neighbor : get_land(curr).getNeighbors()) {
+                gf::Log::debug("(GAME) Analyzing %s\n", get_land(neighbor).getName().c_str());
                 if(get_land(neighbor).getOwner() == player && visited.find(neighbor) == visited.end()) {
                     if(neighbor == b) {
+                        gf::Log::debug("(GAME) There is a path between %s and %s\n", get_land(a).getName().c_str(), get_land(b).getName().c_str());
                         return true;
                     }
                     to_visit.push_back(neighbor);
                 }
             }
-        } while(!to_visit.empty());
+        }
+        gf::Log::debug("(GAME) No path found between %s and %s\n", get_land(a).getName().c_str(), get_land(b).getName().c_str());
         return false;
     }
 

@@ -54,7 +54,6 @@ namespace fisk {
 
     void Land::rmUnits(unsigned nb){
         nb_units -= nb;
-        if (nb_units <= 0) nb_units = 1; // Should never happen ! >:(
     }
 
     void Land::addUnits(unsigned nb){

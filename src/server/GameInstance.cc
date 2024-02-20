@@ -49,7 +49,7 @@ namespace fisk {
             for (unsigned j = 0; j < nb_land_by_player; j++) {
                 bool placed = false;
                 while (!placed) {
-                    unsigned rand_land = rand() % nb_lands;
+                    unsigned rand_land = m_random.get().computeUniformInteger(0u, nb_lands);
                     if (model.get_land(rand_land).getOwner() == gf::InvalidId) {
                         model.get_land(rand_land).setOwner_id(player_ids[i]);
                         
@@ -133,10 +133,11 @@ namespace fisk {
                 model.get_land(data.target).addUnits(data.nb_troops);
                 model.get_land(data.from).rmUnits(data.nb_troops);
                 //
+                model.next_phase();
                 break;
             }
             default:
-                gf::Log::warning("Unknown Packet type : %lu", packet.getType());
+                gf::Log::warning("Unknown Packet type : %lu\n", packet.getType());
                 break;
         }
         gf::Log::info("Sending model to every players\n");
