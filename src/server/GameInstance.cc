@@ -49,7 +49,7 @@ namespace fisk {
             for (unsigned j = 0; j < nb_land_by_player; j++) {
                 bool placed = false;
                 while (!placed) {
-                    unsigned rand_land = m_random.get().computeUniformInteger(0u, nb_lands);
+                    unsigned rand_land = m_random.get().computeUniformInteger(1u, nb_lands);
                     if (model.get_land(rand_land).getOwner() == gf::InvalidId) {
                         model.get_land(rand_land).setOwner_id(player_ids[i]);
                         

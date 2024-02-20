@@ -22,7 +22,7 @@ namespace fisk {
     struct hudEntity : gf::Entity {
         gf::WidgetContainer c_hudButtons;
 
-        hudEntity(gf::WidgetContainer& hudButtons) : c_hudButtons(hudButtons) {
+        hudEntity() {
         
         }
         void render(gf::RenderTarget& target, const gf::RenderStates& states) override {

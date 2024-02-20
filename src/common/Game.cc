@@ -258,6 +258,13 @@ namespace fisk {
         return false;
     }
 
+    bool Game::is_finished() const {
+        for(auto land : lands) {
+            if(land.getOwner() != current_player) return false;
+        }
+        return true;
+    }
+
     bool Game::can_attack() const {
         for(auto land : lands) {
             if(land.getOwner() == current_player && land.getNb_units() > 1) return true;

@@ -43,7 +43,6 @@ namespace fisk {
   , c_handEntity(HandEntity(game))
   , c_playCard("Play", game.resources.getFont("font/PixelSplitter-Bold.ttf"),30)
   , c_closeButton(game.resources.getTexture("sprites/fisk_ui.png"), c_hudAtlas.getTextureRect("redCross"),c_hudAtlas.getTextureRect("redCross"),c_hudAtlas.getTextureRect("redCross"))
-  , c_hudEntity(c_hudButtons)
   {
     //Rendering configuration
     c_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
@@ -77,7 +76,7 @@ namespace fisk {
 
 
     // Construct the hud buttons
-    c_hudButtons.addWidget(c_closeButton);
+    c_hudEntity.c_hudButtons.addWidget(c_closeButton);
     c_closeButton.setPosition( screenCenter + gf::Vector2f(ViewSizeCard.x/2-64, -ViewSizeCard.y/2));
     c_closeButton.setCallback([this](){
       gf::Log::info("CloseButton clicked\n");
@@ -95,6 +94,7 @@ namespace fisk {
       gf::Log::info("PlayCard clicked\n");
     });
     addWorldEntity(c_hudEntity);
+
   }
 
 
