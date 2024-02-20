@@ -4,6 +4,7 @@
 #include <gf/Id.h>
 #include <gf/SerializationOps.h>
 
+#include "Game.h"
 #include "Land.h"
 #include "NetworkProtocolData.h"
 
@@ -206,6 +207,29 @@ namespace fisk {
     template<typename Archive>
         Archive& operator|(Archive& ar, ServerGameAskTroops& data) {
             return ar;
+        }
+
+    struct ServerGameSendInit {
+        static constexpr gf::Id type = "ServerGameSendInit"_id;
+        Game model;
+
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ServerGameSendInit& data) {
+            return ar | data.model;
+        }
+
+    struct ServerGameSendTurnStart {
+        static constexpr gf::Id type = "ServerGameSendTurnStart"_id;
+        CardId card;
+        int nb_troops;
+
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ServerGameSendTurnStart& data) {
+            return ar | data.card | data.nb_troops;
         }
         
     // Client game
