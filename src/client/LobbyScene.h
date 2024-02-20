@@ -2,6 +2,7 @@
 #define FISK_LOBBY_SCENE_H
 
 #include <gf/Entity.h>
+#include <gf/ResourceManager.h>
 #include <gf/Scene.h>
 #include <gf/Action.h>
 
@@ -29,6 +30,19 @@ namespace fisk {
     TitleEntity(gf::Texture& texture);
     void render(gf::RenderTarget& target, const gf::RenderStates& states) override;
     void update(gf::Time time) override;
+  };
+
+  struct LobbyButton : public gf::Entity {
+    gf::TextButtonWidget l_lobbyButton;
+    gf::WidgetContainer l_hudButtons;
+    LobbyButton(gf::Font* font) : l_lobbyButton("Ready", *font,30) {
+      l_hudButtons.addWidget(l_lobbyButton);
+    }
+
+    void render(gf::RenderTarget& target, const gf::RenderStates& states) override {
+      l_hudButtons.render(target, states);
+    }
+
   };
 
 
@@ -73,9 +87,8 @@ private:
 
 
   // widgets
-  gf::TextButtonWidget l_lobbyButton;
-  gf::WidgetContainer l_hudButtons;
-
+  
+  LobbyButton l_lobbyButton;
 
   // actions
 
@@ -83,7 +96,7 @@ private:
   gf::Action l_close;
 
    gf::Vector2f mousePos;
-
+    gf::Vector2i mousePosScreen;
 };
 
 }

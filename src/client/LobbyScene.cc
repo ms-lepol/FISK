@@ -59,8 +59,8 @@ namespace fisk {
           , m_game(game)
           , l_interact("Interact")
           , l_close("Close")
-          , l_lobbyButton("Ready", game.resources.getFont("font/PixelSplitter-Bold.ttf"),30)
           , l_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
+          , l_lobbyButton(&game.resources.getFont("font/PixelSplitter-Bold.ttf"))
           , l_title(game.resources.getTexture("sprites/fiskTitle.png"))
           , l_player1(game.resources)
             , l_player2(game.resources)
@@ -72,27 +72,26 @@ namespace fisk {
 
 
               //HUD entities;
-
-                addHudEntity(l_title);
-                addHudEntity(l_player1);
-                addHudEntity(l_player2);
-                addHudEntity(l_player3);
-                addHudEntity(l_player4);
+                addWorldEntity(l_lobbyButton);
+                addWorldEntity(l_title);
+                addWorldEntity(l_player1);
+                addWorldEntity(l_player2);
+                addWorldEntity(l_player3);
+                addWorldEntity(l_player4);
 
               //HUD Buttons
-                l_lobbyButton.setPosition({ ViewSize.x/2, ViewSize.y-100 });
-                l_lobbyButton.setRadius(20);
-                l_lobbyButton.setDefaultTextColor(HUDColor().backgroundColor);
-                l_lobbyButton.setDefaultBackgroundColor(HUDColor().buttonColor);
-                l_lobbyButton.setPadding(50);
-                l_lobbyButton.setAnchor(gf::Anchor::Center);
-                l_lobbyButton.setCallback([this, &game] {
+                l_lobbyButton.l_lobbyButton.setPosition({ ViewSize.x/2, ViewSize.y-100 });
+                l_lobbyButton.l_lobbyButton.setRadius(20);
+                l_lobbyButton.l_lobbyButton.setDefaultTextColor(HUDColor().backgroundColor);
+                l_lobbyButton.l_lobbyButton.setDefaultBackgroundColor(HUDColor().buttonColor);
+                l_lobbyButton.l_lobbyButton.setPadding(50);
+                l_lobbyButton.l_lobbyButton.setAnchor(gf::Anchor::Center);
+                l_lobbyButton.l_lobbyButton.setCallback([this, &game] {
                     std::cout << "Ready" << std::endl;
                     ClientReady data;
                     data.ready = !game.clientNetwork.isClientReady();
                     m_game.clientNetwork.send(data);
                 });
-                l_hudButtons.addWidget(l_lobbyButton);
 
                 l_close.addKeycodeKeyControl(gf::Keycode::Escape);
 
@@ -101,7 +100,8 @@ namespace fisk {
 
                 addAction(l_interact);
                 addAction(l_close);
-
+            setWorldViewSize(ViewSize);
+            setWorldViewCenter(ViewSize/2);
           }
 
     void LobbyScene::doHandleActions([[maybe_unused]] gf::Window& window) {
@@ -115,8 +115,8 @@ namespace fisk {
         if (l_interact.isActive()) {
              
                
-            l_hudButtons.pointTo(mousePos);
-            l_hudButtons.triggerAction();
+            l_lobbyButton.l_hudButtons.pointTo(mousePos);
+            l_lobbyButton.l_hudButtons.triggerAction();
 
 
             l_interact.reset();
@@ -151,15 +151,14 @@ namespace fisk {
             return;
         }
         if (event.type == gf::EventType::MouseMoved) {
-            mousePos = event.mouseCursor.coords;
+            mousePosScreen = event.mouseCursor.coords;
         }
     }
 
     void LobbyScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
        
-        l_hudButtons.render(target, states);
-        l_title.render(target, states);
-        
+        mousePos = target.mapPixelToCoords(mousePosScreen, getWorldView());
+        renderWorldEntities(target, states);
         renderHudEntities(target, states);
     }
 
