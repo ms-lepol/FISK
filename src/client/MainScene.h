@@ -48,14 +48,7 @@ private:
 
   PlayerColor m_playerColor;
    gf::RectangleShape background;
-  
-
   gf::TextureAtlas m_hudAtlas;
-
-  // containers
-
-  gf::EntityContainer m_WorldEntities;
-  gf::EntityContainer m_HudEntities;
 
   // entities
   public:
@@ -74,6 +67,7 @@ private:
   CameraActions m_cameraActions;
   gf::Action m_interact;
 
+   gf::Vector2f mousePosScreen;
    gf::Vector2f mousePos;
 
    public:

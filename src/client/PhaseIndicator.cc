@@ -46,7 +46,7 @@ namespace fisk {
         m_spr.setPosition(position);
 
         //rendering background
-        for (int i = 0;i<(int)phase;i++) {
+        for (int i = 0;i<(int)phase+1;i++) {
             gf::RectangleShape rect({43,11});
             rect.setColor(color);
             rect.setPosition({static_cast<float>(position.x + 83 + i*(rect.getSize().x+5)), static_cast<float>(position.y + 59)});
