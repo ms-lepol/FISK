@@ -164,12 +164,15 @@ namespace fisk {
                 break;
             case TurnPhase::Reinforce:
                 current_phase = TurnPhase::End;
-                current_player = (current_player + 1) % (get_nb_players() + 1);
-                if(current_player == 0) current_player = 1;
+                next_phase();
                 break;
             case TurnPhase::End:
                 current_player = (current_player + 1) % (get_nb_players() + 1);
                 if(current_player == 0) current_player = 1;
+                give_troops();
+                draw_card();
+                current_phase = TurnPhase::Fortify;
+                break;
             default:
                 gf::Log::error("(GAME) Error when changing turn\n");
                 break;

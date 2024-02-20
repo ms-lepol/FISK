@@ -44,6 +44,11 @@ namespace fisk {
         unsigned nb_lands = model.get_nb_lands()  ;
         unsigned nb_players = this->getPlayersCount();
 
+        for (unsigned i = 1; i < nb_lands+1; i++) {
+            unsigned rand_unit = m_random.get().computeUniformInteger(1u, 3u);
+            model.get_land(i).addUnits(rand_unit);
+        }
+
         gf::Log::info("Nb Players: %d\n", nb_players);
         for (unsigned i = 0; i < nb_players; i++) {
             for (unsigned j = 0; j < nb_land_by_player; j++) {
@@ -60,8 +65,9 @@ namespace fisk {
             }
         }
         model.set_current_player(PlayerId(1));
-        model.get_player(1).drawCard(1);
-        
+        model.give_troops();
+        model.draw_card();
+
         for(auto& player: getPlayers()) {
             ServerHello hello;
             hello.playerId = srv_to_model_id.at(player.id);

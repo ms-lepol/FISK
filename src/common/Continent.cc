@@ -15,6 +15,10 @@ namespace fisk {
 
     }
 
+    int Continent::get_bonus() const {
+        return bonus;
+    }
+
     std::string Continent::getName() const{
         return name;
     }
