@@ -74,20 +74,20 @@ namespace fisk {
         return lands.at(id-1);
     }
 
-    const std::size_t Game::get_nb_lands() const {
-        return lands.size();
+    const int32_t Game::get_nb_lands() const {
+        return static_cast<int32_t>(lands.size());
     }
 
-    const int Game::get_nb_players() const {
-        return static_cast<int>(players.size());
+    const int32_t Game::get_nb_players() const {
+        return static_cast<int32_t>(players.size());
     }
 
-    const std::size_t Game::get_nb_cards() const {
-        return cards.size();
+    const int32_t Game::get_nb_cards() const {
+        return static_cast<int32_t>(cards.size());
     }
 
-    size_t Game::nb_lands() const {
-        return lands.size();
+    int32_t Game::nb_lands() const {
+        return static_cast<int32_t>(lands.size());
     }
 
     void Game::set_current_player(PlayerId id) {
