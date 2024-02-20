@@ -8,12 +8,12 @@ namespace fisk {
 
     std::unique_ptr<Game> createModelForMap1(){
         std::unique_ptr<Game> model(new Game());
-        ContinentId Europe = model->add_continent(Continent("Europe", {}));
-        ContinentId NorthAmerica = model->add_continent(Continent("North America", {}));
-        ContinentId SouthAmerica = model->add_continent(Continent("South America", {}));
-        ContinentId Asia = model->add_continent(Continent("Asia", {}));
-        ContinentId Africa = model->add_continent(Continent("Africa", {}));
-        ContinentId Oceania = model->add_continent(Continent("Oceania", {}));
+        ContinentId Europe = model->add_continent(Continent("Europe", {},5));
+        ContinentId NorthAmerica = model->add_continent(Continent("North America", {},5));
+        ContinentId SouthAmerica = model->add_continent(Continent("South America", {},2));
+        ContinentId Asia = model->add_continent(Continent("Asia", {},5));
+        ContinentId Africa = model->add_continent(Continent("Africa", {},3));
+        ContinentId Oceania = model->add_continent(Continent("Oceania", {},2));
 
 
         LandId Alaska = model->add_land(Land(1, "Alaska", {}, gf::InvalidId));

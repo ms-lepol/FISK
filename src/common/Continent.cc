@@ -7,10 +7,13 @@ namespace fisk {
 
     Continent::Continent(){}
 
-    Continent::Continent(std::string name, std::vector<LandId> lands):
+    Continent::Continent(std::string name, std::vector<LandId> lands,int bonus):
         name(name),
-        lands(lands)
-    {}
+        lands(lands),
+        bonus(bonus)
+    {
+
+    }
 
     std::string Continent::getName() const{
         return name;

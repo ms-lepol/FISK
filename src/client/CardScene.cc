@@ -143,14 +143,14 @@ namespace fisk {
   void CardScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
 
     // Draw the background
-    gf::Vector2f screenSize = m_game.getWindow().getSize();screenSize = m_game.getWindow().getSize();
+    gf::Vector2f screenSize = m_game.getWindow().getSize();
     screenCenter = screenSize / 2.0f;
     ViewSizeCard = screenSize * 3.0f/4.0f;
     background.setSize(ViewSizeCard);
     background.setAnchor(gf::Anchor::Center);
     background.setPosition(screenCenter);
     
-    //target.draw(background, states);
+    target.draw(background, states);
 
 
     renderWorldEntities(target, states);

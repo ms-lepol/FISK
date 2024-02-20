@@ -10,11 +10,13 @@ namespace fisk {
         protected:
             std::string name;
             std::vector<LandId> lands;
+            int bonus;
         public:
             Continent();
-            Continent(std::string name, std::vector<LandId> lands);
+            Continent(std::string name, std::vector<LandId> lands,int bonus);
             std::string getName() const;
             std::vector<LandId> get_lands() const;
+            int get_bonus() const;
 
             void add_land(LandId land);
 

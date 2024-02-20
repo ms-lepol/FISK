@@ -162,21 +162,61 @@ namespace fisk {
                 current_phase = TurnPhase::Reinforce;
                 break;
             case TurnPhase::Reinforce:
-                current_phase = TurnPhase::Fortify;
+                current_phase = TurnPhase::End;
                 current_player = (current_player + 1) % (get_nb_players() + 1);
                 if(current_player == 0) current_player = 1;
                 break;
             case TurnPhase::End:
+                current_player = (current_player + 1) % (get_nb_players() + 1);
+                if(current_player == 0) current_player = 1;
             default:
                 gf::Log::error("(GAME) Error when changing turn\n");
                 break;
         }
     }
 
+    bool Game::is_continent_owned(Continent continent, PlayerId player){
+        bool owned = true;
+        for (auto land : continent.get_lands()){
+            if (get_land(land).getOwner() != player){
+                owned = false;
+                break;
+            }
+        }
+        return owned;
+    }
+
+    void Game::give_troops(){
+        int nb_troops = 0;
+
+        for (auto land : lands){
+            if(land.getOwner() == current_player){
+                nb_troops++;
+            }
+        }
+
+        nb_troops = nb_troops / 2;
+        
+        for (auto continent : continents){
+            if (is_continent_owned(continent, current_player)){
+                nb_troops += continent.get_bonus();
+            }
+        }
+        get_player(current_player).setNb_units(nb_troops);
+    }
+
     void Game::shuffle_cards() {
         std::random_device random_dev;
         std::mt19937 generator(random_dev());
         std::shuffle(cards.begin(), cards.end(),generator);
+    }
+
+    void Game::draw_card() {
+        if(top_card == cards.size()){
+            shuffle_cards();
+            top_card = 0;
+        }
+        get_player(current_player).drawCard(get_top_card());
     }
 
     void Game::attack(LandId atk, LandId def, std::vector<int>& attack_dices, std::vector<int>& defence_dices){

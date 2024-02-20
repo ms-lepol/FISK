@@ -85,6 +85,9 @@ namespace fisk {
 
             bool are_lands_on_same_territory(LandId a, LandId b) const;
             bool is_finished() const;
+            void give_troops();
+            void draw_card();
+            bool is_continent_owned(Continent continent, PlayerId player);
             void shuffle_cards();
 
             /**
