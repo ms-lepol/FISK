@@ -160,6 +160,7 @@ namespace fisk {
                     //
                     ClientGameSendReinforce reinforce;
                     reinforce.target = model.get_land_id_by_name(map.curr_selection->getName());
+                    reinforce.from = model.get_land_id_by_name(map.old_selection->getName());
                     reinforce.nb_troops = selected_unit;
                     //
                     game_hub.clientNetwork.send(reinforce);

@@ -131,6 +131,7 @@ namespace fisk {
                 auto data = packet.as<ClientGameSendReinforce>();
                 //
                 model.get_land(data.target).addUnits(data.nb_troops);
+                model.get_land(data.from).rmUnits(data.nb_troops);
                 //
                 break;
             }

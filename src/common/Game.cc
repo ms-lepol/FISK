@@ -228,7 +228,7 @@ namespace fisk {
         return;
     }   
 
-    bool Game::are_lands_on_same_territory(LandId a, LandId b) {
+    bool Game::are_lands_on_same_territory(LandId a, LandId b) const {
         PlayerId player = get_land(a).getOwner();
 
         if(player != get_land(b).getOwner()) {

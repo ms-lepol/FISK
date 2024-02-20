@@ -244,13 +244,14 @@ namespace fisk {
 
     struct ClientGameSendReinforce {
         static constexpr gf::Id type = "ClientGameSendReinforce"_id;
+        LandId from;
         LandId target;
         int nb_troops;
     };
 
     template<typename Archive>
         Archive& operator|(Archive& ar, ClientGameSendReinforce& data) {
-            return ar | data.target | data.nb_troops;
+            return ar | data.from | data.target | data.nb_troops;
         } 
 
 }
