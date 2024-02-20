@@ -197,8 +197,6 @@ namespace fisk {
    
     renderWorldEntities(target,states);
     mousePos = target.mapPixelToCoords(mousePosScreen, getWorldView());
-    gf::Log::debug("Mouse Screen position: %f, %f\n", mousePosScreen.x, mousePosScreen.y);
-    gf::Log::debug("Mouse position: %f, %f\n", mousePos.x, mousePos.y);
     renderHudEntities(target, states);
   }
 
