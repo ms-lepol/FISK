@@ -160,6 +160,7 @@ namespace fisk {
                 break;
             case TurnPhase::Attack:
                 current_phase = TurnPhase::Reinforce;
+                if(!can_reinforce()) next_phase();
                 break;
             case TurnPhase::Reinforce:
                 current_phase = TurnPhase::End;
@@ -307,8 +308,29 @@ namespace fisk {
 
     bool Game::can_attack() const {
         for(auto land : lands) {
-            if(land.getOwner() == current_player && land.getNb_units() > 1) return true;
+            if(land.getOwner() == current_player && land.getNb_units() > 1) {
+                for(auto l : land.getNeighbors()) {
+                    if(get_land(l).getOwner() != current_player) return true;
+                }
+            }
         }
         return false;
+    }
+
+    bool Game::can_reinforce() const {
+        bool res = false;
+        std::vector<LandId> owned;
+        for(auto land : lands){
+            if(land.getOwner() == current_player) owned.push_back(get_land_id_by_name(land.getName()));
+        }
+
+        for(auto land_a : owned){
+            for (auto land_b : owned) {
+                if(land_a == land_b || get_land(land_a).getNb_units() <= 1) continue;
+                if(are_lands_on_same_territory(land_a, land_b)) return true;
+            }
+        }
+
+        return res;
     }
 }

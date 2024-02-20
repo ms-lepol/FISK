@@ -77,7 +77,8 @@ namespace fisk {
         //Logic
           if (m_game.clientNetwork.hasGameModel()){
             auto& l_model = m_game.clientNetwork.getGameModel();
-            if (l_model.get_current_phase() == TurnPhase::Attack){
+            if (l_model.get_current_phase() == TurnPhase::Attack 
+                && l_model.get_current_player() == m_game.clientNetwork.getClientId()){
                 widg_endPhase.setCallback([this] {
                     gf::Log::debug("Ending attack phase...\n");
                     ClientGameEndAttack end;
