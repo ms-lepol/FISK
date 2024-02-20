@@ -22,11 +22,14 @@
 namespace fisk {
 
   namespace {
-    constexpr gf::Vector2f ViewSizeCard = {720.0f, 480.0f};
+    
     constexpr int ViewRadius = 7;
 
     static constexpr float ZoomInFactor = 0.9f;
     static constexpr float ZoomOutFactor = 1.1f;
+    static constexpr gf::Vector2f screenSize = {1280.0f, 720.0f};
+    static gf::Vector2f ViewSizeCard = screenSize * 3.0f/4.0f;
+    static gf::Vector2f screenCenter = screenSize / 2.0f;
 
   }
 
@@ -40,15 +43,16 @@ namespace fisk {
   , c_handEntity(HandEntity(game))
   , c_playCard("Play", game.resources.getFont("font/PixelSplitter-Bold.ttf"),30)
   , c_closeButton(game.resources.getTexture("sprites/fisk_ui.png"), c_hudAtlas.getTextureRect("redCross"),c_hudAtlas.getTextureRect("redCross"),c_hudAtlas.getTextureRect("redCross"))
+  , c_hudEntity(c_hudButtons)
   {
     //Rendering configuration
     c_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
-    gf::Vector2f screenSize = {1280.0f, 720.0f};
-    gf::Vector2f screenCenter = screenSize / 2.0f;
+   
+   
     
     setClearColor(HUDColor().backgroundColor);
 
-    background.setSize({720.0f, 480.0f});
+    background.setSize(ViewSizeCard);
     background.setAnchor(gf::Anchor::Center);
     background.setPosition(screenCenter);
     background.setColor(HUDColor().buttonColor);
@@ -56,7 +60,7 @@ namespace fisk {
    
     //World entities
    
-    c_hand.addEntity(c_handEntity);
+    addWorldEntity(c_handEntity);
 
     c_handEntity.setPosition(screenCenter + gf::Vector2f({-c_handEntity.getDimensions().x/2.0f, -CARD_HEIGHT/2.0f}));
     //HUD entities
@@ -90,6 +94,7 @@ namespace fisk {
     c_playCard.setCallback([this](){
       gf::Log::info("PlayCard clicked\n");
     });
+    addWorldEntity(c_hudEntity);
   }
 
 
@@ -120,8 +125,9 @@ namespace fisk {
         mousePos = event.mouseCursor.coords;
       }
     }
+    background.setSize(screenSize*(3.0f/4.0f));
 
-    c_hand.update(time);
+    
     m_game.clientNetwork.update(); 
   }
 
@@ -137,12 +143,18 @@ namespace fisk {
   void CardScene::doRender(gf::RenderTarget& target, const gf::RenderStates& states) {
 
     // Draw the background
+    gf::Vector2f screenSize = m_game.getWindow().getSize();screenSize = m_game.getWindow().getSize();
+    screenCenter = screenSize / 2.0f;
+    ViewSizeCard = screenSize * 3.0f/4.0f;
+    background.setSize(ViewSizeCard);
+    background.setAnchor(gf::Anchor::Center);
+    background.setPosition(screenCenter);
     
     target.draw(background, states);
 
 
-    c_hand.render(target, states);
-    c_hudButtons.render(target, states);
+    renderWorldEntities(target, states);
+   
     
   }
 
