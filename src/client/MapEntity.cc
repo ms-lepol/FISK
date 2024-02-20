@@ -5,6 +5,7 @@
 #include <gf/Log.h>
 #include <iostream>
 #include <memory>
+#include <mutex>
 #include <string>
 #include <vector>
 #include "GameHub.h"
@@ -53,7 +54,7 @@ namespace fisk {
         lands["Scandinavia"] = std::make_unique<LandEntity>("Scandinavia", pathScandinavia, gf::Vector2i(xScandinavia,yScandinavia),gf::Vector2i(xTextScandinavia,yTextScandinavia),game_hub);
         lands["Northern Europe"] = std::make_unique<LandEntity>("Northern Europe", pathEuropeNorth, gf::Vector2i(xEuropeNorth,yEuropeNorth),gf::Vector2i(xTextEuropeNorth,yTextEuropeNorth),game_hub);
         lands["Southern Europe"] = std::make_unique<LandEntity>("Southern Europe", pathEuropeSouth, gf::Vector2i(xEuropeSouth,yEuropeSouth),gf::Vector2i(xTextEuropeSouth,yTextEuropeSouth),game_hub);
-        lands["WesternE urope"] = std::make_unique<LandEntity>("Western Europe", pathEuropeWest, gf::Vector2i(xEuropeWest,yEuropeWest),gf::Vector2i(xTextEuropeWest,yTextEuropeWest),game_hub);
+        lands["Western Europe"] = std::make_unique<LandEntity>("Western Europe", pathEuropeWest, gf::Vector2i(xEuropeWest,yEuropeWest),gf::Vector2i(xTextEuropeWest,yTextEuropeWest),game_hub);
         lands["Eastern Europe"] = std::make_unique<LandEntity>("Eastern Europe", pathEuropeEast, gf::Vector2i(xEuropeEast,yEuropeEast),gf::Vector2i(xTextEuropeEast,yTextEuropeEast),game_hub);
         lands["North Africa"] = std::make_unique<LandEntity>("North Africa", pathNorthAfrica, gf::Vector2i(xNorthAfrica,yNorthAfrica),gf::Vector2i(xTextNorthAfrica,yTextNorthAfrica),game_hub);
         lands["Egypt"] = std::make_unique<LandEntity>("Egypt", pathEgypte, gf::Vector2i(xEgypte,yEgypte),gf::Vector2i(xTextEgypte,yTextEgypte),game_hub);
@@ -85,6 +86,9 @@ namespace fisk {
     void MapEntity::render(gf::RenderTarget& target, const gf::RenderStates& states) {
         std::vector<std::string> keysSelected;
         std::vector<std::string> keysHinted;
+
+        {
+            std::lock_guard<std::mutex> guard(game_hub.clientNetwork.m_mutex);
         
         if (old_selection != nullptr) { //2 Choices
             keysSelected.push_back(old_selection->getName());
@@ -111,6 +115,8 @@ namespace fisk {
                         }
                     }
                 }
+        }
+
         }
 
 

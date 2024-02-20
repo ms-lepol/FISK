@@ -4,7 +4,7 @@
 #include "server/ServerNetwork.h"
 
 int main(){
-    gf::Random random;
+    gf::Random random(time(NULL));
     fisk::ServerNetwork serverNetwork(random);
     serverNetwork.run();
     return EXIT_SUCCESS;

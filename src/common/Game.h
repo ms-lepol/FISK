@@ -67,9 +67,9 @@ namespace fisk {
 
             void set_current_player(PlayerId player);
 
-            const std::size_t get_nb_lands() const;
-            const std::size_t get_nb_players() const;
-            const std::size_t get_nb_cards() const;
+            const int32_t get_nb_lands() const;
+            const int32_t get_nb_players() const;
+            const int32_t get_nb_cards() const;
 
             bool is_neighbours_correct() const;
             bool is_neighbour(LandId a, LandId b) const;
@@ -83,7 +83,7 @@ namespace fisk {
             const Card& get_card(CardId card) const;
             const Continent& get_continent(ContinentId continent) const;
 
-            bool are_lands_on_same_territory(LandId a, LandId b);
+            bool are_lands_on_same_territory(LandId a, LandId b) const;
 
             void shuffle_cards();
 
@@ -92,7 +92,7 @@ namespace fisk {
              */
             void next_phase();
 
-            size_t nb_lands() const;
+            int32_t nb_lands() const;
     
             template<typename S>
             void serialisation(S& sa) {

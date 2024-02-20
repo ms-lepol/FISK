@@ -74,20 +74,20 @@ namespace fisk {
         return lands.at(id-1);
     }
 
-    const std::size_t Game::get_nb_lands() const {
-        return lands.size();
+    const int32_t Game::get_nb_lands() const {
+        return static_cast<int32_t>(lands.size());
     }
 
-    const std::size_t Game::get_nb_players() const {
-        return players.size();
+    const int32_t Game::get_nb_players() const {
+        return static_cast<int32_t>(players.size());
     }
 
-    const std::size_t Game::get_nb_cards() const {
-        return cards.size();
+    const int32_t Game::get_nb_cards() const {
+        return static_cast<int32_t>(cards.size());
     }
 
-    size_t Game::nb_lands() const {
-        return lands.size();
+    int32_t Game::nb_lands() const {
+        return static_cast<int32_t>(lands.size());
     }
 
     void Game::set_current_player(PlayerId id) {
@@ -163,7 +163,8 @@ namespace fisk {
                 break;
             case TurnPhase::Reinforce:
                 current_phase = TurnPhase::Fortify;
-                current_player = ((current_player + 1) % (get_nb_players() + 1)) +1;
+                current_player = (current_player + 1) % (get_nb_players() + 1);
+                if(current_player == 0) current_player = 1;
                 break;
             case TurnPhase::End:
             default:
@@ -228,7 +229,8 @@ namespace fisk {
         return;
     }   
 
-    bool Game::are_lands_on_same_territory(LandId a, LandId b) {
+    bool Game::are_lands_on_same_territory(LandId a, LandId b) const {
+        gf::Log::debug("(GAME) DFS from %s to %s.\n", get_land(a).getName().c_str(), get_land(b).getName().c_str());
         PlayerId player = get_land(a).getOwner();
 
         if(player != get_land(b).getOwner()) {
@@ -237,19 +239,22 @@ namespace fisk {
 
         std::unordered_set<LandId> visited;
         std::vector<LandId> to_visit = {a};
-        do {
-            LandId curr = *to_visit.end().base();
+        while(!to_visit.empty()) {
+            LandId curr = to_visit[to_visit.size()-1];
             to_visit.pop_back();
             visited.insert(curr);
-            for(LandId neighbor: get_land(curr).getNeighbors()) {
+            for(LandId neighbor : get_land(curr).getNeighbors()) {
+                gf::Log::debug("(GAME) Analyzing %s\n", get_land(neighbor).getName().c_str());
                 if(get_land(neighbor).getOwner() == player && visited.find(neighbor) == visited.end()) {
                     if(neighbor == b) {
+                        gf::Log::debug("(GAME) There is a path between %s and %s\n", get_land(a).getName().c_str(), get_land(b).getName().c_str());
                         return true;
                     }
                     to_visit.push_back(neighbor);
                 }
             }
-        } while(!to_visit.empty());
+        }
+        gf::Log::debug("(GAME) No path found between %s and %s\n", get_land(a).getName().c_str(), get_land(b).getName().c_str());
         return false;
     }
 
