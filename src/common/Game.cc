@@ -78,8 +78,8 @@ namespace fisk {
         return lands.size();
     }
 
-    const std::size_t Game::get_nb_players() const {
-        return players.size();
+    const int Game::get_nb_players() const {
+        return static_cast<int>(players.size());
     }
 
     const std::size_t Game::get_nb_cards() const {
@@ -163,7 +163,8 @@ namespace fisk {
                 break;
             case TurnPhase::Reinforce:
                 current_phase = TurnPhase::Fortify;
-                current_player = ((current_player + 1) % (get_nb_players() + 1)) +1;
+                current_player = (current_player + 1) % (get_nb_players() + 1);
+                if(current_player == 0) current_player = 1;
                 break;
             case TurnPhase::End:
             default:

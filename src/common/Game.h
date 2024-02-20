@@ -68,7 +68,7 @@ namespace fisk {
             void set_current_player(PlayerId player);
 
             const std::size_t get_nb_lands() const;
-            const std::size_t get_nb_players() const;
+            const int get_nb_players() const;
             const std::size_t get_nb_cards() const;
 
             bool is_neighbours_correct() const;
