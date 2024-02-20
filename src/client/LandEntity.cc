@@ -51,11 +51,11 @@ namespace fisk {
                         gf::Log::warning("(CLIENT GAME) Cannot fortify a land not owned by the player.\n");
                         map.reset_selections();
                         this->game_hub.mainScene.m_unitSelector.hide();
+                        break;
                     }
-                    else {
-                        this->game_hub.mainScene.m_unitSelector.show();
-                        gf::Log::debug("Showing unitSelector...\n");
-                    }
+                    this->game_hub.mainScene.m_unitSelector.show();
+                    gf::Log::debug("Showing unitSelector...\n");
+                    //
                     break;
                 case TurnPhase::Attack: {
                     if(map.old_selection == nullptr) { // First selection
@@ -63,11 +63,11 @@ namespace fisk {
                             map.reset_selections();
                             gf::Log::warning("(CLIENT GAME) Cannot attack from a land not owned\n");
                             this->game_hub.mainScene.m_unitSelector.hide();
+                            break;
                         }
-                        else{
-                            // First selection is an owned land
-                            gf::Log::info("(CLIENT GAME) Waiting for second selection\n");
-                        }
+                        // First selection is an owned land
+                        gf::Log::info("(CLIENT GAME) Waiting for second selection\n");
+                        //
                         break;
                     }
                     if(model.get_land_by_name(map.old_selection->getName()).getOwner() != game_hub.clientNetwork.getClientId()) {
@@ -108,12 +108,11 @@ namespace fisk {
                             map.reset_selections();
                             gf::Log::warning("(CLIENT GAME) Cannot reinforce a land not owned\n");
                             this->game_hub.mainScene.m_unitSelector.hide();
+                            break;
                         }
-                        else{
-                            
-                            // First selection is an owned land
-                            gf::Log::info("(CLIENT GAME) Waiting for second selection\n");
-                        }
+                        // First selection is an owned land
+                        gf::Log::info("(CLIENT GAME) Waiting for second selection\n");
+                        //
                         break;
                     }
                     if(model.get_land_by_name(map.old_selection->getName()).getOwner() != game_hub.clientNetwork.getClientId()) {
@@ -131,8 +130,8 @@ namespace fisk {
                         break;
                     }
                     if (model.get_land_by_name(map.old_selection->getName()).getNb_units() <= 1){
-                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !\n");
-                        map.curr_selection = map.old_selection;
+                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to reinforce !\n");
+                        map.reset_selections();
                         this->game_hub.mainScene.m_unitSelector.hide();
                         break;
                     }

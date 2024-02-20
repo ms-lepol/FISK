@@ -118,41 +118,23 @@ namespace fisk {
             switch(model.get_current_phase()){
                 case TurnPhase::Fortify:
                     gf::Log::debug("Fortify...\n");
-                    if(curr_land.getOwner() != game_hub.clientNetwork.getClientId()){
-                        gf::Log::warning("(CLIENT GAME) Current selection is not owned by player\n");
-                    }
-                    else {
-                        ClientGameSendFortify fortify;
-                        fortify.land_id = model.get_land_id_by_name(map.curr_selection->getName());
-                        fortify.nb = selected_unit;
-                        //
-                        game_hub.clientNetwork.send(fortify);
-                    }
+                    ClientGameSendFortify fortify;
+                    fortify.land_id = model.get_land_id_by_name(map.curr_selection->getName());
+                    fortify.nb = selected_unit;
+                    //
+                    game_hub.clientNetwork.send(fortify);
+                    //
                     map.reset_selections();
                     break;
                 case TurnPhase::Attack:
                     gf::Log::debug("Attack...\n");
-                    if(map.old_selection == nullptr){
-                        gf::Log::warning("(CLIENT GAME) Waiting for a second land to be chosen\n");
-                        break;
-                    }
-                    if(model.get_land_by_name(map.old_selection->getName()).getOwner() != game_hub.clientNetwork.getClientId()){
-                        gf::Log::warning("(CLIENT GAME) First selection is not owned by player\n");
-                    }
-                    else if (model.get_land_by_name(map.old_selection->getName()).getNb_units() <= 1){
-                        gf::Log::warning("(CLIENT GAME) First selection does not have enough units to attack !\n");
-                    }
-                    else if(curr_land.getOwner() == game_hub.clientNetwork.getClientId()){
-                        gf::Log::warning("(CLIENT GAME) Second selection is owned by player\n");
-                    }
-                    else{
-                        ClientGameSendAttack attack;
-                        attack.attacking_land_id = model.get_land_id_by_name(map.old_selection->getName());
-                        attack.defending_land_id = model.get_land_id_by_name(map.curr_selection->getName());
-                        attack.attacking_nb_dice = selected_unit;                        
-                        //
-                        game_hub.clientNetwork.send(attack);
-                    }
+                    ClientGameSendAttack attack;
+                    attack.attacking_land_id = model.get_land_id_by_name(map.old_selection->getName());
+                    attack.defending_land_id = model.get_land_id_by_name(map.curr_selection->getName());
+                    attack.attacking_nb_dice = selected_unit;                        
+                    //
+                    game_hub.clientNetwork.send(attack);
+                    //
                     map.reset_selections();
                     break;
                 case TurnPhase::Reinforce:

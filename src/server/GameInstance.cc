@@ -73,10 +73,6 @@ namespace fisk {
 
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {
         if(!ready) return;
-        /*if(model.(player.id) != model.get_current_player()) {
-            gf::Log::info("(SERVER GAME) This is not your turn to play\n");
-            return;
-        }*/
         TurnPhase curr_phase = model.get_current_phase();
         switch (packet.getType()) {
             case ClientGameSendFortify::type: {
@@ -117,6 +113,7 @@ namespace fisk {
                 model.attack(data.attacking_land_id, data.defending_land_id, attacker_dices, defender_dices);
                 gf::Log::debug("(AFTER) Defence : %lu %u; Attack : %lu, %u\n", defender.getOwner(), defender.getNb_units(), attacker.getOwner(), attacker.getNb_units());
                 //
+                if(!model.can_attack()) model.next_phase();
                 break;
             }
             case ClientGameEndAttack::type: {
