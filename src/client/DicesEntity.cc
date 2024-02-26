@@ -1,5 +1,6 @@
 #include "DicesEntity.h"
 #include <gf/Log.h>
+#include <gf/Random.h>
 #include <gf/Sleep.h>
 #include <gf/Time.h>
 
@@ -63,10 +64,22 @@ namespace fisk {
             dices_attacker_1.setPosition({0,STEP});
             dices_attacker_2.setPosition({0,STEP*2});
             dices_attacker_3.setPosition({0,STEP*3});
+
+            gf::Random random;
+            dices_attacker_1.rotate(random.computeAngle());
+            dices_attacker_2.rotate(random.computeAngle());
+            dices_attacker_3.rotate(random.computeAngle());
             
+
             dices_defender_1.setPosition({1280,STEP});
             dices_defender_2.setPosition({1280,STEP*2});
             dices_defender_3.setPosition({1280,STEP*3});
+
+            dices_defender_1.rotate(random.computeAngle());
+            dices_defender_2.rotate(random.computeAngle());
+            dices_defender_3.rotate(random.computeAngle());
+
+            dices_speed = 500.0f;
 
             for (int i = 0; i < dices_attacker.size(); i++) {
                 if (i == 0) dices_attacker_1.setTextureRect(atlas.getTextureRect(get_dice_texture_name_by_value(dices_attacker[i], true)));
@@ -90,14 +103,22 @@ namespace fisk {
             dices_attacker_2.move(dices_attacker_mov * dices_speed * time.asSeconds());
             dices_attacker_3.move(dices_attacker_mov * dices_speed * time.asSeconds());
 
+            dices_attacker_1.rotate(5 * time.asSeconds());
+            dices_attacker_2.rotate(5 * time.asSeconds());
+            dices_attacker_3.rotate(5 * time.asSeconds());
+            
+
             dices_defender_1.move(dices_defender_mov * dices_speed * time.asSeconds());
             dices_defender_2.move(dices_defender_mov * dices_speed * time.asSeconds());
             dices_defender_3.move(dices_defender_mov * dices_speed * time.asSeconds());
 
+            dices_defender_1.rotate(-5 * time.asSeconds());
+            dices_defender_2.rotate(-5 * time.asSeconds());
+            dices_defender_3.rotate(-5 * time.asSeconds());
+
             if (dices_speed <= 50) {
                 gf::sleep(gf::Time(std::chrono::milliseconds(2000)));
                 launched = false;
-                dices_speed = 500.0f;
             }
         }
     }
