@@ -286,7 +286,17 @@ namespace fisk {
         Archive& operator|(Archive& ar, ClientGameEndReinforce& data) {
             return ar;
         } 
+    struct ServerGameSendDiceRoll {
+        static constexpr gf::Id type = "ServerGameSendDiceoll"_id;
+        std::vector<int> attacker_dices;
+        std::vector<int> defender_dices;
+    };
 
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ServerGameSendDiceRoll& data) {
+            return ar | data.attacker_dices | data.defender_dices;
+        }
+    
 }   
 
 #endif /* FISK_NETWORK_PROTOCOL_H */

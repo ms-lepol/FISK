@@ -114,7 +114,13 @@ namespace fisk {
                 for(auto i = 0; i < defender.getNb_units() && i <= 3; ++i ){ // Maximum amount of dices for the defender
                     defender_dices.push_back(d6.roll(m_random));
                 }
-                // 
+                // Sending dices result to the client for rendering
+                ServerGameSendDiceRoll dice_roll;
+                dice_roll.attacker_dices = attacker_dices;
+                dice_roll.defender_dices = defender_dices;
+                broadcast(dice_roll);
+                //
+
                 gf::Log::debug("Attacking\n");
                 model.attack(data.attacking_land_id, data.defending_land_id, attacker_dices, defender_dices);
                 gf::Log::debug("(AFTER) Defence : %lu %u; Attack : %lu, %u\n", defender.getOwner(), defender.getNb_units(), attacker.getOwner(), attacker.getNb_units());

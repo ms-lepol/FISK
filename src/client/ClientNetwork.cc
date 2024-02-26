@@ -134,6 +134,17 @@ namespace fisk {
             }
             break;
         }
+        case ServerGameSendDiceRoll::type: {
+            gf::Log::info("(CLIENT) Dice Roll.\n");
+            auto data = packeta.as<ServerGameSendDiceRoll>();
+            for (auto dice : data.attacker_dices) {
+                gf::Log::info("(CLIENT)\t Attacker - %d\n", dice);
+            }
+            for (auto dice : data.defender_dices) {
+                gf::Log::info("(CLIENT)\t Defender - %d\n", dice);
+            }
+            break;
+        }
 
         default:
           gf::Log::error("(CLIENT) Unknown packet type: %lu\n", packeta.getType());
