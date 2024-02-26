@@ -143,6 +143,8 @@ namespace fisk {
             for (auto dice : data.defender_dices) {
                 gf::Log::info("(CLIENT)\t Defender - %d\n", dice);
             }
+            m_game.mainScene.m_dices.setDices(data.attacker_dices, data.defender_dices);
+            m_game.mainScene.m_dices.launchDices();
             break;
         }
 

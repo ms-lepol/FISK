@@ -1,0 +1,29 @@
+<TextureAtlas imagePath="dices.png">
+
+    <SubTexture name="white_dice_1" x="0" y="0" width="16" height="16"/>
+    <SubTexture name="white_dice_2" x="16" y="0" width="16" height="16"/>
+    <SubTexture name="white_dice_3" x="32" y="0" width="16" height="16"/>
+    <SubTexture name="white_dice_4" x="48" y="0" width="16" height="16"/>
+    <SubTexture name="white_dice_5" x="64" y="0" width="16" height="16"/>
+    <SubTexture name="white_dice_6" x="80" y="0" width="16" height="16"/>
+
+    <SubTexture name="black_dice_1" x="0" y="16" width="16" height="16"/>
+    <SubTexture name="black_dice_2" x="16" y="16" width="16" height="16"/>
+    <SubTexture name="black_dice_3" x="32" y="16" width="16" height="16"/>
+    <SubTexture name="black_dice_4" x="48" y="16" width="16" height="16"/>
+    <SubTexture name="black_dice_5" x="64" y="16" width="16" height="16"/>
+    <SubTexture name="black_dice_6" x="80" y="16" width="16" height="16"/>
+
+    <SubTexture name="red_dice_1" x="0" y="32" width="16" height="16"/>
+    <SubTexture name="red_dice_2" x="16" y="32" width="16" height="16"/>
+    <SubTexture name="red_dice_3" x="32" y="32" width="16" height="16"/>
+    <SubTexture name="red_dice_4" x="48" y="32" width="16" height="16"/>
+    <SubTexture name="red_dice_5" x="64" y="32" width="16" height="16"/>
+    <SubTexture name="red_dice_6" x="80" y="32" width="16" height="16"/>
+
+    
+
+    
+    <!-- ... -->
+  </TextureAtlas>
+  

@@ -8,6 +8,7 @@
 #include <gf/Views.h>
 #include <gf/TextureAtlas.h>
 
+#include "DicesEntity.h"
 #include "MapEntity.h"
 #include "TurnInterface.h"
 #include "PhaseIndicator.h"
@@ -49,13 +50,16 @@ private:
   PlayerColor m_playerColor;
    gf::RectangleShape background;
   gf::TextureAtlas m_hudAtlas;
+  gf::TextureAtlas m_DiceAtlas;
 
   // entities
   public:
   fisk::MapEntity m_map;
+  fisk::DicesEntity m_dices;
   private:
   fisk::TurnInterface m_turnInterface;
   fisk::PhaseIndicator m_phaseIndicator;
+  
   
 
   // widgets

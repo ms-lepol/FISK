@@ -45,9 +45,11 @@ namespace fisk {
   , m_map(MapEntity(game,1))
   
   , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
+  , m_DiceAtlas(gf::TextureAtlas("../data/sprites/dices_atlas.xml",game.resources))
   , m_turnInterface(TurnInterface(0,game.resources,m_hudAtlas))
   , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game,m_hudAtlas))
   , m_hudButtons(HudButtons(game.resources,m_hudAtlas,game))
+  , m_dices(game.resources, m_DiceAtlas, game)
   , m_unitSelector(game)
   {
    
@@ -78,6 +80,7 @@ namespace fisk {
 
     //World entities
     addWorldEntity(m_map);
+    addWorldEntity(m_dices);
     
 
     //HUD entities
