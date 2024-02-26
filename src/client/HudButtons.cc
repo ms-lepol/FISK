@@ -79,9 +79,19 @@ namespace fisk {
             auto& l_model = m_game.clientNetwork.getGameModel();
             if (l_model.get_current_phase() == TurnPhase::Attack 
                 && l_model.get_current_player() == m_game.clientNetwork.getClientId()){
+                widg_endPhase.setString("End Attack");
                 widg_endPhase.setCallback([this] {
                     gf::Log::debug("Ending attack phase...\n");
                     ClientGameEndAttack end;
+                    m_game.clientNetwork.send(end);
+                });
+                widg_container.addWidget(widg_endPhase);
+           } else if (l_model.get_current_phase() == TurnPhase::Reinforce 
+                && l_model.get_current_player() == m_game.clientNetwork.getClientId()){
+                 widg_endPhase.setString("End Reinforce");
+                 widg_endPhase.setCallback([this] {
+                    gf::Log::debug("Ending reinforce phase...\n");
+                    ClientGameEndReinforce end;
                     m_game.clientNetwork.send(end);
                 });
                 widg_container.addWidget(widg_endPhase);

@@ -260,7 +260,7 @@ namespace fisk {
     struct ClientGameEndAttack {
         static constexpr gf::Id type = "ClientGameEndAttack"_id;
     };
-
+   
     template<typename Archive>
         Archive& operator|(Archive& ar, ClientGameEndAttack& data) {
             return ar;
@@ -277,7 +277,16 @@ namespace fisk {
         Archive& operator|(Archive& ar, ClientGameSendReinforce& data) {
             return ar | data.from | data.target | data.nb_troops;
         } 
+    
+    struct ClientGameEndReinforce {
+        static constexpr gf::Id type = "ClientGameEndReinforce"_id;
+    };
 
-}
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ClientGameEndReinforce& data) {
+            return ar;
+        } 
+
+}   
 
 #endif /* FISK_NETWORK_PROTOCOL_H */

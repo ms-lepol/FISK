@@ -137,6 +137,10 @@ namespace fisk {
                 model.next_phase();
                 break;
             }
+            case ClientGameEndReinforce::type: {
+                model.next_phase();
+                break;
+            }
             default:
                 gf::Log::warning("Unknown Packet type : %lu\n", packet.getType());
                 break;
