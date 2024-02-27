@@ -112,9 +112,9 @@ namespace fisk {
             dices_defender_2.move(dices_defender_mov * dices_speed * time.asSeconds());
             dices_defender_3.move(dices_defender_mov * dices_speed * time.asSeconds());
 
-            dices_defender_1.rotate(-5 * time.asSeconds());
-            dices_defender_2.rotate(-5 * time.asSeconds());
-            dices_defender_3.rotate(-5 * time.asSeconds());
+            dices_defender_1.rotate(- 5 * time.asSeconds());
+            dices_defender_2.rotate(- 5 * time.asSeconds());
+            dices_defender_3.rotate(- 5 * time.asSeconds());
 
             if (dices_speed <= 50) {
                 gf::sleep(gf::Time(std::chrono::milliseconds(2000)));

@@ -31,7 +31,7 @@
 #include <gf/Anchor.h>
 #include <gf/RenderStates.h>
 #include <gf/RenderTarget.h>
-
+#include <gf/AnimatedSprite.h>
 
 #include "../common/FiskColors.h"
 
@@ -54,6 +54,7 @@ namespace fisk {
 
 
             gf::Texture& m_texture;
+            gf::AnimatedSprite expl_sprite;
             
         public:
 
