@@ -31,6 +31,7 @@
 #include <gf/Anchor.h>
 #include <gf/RenderStates.h>
 #include <gf/RenderTarget.h>
+#include <gf/Animation.h>
 #include <gf/AnimatedSprite.h>
 
 #include "../common/FiskColors.h"
@@ -49,12 +50,15 @@ namespace fisk {
             std::string name;
             gf::Vector2i position;
             gf::Vector2i positionText;
+            PlayerId prev_owner;
 
             GameHub& game_hub;
 
 
             gf::Texture& m_texture;
-            gf::AnimatedSprite expl_sprite;
+            gf::Animation land_explosion;
+            bool changed_owner;
+            
             
         public:
 
@@ -67,10 +71,14 @@ namespace fisk {
             gf::Color4f getColor();
             std::string getName();
 
+            bool have_owner_changed();
+
+            
+            void update(gf::Time time);
             void render(gf::RenderTarget& target, gf::RenderStates states);
             void renderSelected(gf::RenderTarget& target, gf::RenderStates states);
             void renderHinted(gf::RenderTarget& target, gf::RenderStates states);
-
+            void renderAnimation(gf::RenderTarget& target, gf::RenderStates states);
         };
 }
 #endif // FISK_LAND_ENTITY_H

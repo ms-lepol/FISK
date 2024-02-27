@@ -34,6 +34,7 @@ namespace fisk  {
             gf::WidgetContainer widg_container;
             
             MapEntity(GameHub& gm , unsigned level_id);
+            void update(gf::Time time);
             void render(gf::RenderTarget& target, const gf::RenderStates& states);
 
     };

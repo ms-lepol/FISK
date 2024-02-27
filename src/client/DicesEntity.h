@@ -1,5 +1,6 @@
 
 #include <gf/Sprite.h>
+#include <gf/VectorOps.h>
 #ifndef FISK_DICE_ENTITY_H
 #define FISK_DICE_ENTITY_H value
 
@@ -39,6 +40,7 @@ namespace fisk {
             gf::Sprite dices_defender_3;
 
             float dices_speed = 500.0f;
+            float dices_angle = 5.0f;
            
             bool launched = false;
 
@@ -48,6 +50,7 @@ namespace fisk {
             void initTextures();
             void setDices(std::vector<int> attacker, std::vector<int> defender);
             void launchDices();
+            void endAnimation();
 
             DicesEntity(gf::ResourceManager& rm, gf::TextureAtlas& atlas, GameHub& game);
 
