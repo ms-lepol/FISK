@@ -23,10 +23,10 @@ namespace fisk {
         m_texture(game_hub.resources.getTexture(sprite_path)),
         position(position),
         positionText(positionText),
-        spr_widg(gf::SpriteWidget())
+        spr_widg(gf::SpriteWidget()),
+        changed_owner(false)
         {
 
-        
         //Logic
        auto& model = game_hub.clientNetwork.getGameModel();
        prev_owner = gf::InvalidId;
