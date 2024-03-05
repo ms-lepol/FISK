@@ -1,8 +1,11 @@
 #include "LandEntity.h" 
 #include "GameHub.h"
 #include <algorithm>
+#include <gf/Anchor.h>
+#include <gf/AnimatedSprite.h>
 #include <gf/Id.h>
 #include <gf/Log.h>
+#include <gf/Time.h>
 #include <sys/socket.h>
 #include <mutex>
 
@@ -25,8 +28,12 @@ namespace fisk {
 
         
         //Logic
-       
+       auto& model = game_hub.clientNetwork.getGameModel();
+       prev_owner = gf::InvalidId;
         //Rendering
+        land_explosion.addTileset(game_hub.resources.getTexture("sprites/land_explosion.png"), {3,4}, gf::seconds(2.0f/5.0f), 12);
+        land_explosion.setLoop(false);
+        
         spr_widg.setDefaultSprite(m_texture, gf::RectF::fromMinMax({0,0}, {1,1}));
         spr_widg.setPosition(position);
         spr_widg.setCallback([this] {
@@ -169,6 +176,17 @@ namespace fisk {
         return name;
     }
 
+    void LandEntity::update(gf::Time time) {
+        std::lock_guard guard(game_hub.clientNetwork.m_mutex);
+        auto& model = game_hub.clientNetwork.getGameModel();
+        PlayerId owner = model.get_land_by_name(name).getOwner();
+        if(owner != prev_owner) {
+            changed_owner = true;
+            prev_owner = owner;
+            gf::Log::info("LandEntity %s : owner changed\n", name.c_str());
+        }
+    }
+
     void LandEntity::render(gf::RenderTarget& target,gf::RenderStates states) {
         
         if (getColor()!=gf::Color::Transparent){
@@ -188,6 +206,9 @@ namespace fisk {
         txt.setAnchor(gf::Anchor::Center);
         txt.setPosition(position+positionText+gf::Vector2i({0,1}));
         target.draw(txt,states);
+        if (changed_owner){
+            renderAnimation(target, states);
+        }
     }
 
 
@@ -229,6 +250,9 @@ namespace fisk {
         txt.setAnchor(gf::Anchor::Center);
         txt.setPosition(position+positionText+gf::Vector2i({0,1}));
         target.draw(txt,states);
+        if (changed_owner){
+            renderAnimation(target, states);
+        }
     }
 
     void LandEntity::renderHinted(gf::RenderTarget& target, gf::RenderStates states){
@@ -266,5 +290,23 @@ namespace fisk {
         txt.setAnchor(gf::Anchor::Center);
         txt.setPosition(position+positionText+gf::Vector2i({0,1}));
         target.draw(txt,states);
+        if (changed_owner){
+            renderAnimation(target, states);
+        }
+    }
+
+    void LandEntity::renderAnimation(gf::RenderTarget& target, gf::RenderStates states){
+        gf::AnimatedSprite land_explosion_spr;
+        land_explosion_spr.setColor(gf::Color::Red);
+        land_explosion_spr.setAnchor(gf::Anchor::Center);
+        land_explosion_spr.setPosition(position+positionText-gf::Vector2i({32,32}));
+        land_explosion_spr.setAnimation(land_explosion);
+        land_explosion.update(gf::seconds(1.0f/12.0f));
+        gf::Log::info("LandEntity %s : rendering animation\n", name.c_str());
+        
+        target.draw(land_explosion_spr, states);
+        if (land_explosion.isFinished()){
+            changed_owner = false;
+        }
     }
 }

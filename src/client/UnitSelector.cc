@@ -76,6 +76,7 @@ namespace fisk {
         switch (model.get_current_phase()) {
             case TurnPhase::Fortify:
                 setMaxUnit(model.get_player(game_hub.clientNetwork.getClientId()).getNb_units()+1);
+                s_validate.setString("Fortify");
                 break;
             case TurnPhase::Attack:
                 if (map.old_selection != nullptr) {
@@ -84,11 +85,13 @@ namespace fisk {
                     if(units <= 4) n = units;
                     if(n <= 1) n = 1;
                     setMaxUnit(n);
+                    s_validate.setString("Attack");
                 }
                 break;
             case TurnPhase::Reinforce:        
                 if (map.old_selection != nullptr && map.curr_selection != nullptr) {
                     setMaxUnit(model.get_land_by_name(map.old_selection->getName()).getNb_units());
+                    s_validate.setString("Reinforce");
                 }
             break;
             case TurnPhase::End:

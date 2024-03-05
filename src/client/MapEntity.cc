@@ -119,7 +119,6 @@ namespace fisk {
 
         }
 
-
         for (auto& [key,value] : lands) {
             value->render(target,states);
             
@@ -130,6 +129,12 @@ namespace fisk {
         }
         for (auto key : keysHinted){
             lands[key]->renderHinted(target,states);
+        }
+    }
+
+    void MapEntity::update(gf::Time time) {
+        for (auto& [key,value] : lands) {
+            value->update(time);
         }
     }
 }
