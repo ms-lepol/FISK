@@ -177,13 +177,15 @@ namespace fisk {
     }
 
     void LandEntity::update(gf::Time time) {
-        std::lock_guard guard(game_hub.clientNetwork.m_mutex);
-        auto& model = game_hub.clientNetwork.getGameModel();
-        PlayerId owner = model.get_land_by_name(name).getOwner();
-        if(owner != prev_owner) {
-            changed_owner = true;
-            prev_owner = owner;
-            gf::Log::info("LandEntity %s : owner changed\n", name.c_str());
+        if(game_hub.clientNetwork.hasGameModel()) {
+            std::lock_guard guard(game_hub.clientNetwork.m_mutex);
+            auto& model = game_hub.clientNetwork.getGameModel();
+            PlayerId owner = model.get_land_by_name(name).getOwner();
+            if(owner != prev_owner) {
+                changed_owner = true;
+                prev_owner = owner;
+                gf::Log::info("LandEntity %s : owner changed\n", name.c_str());
+            }
         }
     }
 
