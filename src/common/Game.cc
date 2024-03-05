@@ -163,6 +163,11 @@ namespace fisk {
                 if(!can_reinforce()) next_phase();
                 break;
             case TurnPhase::Reinforce:
+                if(is_finished()){
+                    gf::Log::info("(GAME) Game is over ! The player %lu escaped the fisk :3\n", current_player);
+                    int x = 1/0;
+                    break;
+                }
                 current_phase = TurnPhase::End;
                 next_phase();
                 break;
@@ -191,7 +196,7 @@ namespace fisk {
     }
 
     void Game::give_troops(){
-        int nb_troops = 0;
+        int nb_troops = 80;
 
         for (auto land : lands){
             if(land.getOwner() == current_player){
