@@ -1,6 +1,7 @@
 #include "UnitSelector.h"
 #include <gf/Alignment.h>
 #include <gf/Anchor.h>
+#include <gf/Log.h>
 #include <gf/Shapes.h>
 #include <string>
 
@@ -134,7 +135,7 @@ namespace fisk {
                     ClientGameSendAttack attack;
                     attack.attacking_land_id = model.get_land_id_by_name(map.old_selection->getName());
                     attack.defending_land_id = model.get_land_id_by_name(map.curr_selection->getName());
-                    attack.attacking_nb_dice = selected_unit;                        
+                    attack.attacking_nb_dice = selected_unit;  
                     //
                     game_hub.clientNetwork.send(attack);
                     //

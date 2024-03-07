@@ -51,7 +51,7 @@ target_link_libraries(fisk_client
 
 target_compile_options(fisk_client
   PRIVATE
-  "-g" "-fsanitize=address,undefined"
+  "-g" #"-fsanitize=address,undefined"
 )
 
 target_compile_features(fisk_client
@@ -62,7 +62,7 @@ target_compile_features(fisk_client
 set_target_properties(fisk_client
   PROPERTIES
     CXX_EXTENSIONS OFF
-    LINK_FLAGS "-fsanitize=address,undefined"
+    #LINK_FLAGS "-fsanitize=address,undefined"
 )
 
 
@@ -90,7 +90,7 @@ target_link_libraries(fisk_server
 
 target_compile_options(fisk_server
   PRIVATE
-  "-g" "-fsanitize=address,undefined"
+  "-g" #"-fsanitize=address,undefined"
 )
 
 target_compile_features(fisk_server
@@ -101,5 +101,5 @@ target_compile_features(fisk_server
 set_target_properties(fisk_server
   PROPERTIES
     CXX_EXTENSIONS OFF
-    LINK_FLAGS "-fsanitize=address,undefined"
+    #LINK_FLAGS "-fsanitize=address,undefined"
 )

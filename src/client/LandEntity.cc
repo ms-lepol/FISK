@@ -304,7 +304,6 @@ namespace fisk {
         land_explosion_spr.setPosition(position+positionText-gf::Vector2i({32,32}));
         land_explosion_spr.setAnimation(land_explosion);
         land_explosion.update(gf::seconds(1.0f/12.0f));
-        gf::Log::info("LandEntity %s : rendering animation\n", name.c_str());
         
         target.draw(land_explosion_spr, states);
         if (land_explosion.isFinished()){
