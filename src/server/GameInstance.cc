@@ -108,12 +108,11 @@ namespace fisk {
                 gf::Dice d6(6);
                 //
                 for(auto i = 0; i<data.attacking_nb_dice; ++i){
-                    gf::Log::debug("i : %i, def : %i\n", i, defender.getNb_units());
                     attacker_dices.push_back(d6.roll(m_random));
+                    if(i < defender.getNb_units()) defender_dices.push_back(d6.roll(m_random));
                 }
-                for(auto i = 0; i < defender.getNb_units() && i < 3; ++i ){ // Maximum amount of dices for the defender
-                    defender_dices.push_back(d6.roll(m_random));
-                }
+                sort(attacker_dices.begin(), attacker_dices.end(), std::greater<int>());
+                sort(defender_dices.begin(), defender_dices.end(), std::greater<int>());
                 // Sending dices result to the client for rendering
                 ServerGameSendDiceRoll dice_roll;
                 dice_roll.attacker_dices = attacker_dices;
