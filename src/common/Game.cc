@@ -3,6 +3,7 @@
 #include "Continent.h"
 #include "Enums.h"
 #include "Land.h"
+#include "NetworkProtocol.h"
 #include "Player.h"
 #include <algorithm>
 #include <csignal>
@@ -164,8 +165,8 @@ namespace fisk {
                 break;
             case TurnPhase::Reinforce:
                 if(is_finished()){
-                    gf::Log::info("(GAME) Game is over ! The player %lu escaped the fisk :3\n", current_player);
-                    int x = 1/0;
+                    gf::Log::info("(GAME) Game is over ! The player %lu escaped the fisk :3\n", current_player);      
+                    game_finished = true;        
                     break;
                 }
                 current_phase = TurnPhase::End;

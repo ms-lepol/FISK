@@ -231,6 +231,27 @@ namespace fisk {
         Archive& operator|(Archive& ar, ServerGameSendTurnStart& data) {
             return ar | data.card | data.nb_troops;
         }
+
+    struct ServerGameSendDiceRoll {
+        static constexpr gf::Id type = "ServerGameSendDiceoll"_id;
+        std::vector<int> attacker_dices;
+        std::vector<int> defender_dices;
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ServerGameSendDiceRoll& data) {
+            return ar | data.attacker_dices | data.defender_dices;
+        }
+    
+    struct ServerGameSendEndOfGame {
+        static constexpr gf::Id type = "ServerGameSendEndOfGame"_id;
+        PlayerId winner;
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ServerGameSendEndOfGame& data) {
+            return ar | data.winner;
+        }
         
     // Client game
 
@@ -298,16 +319,6 @@ namespace fisk {
         Archive& operator|(Archive& ar, ClientGameEndReinforce& data) {
             return ar;
         } 
-    struct ServerGameSendDiceRoll {
-        static constexpr gf::Id type = "ServerGameSendDiceoll"_id;
-        std::vector<int> attacker_dices;
-        std::vector<int> defender_dices;
-    };
-
-    template<typename Archive>
-        Archive& operator|(Archive& ar, ServerGameSendDiceRoll& data) {
-            return ar | data.attacker_dices | data.defender_dices;
-        }
     
 }   
 
