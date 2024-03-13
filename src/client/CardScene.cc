@@ -18,6 +18,8 @@
 #include <gf/Vector.h>
 #include <gf/MouseValues.h>
 #include <iostream>
+#include <sys/socket.h>
+#include <vector>
 #include "../common/FiskColors.h"
 namespace fisk {
 
@@ -112,8 +114,86 @@ namespace fisk {
       c_hudButtons.pointTo(mousePos);
       c_hudButtons.triggerAction();
 
-      //TODO: Add card play action
+      gf::Log::debug("(CARD SCENE) Interacting with cards\n");
+
+      auto& mdl = m_game.clientNetwork.getGameModel();
+      auto& curr_plyr = mdl.get_player(mdl.get_current_player());
+
+      if(mdl.get_current_phase() != TurnPhase::Fortify || mdl.get_current_player() == m_game.clientNetwork.getClientId()) {
+        c_interact.reset();
+        return;
+      }
       
+      auto hand = mdl.get_player(mdl.get_current_player()).getHand();
+      ClientGameSendCardsToPlay cards;
+      bool can_send = false;
+      if(hand.size() >= 3){ 
+        std::vector<CardId> infantery;
+        std::vector<CardId> gunner;
+        std::vector<CardId> cavalry;
+        std::vector<CardId> joker;
+
+        for(CardId card : hand){
+          switch(mdl.get_card(hand[card]).getType()){
+            case Type::Infantery:
+              infantery.push_back(card);
+              break;
+            case Type::Cavalry:
+              cavalry.push_back(card);
+              break;
+            case Type::Gunner:
+              gunner.push_back(card);
+            case Type::Joker:
+              joker.push_back(card);
+              break;
+          }
+        }
+
+        bool three_types_plus_joker = infantery.size() >= 1 && cavalry.size() >= 1 && gunner.size() >= 1
+                                      ||infantery.size() >= 1 && cavalry.size() >= 1 && joker.size() >= 1
+                                      ||infantery.size() >= 1 && joker.size() >= 1 && gunner.size() >= 1
+                                      ||joker.size() >= 1 && cavalry.size() >= 1 && gunner.size() >= 1;
+
+        // Case of three different card types (and cases with one joker)
+        if(three_types_plus_joker){
+          can_send = true;
+          if(!infantery.empty()) cards.card_a = infantery[0];
+          else cards.card_a = joker[0];
+          if(!cavalry.empty()) cards.card_b = cavalry[0];
+          else cards.card_b = joker[0];
+          if(!gunner.empty()) cards.card_c = gunner[0];
+          else cards.card_c = joker[0]; 
+        }
+        // TODO Still needs cases with 2 jokers
+        else{
+          if(infantery.size() >= 3) { // 3 infantery
+            cards.card_a = infantery[0];
+            cards.card_b = infantery[1];
+            cards.card_c = infantery[2];
+            can_send = true;
+          } 
+          else if(gunner.size() >= 3) { // 3 gunners
+            cards.card_a = gunner[0];
+            cards.card_b = gunner[1];
+            cards.card_c = gunner[2];
+            can_send = true;
+          }
+          else if(cavalry.size() >= 3) { // 3 cavalry
+            cards.card_a = cavalry[0];
+            cards.card_b = cavalry[1];
+            cards.card_c = cavalry[2];
+            can_send = true;
+          }
+          else if(joker.size() >= 3) { // 3 jokers
+            cards.card_a = joker[0];
+            cards.card_b = joker[1];
+            cards.card_c = joker[2];
+            can_send = true;
+          }
+        }
+      }
+      if(can_send) m_game.clientNetwork.send(cards);
+
       c_interact.reset();
     }
   }

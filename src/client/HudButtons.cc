@@ -2,6 +2,7 @@
 #include "HudButtons.h"
 #include "GameHub.h"
 #include <gf/Log.h>
+#include <mutex>
 
 
 
@@ -9,7 +10,8 @@ namespace fisk {
 
     HudButtons::HudButtons(gf::ResourceManager& rm, gf::TextureAtlas& atlas, GameHub& game) : 
         m_game(game),
-        ressources(rm), 
+        ressources(rm),
+        current_phase(TurnPhase::End),
         atlas(atlas),
         widg_card(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("buttonCard"),atlas.getTextureRect("buttonCard"),atlas.getTextureRect("buttonCard"))),
         widg_quit(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("buttonQuit"),atlas.getTextureRect("buttonQuit"),atlas.getTextureRect("buttonQuit"))),
@@ -72,9 +74,10 @@ namespace fisk {
 
     void HudButtons::update(gf::Time time) {
         //Logic
+        std::lock_guard<std::mutex> guard(m_game.clientNetwork.m_mutex);
           if (m_game.clientNetwork.hasGameModel()){
             auto& l_model = m_game.clientNetwork.getGameModel();
-            if (l_model.get_current_phase() == TurnPhase::Attack 
+            if (l_model.get_current_phase() == TurnPhase::Attack && current_phase != TurnPhase::Attack
                 && l_model.get_current_player() == m_game.clientNetwork.getClientId()){
                 widg_endPhase.setString("End Attack");
                 widg_endPhase.setCallback([this] {
@@ -83,7 +86,8 @@ namespace fisk {
                     m_game.clientNetwork.send(end);
                 });
                 widg_container.addWidget(widg_endPhase);
-           } else if (l_model.get_current_phase() == TurnPhase::Reinforce 
+                current_phase = TurnPhase::Attack;
+           } else if (l_model.get_current_phase() == TurnPhase::Reinforce && current_phase != TurnPhase::Reinforce
                 && l_model.get_current_player() == m_game.clientNetwork.getClientId()){
                  widg_endPhase.setString("End Reinforce");
                  widg_endPhase.setCallback([this] {
@@ -92,8 +96,10 @@ namespace fisk {
                     m_game.clientNetwork.send(end);
                 });
                 widg_container.addWidget(widg_endPhase);
-           } else {
+                current_phase = TurnPhase::Reinforce;
+           } else if (l_model.get_current_phase() == TurnPhase::Fortify && current_phase != TurnPhase::Fortify) {
                 widg_container.removeWidget(&widg_endPhase);
+                current_phase = TurnPhase::Fortify;
            }
             
         }

@@ -22,6 +22,8 @@ namespace fisk {
         private:
             GameHub& m_game;
 
+            TurnPhase current_phase;
+
 
             gf::SpriteWidget widg_quit;
             gf::SpriteWidget widg_card;

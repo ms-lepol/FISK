@@ -277,6 +277,18 @@ namespace fisk {
         Archive& operator|(Archive& ar, ClientGameSendReinforce& data) {
             return ar | data.from | data.target | data.nb_troops;
         } 
+
+    struct ClientGameSendCardsToPlay {
+        static constexpr gf::Id type = "ClientGameSendCardsToPlay"_id;
+        CardId card_a;
+        CardId card_b;
+        CardId card_c;
+    };
+
+    template<typename Archive>
+        Archive& operator|(Archive& ar, ClientGameSendCardsToPlay& data) {
+            return ar | data.card_a | data.card_b | data.card_c;
+        } 
     
     struct ClientGameEndReinforce {
         static constexpr gf::Id type = "ClientGameEndReinforce"_id;

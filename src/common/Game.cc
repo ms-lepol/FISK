@@ -196,7 +196,7 @@ namespace fisk {
     }
 
     void Game::give_troops(){
-        int nb_troops = 80;
+        int nb_troops = 5;
 
         for (auto land : lands){
             if(land.getOwner() == current_player){
@@ -211,6 +211,7 @@ namespace fisk {
                 nb_troops += continent.get_bonus();
             }
         }
+        
         get_player(current_player).setNb_units(nb_troops);
     }
 
@@ -235,8 +236,6 @@ namespace fisk {
         gf::Log::debug("Start attack\n");
         assert(defence.getOwner() != attack.getOwner());
         //
-        sort(attack_dices.begin(), attack_dices.end(), std::greater<int>());
-        sort(defence_dices.begin(), defence_dices.end(), std::greater<int>());
         for(auto i : attack_dices){
             gf::Log::debug("attack dice : %i\n", i);
         }

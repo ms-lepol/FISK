@@ -108,12 +108,11 @@ namespace fisk {
                 gf::Dice d6(6);
                 //
                 for(auto i = 0; i<data.attacking_nb_dice; ++i){
-                    gf::Log::debug("i : %i, def : %i\n", i, defender.getNb_units());
                     attacker_dices.push_back(d6.roll(m_random));
+                    if(i < defender.getNb_units()) defender_dices.push_back(d6.roll(m_random));
                 }
-                for(auto i = 0; i < defender.getNb_units() && i < 3; ++i ){ // Maximum amount of dices for the defender
-                    defender_dices.push_back(d6.roll(m_random));
-                }
+                sort(attacker_dices.begin(), attacker_dices.end(), std::greater<int>());
+                sort(defender_dices.begin(), defender_dices.end(), std::greater<int>());
                 // Sending dices result to the client for rendering
                 ServerGameSendDiceRoll dice_roll;
                 dice_roll.attacker_dices = attacker_dices;
@@ -144,7 +143,21 @@ namespace fisk {
                 break;
             }
             case ClientGameEndReinforce::type: {
+                gf::Log::debug("(SERVER GAME) Received End Reinforce {%" PRIX64 "}\n", player.id);
+                //
                 model.next_phase();
+                break;
+            }
+            case ClientGameSendCardsToPlay::type: {
+                gf::Log::debug("(SERVER GAME) Received Cards to play from player {%" PRIX64 "}\n", player.id);
+                //
+                auto data = packet.as<ClientGameSendCardsToPlay>();
+                //
+                if(model.get_current_phase() == TurnPhase::Fortify 
+                && model.get_current_player() == srv_to_model_id.at(player.id))
+                {
+                    model.get_player(model.get_current_player()).playCard(data.card_a, data.card_b, data.card_c);
+                }
                 break;
             }
             default:
