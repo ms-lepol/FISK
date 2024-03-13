@@ -79,6 +79,13 @@ namespace fisk {
 
     void GameInstance::update(ServerPlayer& player, gf::Packet& packet) {
         if(!ready) return;
+        if(model.game_finished) {
+            gf::Log::debug("(GAME INSTANCE) End of game detected. Winner : %lu\n", model.get_current_player());
+            ServerGameSendEndOfGame end;
+            end.winner = model.get_current_player();
+            broadcast(end);
+            return;
+        }
         TurnPhase curr_phase = model.get_current_phase();
         switch (packet.getType()) {
             case ClientGameSendFortify::type: {

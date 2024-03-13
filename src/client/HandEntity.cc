@@ -32,9 +32,8 @@ namespace fisk {
             PlayerId player = game_hub.clientNetwork.getClientId();
             std::vector<CardId> hand = (player > 0 && player <= gm.get_nb_players()) ? gm.get_player(player).getHand(): std::vector<CardId>();
             cards.clear();
-            for (auto card : hand) {
+            for (CardId card : hand) {
                 cards.push_back(CardEntity(gm.get_card(card), ressources,gm.get_land(gm.get_card(card).getLand()).getName()));
-
             }
             dimensions = {CARD_WIDTH * (int)cards.size(), CARD_HEIGHT};
         }
