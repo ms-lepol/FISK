@@ -57,7 +57,10 @@ namespace fisk {
     }
 
     void Player::drawCard(CardId id){
-        
+        if(hand.size() == 5){
+            gf::Log::debug("Hand full\n");
+            return;
+        }
         gf::Log::debug("drew card %lu\n", id);
         hand.push_back(id);
     }

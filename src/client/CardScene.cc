@@ -119,7 +119,8 @@ namespace fisk {
       auto& mdl = m_game.clientNetwork.getGameModel();
       auto& curr_plyr = mdl.get_player(mdl.get_current_player());
 
-      if(mdl.get_current_phase() != TurnPhase::Fortify || mdl.get_current_player() == m_game.clientNetwork.getClientId()) {
+      if(mdl.get_current_phase() != TurnPhase::Fortify) {
+        gf::Log::debug("(CARD SCENE) Cannot use cards; Either turn phase is not fortify or this is not your turn !\n");
         c_interact.reset();
         return;
       }
@@ -134,7 +135,8 @@ namespace fisk {
         std::vector<CardId> joker;
 
         for(CardId card : hand){
-          switch(mdl.get_card(hand[card]).getType()){
+          gf::Log::debug("(CARD SCENE)\t- %lu\n", mdl.get_card(card).getLand());
+          switch(mdl.get_card(card).getType()){
             case Type::Infantery:
               infantery.push_back(card);
               break;
@@ -148,11 +150,14 @@ namespace fisk {
               break;
           }
         }
+        gf::Log::debug("(CARD SCENE) Hand sorted\n");
+        bool three_types_plus_joker = (infantery.size() >= 1 && cavalry.size() >= 1 && gunner.size() >= 1)
+                                      || (joker.size() == 1) && 
+                                        ((infantery.size() >= 1 && cavalry.size() >= 1)
+                                      || (cavalry.size() >= 1 && gunner.size() >= 1)
+                                      || (infantery.size() >= 1 && gunner.size() >= 1));
 
-        bool three_types_plus_joker = infantery.size() >= 1 && cavalry.size() >= 1 && gunner.size() >= 1
-                                      ||infantery.size() >= 1 && cavalry.size() >= 1 && joker.size() >= 1
-                                      ||infantery.size() >= 1 && joker.size() >= 1 && gunner.size() >= 1
-                                      ||joker.size() >= 1 && cavalry.size() >= 1 && gunner.size() >= 1;
+        bool three_types_plus_two_jokers = joker.size() == 2 && (cavalry.size() >= 1 || gunner.size() >= 1 || infantery.size() >= 1);
 
         // Case of three different card types (and cases with one joker)
         if(three_types_plus_joker){
@@ -164,7 +169,20 @@ namespace fisk {
           if(!gunner.empty()) cards.card_c = gunner[0];
           else cards.card_c = joker[0]; 
         }
-        // TODO Still needs cases with 2 jokers
+        else if(three_types_plus_two_jokers){
+          can_send = true;
+          if(!infantery.empty()) {
+            cards.card_a = infantery[0];
+          }
+          else if(!cavalry.empty()) {
+            cards.card_a = cavalry[0];
+          }
+          else /*(!gunner.empty())*/ {
+            cards.card_a = gunner[0];
+          }
+          cards.card_b = joker[0];
+          cards.card_c = joker[1];
+        }
         else{
           if(infantery.size() >= 3) { // 3 infantery
             cards.card_a = infantery[0];
@@ -184,16 +202,13 @@ namespace fisk {
             cards.card_c = cavalry[2];
             can_send = true;
           }
-          else if(joker.size() >= 3) { // 3 jokers
-            cards.card_a = joker[0];
-            cards.card_b = joker[1];
-            cards.card_c = joker[2];
-            can_send = true;
-          }
         }
       }
-      if(can_send) m_game.clientNetwork.send(cards);
-
+      if(can_send) {
+        gf::Log::debug("(CARD SCENE) Sending cards to play for the server\n");
+        m_game.clientNetwork.send(cards);
+      }
+      else gf::Log::debug("(CARD SCENE) Not sending cards to play for the server\n");
       c_interact.reset();
     }
   }
