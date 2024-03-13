@@ -33,7 +33,7 @@ namespace fisk {
             std::vector<CardId> getHand() const;
 
             void drawCard(CardId id);
-            void playCard();
+            void playCard(CardId a, CardId b, CardId c);
 
             template<typename S>
             void serialisation(S& sa) {

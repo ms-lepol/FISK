@@ -211,6 +211,7 @@ namespace fisk {
                 nb_troops += continent.get_bonus();
             }
         }
+        
         get_player(current_player).setNb_units(nb_troops);
     }
 

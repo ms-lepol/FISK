@@ -143,7 +143,21 @@ namespace fisk {
                 break;
             }
             case ClientGameEndReinforce::type: {
+                gf::Log::debug("(SERVER GAME) Received End Reinforce {%" PRIX64 "}\n", player.id);
+                //
                 model.next_phase();
+                break;
+            }
+            case ClientGameSendCardsToPlay::type: {
+                gf::Log::debug("(SERVER GAME) Received Cards to play from player {%" PRIX64 "}\n", player.id);
+                //
+                auto data = packet.as<ClientGameSendCardsToPlay>();
+                //
+                if(model.get_current_phase() == TurnPhase::Fortify 
+                && model.get_current_player() == srv_to_model_id.at(player.id))
+                {
+                    model.get_player(model.get_current_player()).playCard(data.card_a, data.card_b, data.card_c);
+                }
                 break;
             }
             default:

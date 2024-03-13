@@ -2,7 +2,9 @@
 #include "Constants.h"
 #include "FiskColors.h"
 #include "Game.h"
+#include <algorithm>
 #include <gf/Log.h>
+#include <vector>
 
 namespace fisk {
     Player::Player() {
@@ -49,15 +51,23 @@ namespace fisk {
         }
         return PlayerColor().Neutral;
     }
+
     void Player::setNb_units(int nb_units){
         this->nb_units = nb_units;
     }
+
     void Player::drawCard(CardId id){
         
         gf::Log::debug("drew card %lu\n", id);
         hand.push_back(id);
     }
-    void playCard(){
-        // TODO
+    void Player::playCard(CardId a, CardId b, CardId c){
+        this->nb_units += 15;
+        //
+        for(int i = 0; i < 2; ++i){
+            for(auto curr = hand.begin(); curr < hand.end(); ++curr){
+                if(*curr == a || *curr == b || *curr == c) hand.erase(curr);
+            }
+        }
     }
 };
