@@ -23,8 +23,7 @@ namespace fisk {
     CameraActions();
     
     gf::Action close;
-    gf::Action zoomIn;
-    gf::Action zoomOut;
+    gf::Action win;
   };
 
 

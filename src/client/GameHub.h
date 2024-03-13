@@ -4,6 +4,7 @@
 #include <gf/GameManager.h>
 
 #include "CardScene.h"
+#include "EndScene.h"
 #include "MainScene.h"
 #include "TitleScene.h"
 #include "LobbyScene.h"
@@ -18,6 +19,7 @@ namespace fisk {
     CardScene cardScene;
     LobbyScene lobbyScene;
     TitleScene titleScene;
+    EndScene endScene;
 
     ClientNetwork clientNetwork;    
   };

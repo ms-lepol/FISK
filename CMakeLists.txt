@@ -39,6 +39,7 @@ add_executable(fisk_client
   src/client/HandEntity.cc
   src/client/UnitSelector.cc
   src/client/DicesEntity.cc
+  src/client/EndScene.cc
   # and the rest of your sources
 )
 

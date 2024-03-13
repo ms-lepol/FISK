@@ -16,6 +16,8 @@
 #include <mutex>
 #include "../common/FiskColors.h"
 
+#define IS_DEV 1
+
 namespace fisk {
 
     namespace {
@@ -30,8 +32,7 @@ namespace fisk {
 
     CameraActions::CameraActions()
         : close("Close")
-          , zoomIn("ZoomIn")
-          , zoomOut("ZoomOut")
+        , win("win")
     {
     }
 
@@ -100,15 +101,12 @@ namespace fisk {
     m_cameraActions.close.addKeycodeKeyControl(gf::Keycode::Escape);
     m_cameraActions.close.isActive();
 
-    m_cameraActions.zoomIn.addScancodeKeyControl(gf::Scancode::Up);
-    m_cameraActions.zoomIn.setContinuous();
-    m_cameraActions.zoomOut.addScancodeKeyControl(gf::Scancode::Down);
-    m_cameraActions.zoomOut.setContinuous();
-
+    m_cameraActions.win.addKeycodeKeyControl(gf::Keycode::W);
+    m_cameraActions.win.isActive();
+   
     addAction(m_cameraActions.close);
-    addAction(m_cameraActions.zoomIn);
-    addAction(m_cameraActions.zoomOut);
-
+    if (IS_DEV) addAction(m_cameraActions.win);
+    
 
     // Interact Action
     m_interact.addMouseButtonControl(gf::MouseButton::Left);
@@ -127,21 +125,26 @@ namespace fisk {
       m_game.getWindow().close();
     }
 
-        // Handle interact
-        if (m_interact.isActive()) {
-
-            m_hudButtons.widg_container.pointTo(mousePosScreen);
-            m_hudButtons.widg_container.triggerAction();
-
-            m_map.widg_container.pointTo(mousePos);
-            m_map.widg_container.triggerAction();
-
-            m_unitSelector.s_container.pointTo(mousePosScreen);
-            m_unitSelector.s_container.triggerAction();
-
-            m_interact.reset();
-        }
+    if (m_cameraActions.win.isActive()) {
+      m_game.popScene();
+      m_game.pushScene(m_game.endScene);
     }
+
+    // Handle interact
+    if (m_interact.isActive()) {
+
+        m_hudButtons.widg_container.pointTo(mousePosScreen);
+        m_hudButtons.widg_container.triggerAction();
+
+        m_map.widg_container.pointTo(mousePos);
+        m_map.widg_container.triggerAction();
+
+        m_unitSelector.s_container.pointTo(mousePosScreen);
+        m_unitSelector.s_container.triggerAction();
+
+        m_interact.reset();
+    }
+  }
 
   void MainScene::doUpdate(gf::Time time) {
     gf::Event event;

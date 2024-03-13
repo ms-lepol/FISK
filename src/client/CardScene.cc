@@ -17,14 +17,13 @@
 #include <gf/TextureAtlas.h>
 #include <gf/Vector.h>
 #include <gf/MouseValues.h>
-#include <iostream>
 #include <sys/socket.h>
 #include <vector>
 #include "../common/FiskColors.h"
 namespace fisk {
 
   namespace {
-    
+    constexpr gf::Vector2f ViewSize = {1280.0f, 720.0f};
     constexpr int ViewRadius = 7;
 
     static constexpr float ZoomInFactor = 0.9f;
@@ -37,7 +36,7 @@ namespace fisk {
 
 
   CardScene::CardScene(GameHub& game)
-  : gf::Scene(ViewSizeCard)
+  : gf::Scene(game.getRenderer().getSize())
   , m_game(game)
   , c_interact("Interact")
   , c_close("Close")
@@ -48,10 +47,11 @@ namespace fisk {
   {
     //Rendering configuration
     c_hudAtlas.setTexture(game.resources.getTexture("sprites/fisk_ui.png"));
-   
-   
     
     setClearColor(HUDColor().backgroundColor);
+
+     setWorldViewCenter({ViewSize.x / 2, ViewSize.y / 2});   
+    setWorldViewSize(ViewSize); 
 
     background.setSize(ViewSizeCard);
     background.setAnchor(gf::Anchor::Center);

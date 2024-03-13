@@ -300,7 +300,7 @@ namespace fisk {
         
         land_explosion_spr.setColor(gf::Color::Red);
         land_explosion_spr.setAnchor(gf::Anchor::Center);
-        land_explosion_spr.setPosition(position+positionText-gf::Vector2i({32,32}));
+        land_explosion_spr.setPosition(position+positionText);
         land_explosion_spr.setAnimation(land_explosion);
         land_explosion.update(gf::seconds(1.0f/12.0f));
         
