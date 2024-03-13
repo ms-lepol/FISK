@@ -30,6 +30,7 @@ namespace fisk {
             void doUpdate(gf::Time time) override;
             void doRender(gf::RenderTarget& target, const gf::RenderStates& states) override;
             void doProcessEvent(gf::Event& event) override;
+            void declareWinner(std::string winner);
 
         private:
             GameHub& m_game;

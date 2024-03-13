@@ -44,7 +44,7 @@ namespace fisk {
 
     e_endText.setPosition(m_game.getWindow().getSize()/2);
     //HUD entities
-
+    e_hudButtons.addWidget(e_replayButton);
 
     e_close.addKeycodeKeyControl(gf::Keycode::Escape);
     e_close.addKeycodeKeyControl(gf::Keycode::Q);
@@ -54,6 +54,10 @@ namespace fisk {
 
     addAction(e_interact);
     addAction(e_close);
+
+    e_replayButton.setCallback([this] {
+      gf::Log::info("ReplayButton clicked\n");
+    });
 
 
     // Construct the hud buttons
@@ -110,7 +114,7 @@ namespace fisk {
     // Draw the background
     
     gf::Vector2f screenSize = m_game.getWindow().getSize();
-     setWorldViewCenter(screenSize/2);
+    setWorldViewCenter(screenSize/2);
     
     background.setSize(screenSize);
     background.setPosition({0,0});
@@ -120,13 +124,17 @@ namespace fisk {
     target.draw(background, states);
     e_endText.setPosition(m_game.getWindow().getSize()/2);
     e_endText.draw(target, states);
-    e_replayButton.draw(target, states);
+    
     e_replayButton.setPosition(screenSize/2 + gf::Vector2f(0, 100));
-
+    e_hudButtons.render(target, states);
 
     renderWorldEntities(target, states);
    
     
+  }
+
+  void EndScene::declareWinner(std::string winner) {
+    e_endText.setString(winner + " has won the game");
   }
 
 }
