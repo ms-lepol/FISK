@@ -2,7 +2,6 @@
 #include "HudButtons.h"
 #include "GameHub.h"
 #include <gf/Log.h>
-#include <iostream>
 
 
 
@@ -13,8 +12,6 @@ namespace fisk {
         ressources(rm), 
         atlas(atlas),
         widg_card(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("buttonCard"),atlas.getTextureRect("buttonCard"),atlas.getTextureRect("buttonCard"))),
-        widg_help(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("buttonHelp"),atlas.getTextureRect("buttonHelp"),atlas.getTextureRect("buttonHelp"))),
-        widg_settings(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("ButtonSetting"),atlas.getTextureRect("ButtonSetting"),atlas.getTextureRect("ButtonSetting"))),
         widg_quit(gf::SpriteWidget(atlas.getTexture(),atlas.getTextureRect("buttonQuit"),atlas.getTextureRect("buttonQuit"),atlas.getTextureRect("buttonQuit"))),
         widg_endPhase("End Attack",rm.getFont("font/PixelSplitter-Bold.ttf"),20)
     {
@@ -24,9 +21,13 @@ namespace fisk {
 
 
         widg_card.setPosition({0,0});
-        widg_help.setPosition({10,10});
-        widg_settings.setPosition({74,10});
-        widg_quit.setPosition({138,10});
+        widg_quit.setPosition({10,10});
+
+        widg_quit.setCallback([this] {
+            gf::Log::info("QuitButton clicked\n");
+            m_game.clientNetwork.disconnect();
+            m_game.getWindow().close();
+        });
     
 
         widg_endPhase.setCallback([this] {
@@ -43,8 +44,6 @@ namespace fisk {
                 });
 
         widg_container.addWidget(widg_card);
-        widg_container.addWidget(widg_help);
-        widg_container.addWidget(widg_settings);
         widg_container.addWidget(widg_quit);
         widg_container.addWidget(widg_endPhase);
 
@@ -67,8 +66,6 @@ namespace fisk {
 
     void HudButtons::initTextures(){
         widg_card.setDefaultSprite(atlas.getTexture(),atlas.getTextureRect("buttonCard"));
-        widg_help.setDefaultSprite(atlas.getTexture(),atlas.getTextureRect("buttonHelp"));
-        widg_settings.setDefaultSprite(atlas.getTexture(),atlas.getTextureRect("ButtonSetting"));
         widg_quit.setDefaultSprite(atlas.getTexture(),atlas.getTextureRect("buttonQuit"));
 
     }

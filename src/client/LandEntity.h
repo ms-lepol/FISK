@@ -57,6 +57,7 @@ namespace fisk {
 
             gf::Texture& m_texture;
             gf::Animation land_explosion;
+            gf::AnimatedSprite land_explosion_spr;
             bool changed_owner;
             
             

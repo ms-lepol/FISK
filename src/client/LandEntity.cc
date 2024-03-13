@@ -1,6 +1,5 @@
 #include "LandEntity.h" 
 #include "GameHub.h"
-#include <algorithm>
 #include <gf/Anchor.h>
 #include <gf/AnimatedSprite.h>
 #include <gf/Id.h>
@@ -298,7 +297,7 @@ namespace fisk {
     }
 
     void LandEntity::renderAnimation(gf::RenderTarget& target, gf::RenderStates states){
-        gf::AnimatedSprite land_explosion_spr;
+        
         land_explosion_spr.setColor(gf::Color::Red);
         land_explosion_spr.setAnchor(gf::Anchor::Center);
         land_explosion_spr.setPosition(position+positionText-gf::Vector2i({32,32}));
@@ -308,6 +307,7 @@ namespace fisk {
         target.draw(land_explosion_spr, states);
         if (land_explosion.isFinished()){
             changed_owner = false;
+
         }
     }
 }

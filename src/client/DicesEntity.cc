@@ -3,7 +3,6 @@
 #include <gf/Random.h>
 #include <gf/Sleep.h>
 #include <gf/Time.h>
-#include <thread>
 
 #define STEP 144
 

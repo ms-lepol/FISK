@@ -25,8 +25,6 @@ namespace fisk {
 
             gf::SpriteWidget widg_quit;
             gf::SpriteWidget widg_card;
-            gf::SpriteWidget widg_help;
-            gf::SpriteWidget widg_settings;
             gf::TextButtonWidget widg_endPhase;
 
             gf::ResourceManager& ressources;
