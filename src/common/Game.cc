@@ -155,6 +155,10 @@ namespace fisk {
     }
 
     void Game::next_phase() {
+        if(is_finished()){
+            gf::Log::info("(GAME) Game is over ! The player %lu escaped the fisk :3\n", current_player);      
+            game_finished = true;        
+        }
         switch (current_phase) {
             case TurnPhase::Fortify:
                 current_phase = TurnPhase::Attack;
@@ -164,11 +168,6 @@ namespace fisk {
                 if(!can_reinforce()) next_phase();
                 break;
             case TurnPhase::Reinforce:
-                if(is_finished()){
-                    gf::Log::info("(GAME) Game is over ! The player %lu escaped the fisk :3\n", current_player);      
-                    game_finished = true;        
-                    break;
-                }
                 current_phase = TurnPhase::End;
                 next_phase();
                 break;
@@ -215,7 +214,7 @@ namespace fisk {
         for(auto& land : lands){
             if(land.getOwner() == player) land.setOwner_id(gf::InvalidId);
         }
-        for(PlayerId p : disconnected) gf::Log::debug("\t%lu\n", p);
+        if(get_nb_players() - disconnected.size() <= 1) game_finished = true;
     }
 
     std::vector<PlayerId> const &Game::get_disconnected() const{
@@ -335,7 +334,7 @@ namespace fisk {
 
     bool Game::is_finished() const {
         gf::Log::debug("Players size : %zu\n", players.size());
-        if(players.size() <= 1) return true;
+        if(get_nb_players() - disconnected.size() <= 1) return true;
         for(auto land : lands) {
             if(land.getOwner() != current_player) return false;
         }
