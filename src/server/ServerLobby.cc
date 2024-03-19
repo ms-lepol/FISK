@@ -27,6 +27,7 @@ namespace fisk {
     void ServerLobby::removePlayer(ServerPlayer& player) {
         ServerGroup::removePlayer(player);
         gf::Log::info("(LOBBY) {%" PRIX64 "} Removed Client from Lobby.\n", player.id);
+        m_instance->removePlayer(player);
         broadcastPlayers();
     }
 

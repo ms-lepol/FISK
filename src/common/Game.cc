@@ -173,8 +173,7 @@ namespace fisk {
                 next_phase();
                 break;
             case TurnPhase::End:
-                current_player = (current_player + 1) % (get_nb_players() + 1);
-                if(current_player == 0) current_player = 1;
+                next_player();
                 give_troops();
                 draw_card();
                 current_phase = TurnPhase::Fortify;
@@ -194,6 +193,33 @@ namespace fisk {
             }
         }
         return owned;
+    }
+
+    void Game::next_player(){
+        if(get_nb_players() == disconnected.size()) return;
+        do {
+            current_player = (current_player + 1) % (get_nb_players() + 1);
+            if(current_player == 0) current_player = 1;
+            gf::Log::debug("Current : %lu\n", current_player);
+        } while(std::find(disconnected.begin(), disconnected.end(), current_player) != disconnected.end());
+    }
+
+    void Game::removePlayer(PlayerId player){
+        gf::Log::debug("(GAME) removing player %lu\n", player);
+        disconnected.push_back(player);
+        if(current_player == player) {
+            gf::Log::debug("(GAME) changing current player\n");
+            next_player();
+        }
+        gf::Log::debug("(GAME) setting lands to neutral state\n");
+        for(auto& land : lands){
+            if(land.getOwner() == player) land.setOwner_id(gf::InvalidId);
+        }
+        for(PlayerId p : disconnected) gf::Log::debug("\t%lu\n", p);
+    }
+
+    std::vector<PlayerId> const &Game::get_disconnected() const{
+        return disconnected;
     }
 
     void Game::give_troops(){
@@ -308,6 +334,8 @@ namespace fisk {
     }
 
     bool Game::is_finished() const {
+        gf::Log::debug("Players size : %zu\n", players.size());
+        if(players.size() <= 1) return true;
         for(auto land : lands) {
             if(land.getOwner() != current_player) return false;
         }

@@ -23,6 +23,7 @@ namespace fisk {
             std::vector<Land> lands;
             std::vector<Card> cards;
             std::vector<Continent> continents;
+            std::vector<PlayerId> disconnected;
 
             CardId top_card = 0;
 
@@ -62,10 +63,12 @@ namespace fisk {
             Continent& get_continent(ContinentId continent);
             PlayerId get_current_player() const;
             TurnPhase get_current_phase() const;
+            std::vector<PlayerId> const &get_disconnected() const;
 
             CardId get_top_card();
 
             void set_current_player(PlayerId player);
+            void removePlayer(PlayerId player);
 
             const int32_t get_nb_lands() const;
             const int32_t get_nb_players() const;
@@ -96,6 +99,8 @@ namespace fisk {
              * @brief Change the current game phase to the next one
              */
             void next_phase();
+
+            void next_player();
 
             int32_t nb_lands() const;
     

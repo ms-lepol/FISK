@@ -147,7 +147,33 @@ namespace fisk {
             m_game.mainScene.m_dices.launchDices();
             break;
         }
+        case ServerGameSendEndOfGame::type: {
+            gf::Log::info("(CLIENT) Dice Roll.\n");
+            auto data = packeta.as<ServerGameSendEndOfGame>();
+            std::string win = "Joueur ";
+            switch(m_model->get_player(data.winner).getColor()){
 
+                case Player::Color::YELLOW:
+                    win += "Jaune";
+                    break;
+                case Player::Color::RED:
+                    win += "Rouge";
+                    break;
+                case Player::Color::BLUE:
+                    win += "Bleu";
+                    break;
+                case Player::Color::GREEN:
+                    win += "Vert";
+                    break;
+                case Player::Color::NEUTRAL:
+                default:
+                    win += "???";
+                    break;
+            }
+            m_game.endScene.declareWinner(win);
+            m_game.popScene();
+            m_game.pushScene(m_game.endScene);
+        }
         default:
           gf::Log::error("(CLIENT) Unknown packet type: %lu\n", packeta.getType());
           break;

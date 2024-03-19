@@ -35,6 +35,7 @@ namespace fisk {
             void start();
             void update(ServerPlayer& player, gf::Packet& packet);
             bool isFinished();
+            void removePlayer(ServerPlayer& player) override;
 
     };
 

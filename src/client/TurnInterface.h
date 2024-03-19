@@ -19,8 +19,11 @@
 #define texture_path "/sprites/fisk_ui.png"
 
 namespace fisk {
+
+    struct GameHub;
     class TurnInterface : public gf::Entity {
         private:
+            GameHub& m_game;
             unsigned nb_player;
             unsigned turn_order;
             gf::Sprite m_spr;
@@ -31,10 +34,11 @@ namespace fisk {
         public:
             int width = 96;
             int height = 72;
-            TurnInterface(unsigned nb_player, gf::ResourceManager& rm, gf::TextureAtlas& atlas);
+            TurnInterface(GameHub& game, gf::ResourceManager& rm, gf::TextureAtlas& atlas);
             void setNbPlayer(unsigned nb_player);
             void setTurnOrder(gf::Color4f color);
             void changeTurn();
+            void update();
             void render(gf::RenderTarget& target,const gf::RenderStates& states);
             void setPosition(gf::Vector2i position);
         };

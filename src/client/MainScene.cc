@@ -45,7 +45,7 @@ namespace fisk {
   
   , m_hudAtlas(gf::TextureAtlas("../data/sprites/ui_atlas.xml",game.resources))
   , m_DiceAtlas(gf::TextureAtlas("../data/sprites/dices_atlas.xml",game.resources))
-  , m_turnInterface(TurnInterface(0,game.resources,m_hudAtlas))
+  , m_turnInterface(TurnInterface(game,game.resources,m_hudAtlas))
   , m_phaseIndicator(PhaseIndicator(gf::Color4f({0,1,0,0}),game,m_hudAtlas))
   , m_hudButtons(HudButtons(game.resources,m_hudAtlas,game))
   , m_dices(game.resources, m_DiceAtlas, game)
@@ -166,12 +166,7 @@ namespace fisk {
 
         //Update the turn interface
         if (m_game.clientNetwork.hasGameModel()){
-            auto& l_model = m_game.clientNetwork.getGameModel();
-            m_turnInterface.setTurnOrder(l_model.get_player(l_model.get_current_player()).getColor4f());
-            if (m_game.clientNetwork.hasPlayerList()){
-                auto& l_playerList = m_game.clientNetwork.getPlayerList();
-                m_turnInterface.setNbPlayer(l_playerList.players.size());
-            }
+            m_turnInterface.update();
         }
     }
 

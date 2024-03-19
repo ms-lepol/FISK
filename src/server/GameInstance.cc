@@ -1,6 +1,7 @@
 #include "GameInstance.h"
 #include <gf/Dice.h>
 #include <map>
+#include "ServerGroup.h"
 #include "ServerPlayer.h"
 #include <algorithm>
 #include <cstddef>
@@ -25,6 +26,18 @@ namespace fisk {
     m_random(random),
     ready(false)
     {
+    }
+
+    void GameInstance::removePlayer(ServerPlayer& player){
+        ServerGroup::removePlayer(player);
+        if(srv_to_model_id.empty() || !ready) {
+            gf::Log::warning("(GAME INSTANCE) srv to model not initialized yet\n"); 
+            return;
+        }
+        gf::Log::debug("(GAME INSTANCE) removing player %lu from model\n", srv_to_model_id[player.id]);
+        model.removePlayer(srv_to_model_id[player.id]);
+        gf::Log::debug("(GAME INSTANCE) sending model\n");
+        broadcast(model);
     }
 
     void GameInstance::start() {
